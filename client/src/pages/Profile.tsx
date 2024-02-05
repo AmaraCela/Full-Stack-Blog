@@ -1,11 +1,9 @@
 import { useParams } from "react-router-dom";
-
 const Profile = () => {
-
     type Id = {
         id : string
     }
-    const {id} = useParams<Id>();
+    const { id } = useParams<Id>();
     return ( 
         <h1>Profile -{id}</h1>
      );

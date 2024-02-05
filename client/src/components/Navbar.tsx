@@ -8,10 +8,9 @@ const Navbar = () => {
             <h1 className="title ml-4">Chronicles</h1>
             <div className="flex row mr-10 ml-10">
                 <div className="flex items-center search-bar">
-                    <img src={search} alt="" className="h-5 w-5 absolute z-10 ml-1"/>
-                    <input className="mr-2 relative text-center h-9 rounded-md w-52 md:w-96" type="search" placeholder="Search..."/>
+                    <input className="mr-2 relative text-center h-9 rounded-md w-52 md:w-96 search-input pl-10"  type="search" placeholder="Search..." style={{ backgroundImage: `url(${search})` }}/>
                 </div>
-                <img src={profileImg} alt="profile-img" className="w-12 h-12" />
+                <img src={profileImg} alt="profile-img" className="w-12 h-12 cursor-pointer" />
             </div>
         </nav>
     )

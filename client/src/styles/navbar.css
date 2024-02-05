@@ -8,6 +8,12 @@
     padding-top: 10px;
 }
 
+.search-input{
+    background-repeat: no-repeat;
+    background-position: 6px 4px;
+    
+}
+
 @media screen and (max-width:500px) {
     .search-bar{
         display: none;

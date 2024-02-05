@@ -1,3 +1,8 @@
 @import 'tailwindcss/base';
 @import 'tailwindcss/components';
 @import 'tailwindcss/utilities';
+
+body {
+    background: linear-gradient(rgba(248, 238, 238, 1), rgba(248, 238, 238, 0.1));
+    background-repeat: no-repeat;
+}

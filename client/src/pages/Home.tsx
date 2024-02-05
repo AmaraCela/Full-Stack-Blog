@@ -1,8 +1,9 @@
 // import "../styles/home.css"
+import TagsComponent from "../components/TagsComponent";
 const Home = () => {
     return (  
-        <div className="home">
-            <h2 className="f">Homepage</h2>
+        <div className="home flex items-center flex-col">
+            <TagsComponent/>
         </div>
     );
 }

@@ -10,8 +10,10 @@
 
 .search-input{
     background-repeat: no-repeat;
-    background-position: 6px 4px;
-    
+    background-position: 6px 2px;
+    border-style: solid;
+    border-width: 2px;
+    border-color: black;
 }
 
 @media screen and (max-width:500px) {

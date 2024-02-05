@@ -1,0 +1,19 @@
+.tags{
+    width: 100%
+}
+
+.tag{
+    @apply bg-[#fdfd96be] text-center m-1 h-12 text-3xl rounded-lg flex items-center justify-center cursor-pointer ;
+    width: 100px;
+    box-shadow: 3px 3px 3px black;
+}
+
+.laptop-img{
+    top: -120px;
+    width: 60%;
+    filter: opacity(0.4);
+}
+
+.inspire{
+    top:150px;
+}

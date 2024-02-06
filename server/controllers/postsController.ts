@@ -2,7 +2,8 @@ import DatabaseConnection from "../database/DatabaseConnection";
 import { Request,Response } from "express";
 
 function getPosts(req:Request, res:Response):void{
-    const connection = new DatabaseConnection().getConnection();
+    const dbconnection = new DatabaseConnection();
+    const connection = dbconnection.getConnection();
     const query = `SELECT * FROM posts`;
     connection.query(query,(err,results)=>{
         if(err)
@@ -14,6 +15,8 @@ function getPosts(req:Request, res:Response):void{
             res.json(results);
         }
     });
+    dbconnection.closeConnection();
+    
 }
 
 module.exports = {getPosts};

@@ -1,8 +1,11 @@
 import { Request, Response } from "express";
+import CreateTables from "./database/CreateTables";
 const express = require('express');
 const app = express();
 
 const port = 5000;
+
+
 
 app.get('/', (req:Request,res:Response)=>{
     res.send('Hello from Express')

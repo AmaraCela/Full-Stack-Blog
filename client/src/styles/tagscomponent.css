@@ -17,3 +17,30 @@
 .inspire{
     top:150px;
 }
+
+.wrapper {
+    height: 600px;
+    top: 252px;
+    transform: translate(-50%, -50%);
+    background-image: linear-gradient(to top, rgb(240 191 191), color(srgb 0.94 0.75 0.75)100%);
+  }
+  
+.wave {
+    height: 1025px;
+    top: -25%;
+    margin-left: -500px;
+    margin-top: -500px;
+    border-radius: 35%;
+    background: rgba(255, 255, 255, .75);
+    animation: wave 15s infinite linear;
+}
+
+
+  @keyframes wave {
+    from {
+      transform: rotate(0deg);
+    }
+    from {
+      transform: rotate(360deg);
+    }
+  }

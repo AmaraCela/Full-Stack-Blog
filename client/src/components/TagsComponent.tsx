@@ -9,7 +9,7 @@ const TagsComponent = () => {
         <h1 className="title w-80 text-center relative inspire">
             Inspire and get insipred.
         </h1>
-        <div className="relative flex flex-row tags w-max justify-evenly top-80">
+        {/* <div className="relative flex flex-row tags w-max justify-evenly top-80">
             <div className="tag">
                 All
             </div>
@@ -40,7 +40,7 @@ const TagsComponent = () => {
             <div className="tag">
                 #blog
             </div>
-        </div>
+        </div> */}
         
         
         </>

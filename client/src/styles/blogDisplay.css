@@ -1,0 +1,15 @@
+@import url('https://fonts.googleapis.com/css2?family=Grandstander:wght@300&display=swap');
+
+.blogs{
+    top:350px;
+    width: 100%;
+}
+
+.blog{
+    height: 700px;
+}
+
+.regular-font{
+    font-family: 'Grandstander',cursive;
+}
+

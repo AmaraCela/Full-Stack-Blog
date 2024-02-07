@@ -3,13 +3,28 @@
 .blogs{
     top:350px;
     width: 100%;
+    height: fit-content;
 }
 
 .blog{
-    height: 700px;
+    height: 500px;
+    margin-bottom: 20px;
+}
+
+.blog:hover{
+    box-shadow: 3px 3px 5px rgb(196, 102, 102);
 }
 
 .regular-font{
     font-family: 'Grandstander',cursive;
+}
+
+.info{
+    flex: 0 0 75%;
+}
+
+.sticky-tag{
+    box-shadow: 0px 3px 3px black;
+    @apply flex justify-end w-3/4 bg-[#FEFF9C] regular-font text-center mt-4;
 }
 

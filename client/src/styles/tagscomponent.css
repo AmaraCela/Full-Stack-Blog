@@ -13,7 +13,7 @@
 }
 
 .wrapper {
-    height: 600px;
+    height: 100vh;
     top: 252px;
     transform: translate(-50%, -50%);
     background-image: linear-gradient(to top, rgb(240 191 191), color(srgb 0.94 0.75 0.75)100%);

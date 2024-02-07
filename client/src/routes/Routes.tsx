@@ -4,12 +4,11 @@ import Navbar from "../components/Navbar";
 import Blog from "../pages/Blog";
 import Home from "../pages/Home";
 import Profile from "../pages/Profile";
+import LogIn from '../pages/LogIn';
 
 const Routes = () => {
     return ( <Router>
-        <div className="App">
           <Navbar></Navbar>
-         <div className="content">
           <Switch>
             <Route path='/create'>
               <FormComponent/>
@@ -20,12 +19,13 @@ const Routes = () => {
             <Route path='/profile/:id'>
               <Profile/>
             </Route>
+            <Route path='/login'>
+                <LogIn/>
+            </Route>
             <Route path='/'>
               <Home/>
             </Route>
           </Switch>
-         </div>
-        </div>
         </Router> );
 }
  

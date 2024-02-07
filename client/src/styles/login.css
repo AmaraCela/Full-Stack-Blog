@@ -1,0 +1,13 @@
+.login-div{
+    box-shadow: 3px 3px 5px rgb(196, 102, 102);
+    width: 60%;
+}
+
+.login-blog{
+    width: 60%;
+}
+
+.login-form{
+    grid-template-rows: 10% 20% 10% 30% 10%;
+    width: 40%;
+}

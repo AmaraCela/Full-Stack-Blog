@@ -8,13 +8,10 @@
     box-shadow: 3px 3px 3px black;
 }
 
-.inspire{
-    top:150px;
-}
 
 .wrapper {
-    height: 100vh;
-    top: 252px;
+    height: 110vh;
+    top: 197px;
     transform: translate(-50%, -50%);
     background-image: linear-gradient(to top, rgb(240 191 191), color(srgb 0.94 0.75 0.75)100%);
   }

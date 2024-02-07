@@ -7,8 +7,8 @@ const Profile = () => {
     }
     const { id } = useParams<Id>();
     return ( 
-       <div className="flex w-full flex-row justify-between">
-            <div className="bg-[#ff33f2] flex flex-col w-full ml-10 mr-10 h-fit items-center rounded-md">
+       <div className="flex w-full flex-row justify-between mt-8">
+            <div className="bg-[#ff33f2] flex flex-col w-full ml-10 mr-10 h-fit items-center rounded-md sticky top-2">
                 <img src={profileImg} alt="" className="size-40" />
                 <h1>Username</h1>
                 <p>Number of posts:3</p>

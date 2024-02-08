@@ -1,14 +1,44 @@
-import { useParams } from "react-router-dom";
 import laptop from "../assets/laptop.png";
+import blog from "../assets/blog.webp";
+import "../styles/blog.css";
+import { useEffect, useRef, useState } from "react";
+import CarouselItem from "../components/CarouselItem.jsx";
+
 const Blog = () => {
-    type Id = {
-        id:string;
-    }
-    const {id} = useParams<Id>()
+
+    const items = [
+        {
+            id:1,
+            image:laptop
+        },
+        {
+            id:2,
+            image:blog
+        },
+    ]
+    
     return (
-        <div className="blog-details">
-            <h1>Author · date posted </h1>
-            <img src={laptop} alt="" />
+        <div className="blog-details px-16">
+            <h1 className="regular-font text-3xl mt-4 font-bold">Author · date posted </h1>
+            {/* <div className="relative max-w-5xl">
+                <div className="fade slidesDiv">
+                    <img src={laptop} alt="" />
+                </div>
+                <div className="fade slidesDiv">
+                    <img src={blog} alt="" />
+                </div>
+                <p className="prev navigation-button">&#10094;</p>
+                <p className="next navigation-button">&#10095;</p>
+                
+            </div> */}
+            
+            <div className="carousel">
+                <div className="inner">
+                    {items.map((item)=>{
+                        return <CarouselItem key={item.id} item={item}/>
+                    })}
+                </div>
+            </div>
             <h1>Here goes the blog title</h1>
             <p>Talks about: #blog #tag #othertag</p>
             <p>Here will go a looooooooooooooooooooooooooooooooooooong description: 

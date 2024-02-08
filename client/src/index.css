@@ -11,3 +11,7 @@ body {
 #root{
   height: 100vh;
 }
+
+.input-format{
+@apply border-2 border-[#000000] rounded-md;
+}

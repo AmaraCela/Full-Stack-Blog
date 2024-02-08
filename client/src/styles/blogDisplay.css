@@ -3,13 +3,13 @@
 .blogs{
     width: 100%;
     height: fit-content;
-    flex: 0 0 75%;
+    flex: 0 0 70%;
 }
 
 .blog{
     height: 80vh;
     margin-bottom: 20px;
-    @apply w-full pl-10 pb-10 flex cursor-pointer shadow-lg
+    @apply w-full ml-16 pl-1 pb-10 pt-2 flex cursor-pointer shadow-lg
 }
 
 .blog:hover{

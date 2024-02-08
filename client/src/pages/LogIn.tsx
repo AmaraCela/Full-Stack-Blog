@@ -15,7 +15,7 @@ const LogIn = () => {
                 <label htmlFor="password" className="regular-font font-semibold">Password:</label>
                 <input type="password" id="password" className="input-format"/></div>
                 <div className="flex flex-col items-baseline">
-                <input type="submit" value='Login' className="text-xl p-1 input-format cursor-pointer"/>
+                <input type="submit" value='Login' className="text-xl p-1 input-format cursor-pointer regular-font font-semibold"/>
                 <p className="regular-font mt-2">Don't have an account? <Link to="" className="text-[#c46666] underline">Sign up</Link></p>
                 </div>
             </form>

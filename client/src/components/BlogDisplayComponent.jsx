@@ -6,81 +6,51 @@ const BlogDisplay = () => {
     return (  
         <div className="relative blogs">
             <div className="blog">
-                <div className="info w-3/4">
-                <div className="flex flex-row items-end">
-                    <img src={profile} alt="" className="h-10" />
-                    <Link to="" className="regular-font text-2xl ml-1">User</Link>
-                </div>
-                <img src={laptop} alt="laptop" className="mt-2 blog-img h-3/4 w-full"/>
-                <p className="mt-2 regular-font text-2xl font-bold">Here goes the title...</p>
-                <p className="mt-2 regular-font">Here goes a looooooooooooooooooooooooooooooooooooooooooooong description...</p>
-                </div>
-                <div className="tags flex flex-col justify-start items-end">
-                    <div className="sticky-tag">
-                        <p className="w-full text-2xl pt-2">#blog</p>
+                <img src={laptop} alt="laptop" className="mt-2 blog-img h-full w-3/5"/>
+                <div className="info p-2 flex flex-col justify-between">
+                    <div>
+                    <div className="flex flex-row items-end">
+                        <img src={profile} alt="" className="h-14 blog-profile" />
+                        <Link to="" className="regular-font text-3xl font-semibold ml-1 blog-user">User</Link>
                     </div>
-                    <div className="sticky-tag">
-                        <p className="w-full text-2xl pt-2">#tag</p>
+                    <p className="mt-8 regular-font text-2xl font-bold blog-title">Here goes the title...</p>
+                    <p className="regular-font mt-2 text-base italic blog-tags">Talks about #blog #tag #othertag</p>
+                    <p className="mt-8 regular-font text-xl blog-desc">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi dapibus eu lectus id gravida...</p>
                     </div>
-                    <div className="sticky-tag">
-                        <p className="w-full text-2xl pt-2">#othertag</p>
+                    <p className="refular-font text-xl font-bold text-end date">Posted on: date</p>
                     </div>
-                    <div className="sticky-tag">
-                        <p className="w-full text-2xl pt-2">#longertag</p>                      
-                    </div>
-                </div>
             </div>
             <div className="blog">
-                <div className="info w-3/4">
-                <div className="flex flex-row items-end">
-                    <img src={profile} alt="" className="h-10" />
-                    <Link to="" className="regular-font text-2xl ml-1">User</Link>
-                </div>
-                <img src={laptop} alt="laptop" className="mt-2 blog-img h-3/4 w-full"/>
-                <p className="mt-2 regular-font text-2xl font-bold">Here goes the title...</p>
-                <p className="mt-2 regular-font">Here goes a looooooooooooooooooooooooooooooooooooooooooooong description...</p>
-                </div>
-                <div className="tags flex flex-col justify-start items-end">
-                    <div className="sticky-tag">
-                        <p className="w-full text-2xl pt-2">#blog</p>
+                <img src={laptop} alt="laptop" className="mt-2 blog-img h-full w-3/5"/>
+                <div className="info p-2 flex flex-col justify-between">
+                    <div>
+                    <div className="flex flex-row items-end">
+                        <img src={profile} alt="" className="h-14 blog-profile" />
+                        <Link to="" className="regular-font text-3xl font-semibold ml-1 blog-user">User</Link>
                     </div>
-                    <div className="sticky-tag">
-                        <p className="w-full text-2xl pt-2">#tag</p>
+                    <p className="mt-8 regular-font text-2xl font-bold blog-title">Here goes the title...</p>
+                    <p className="regular-font mt-2 text-base italic blog-tags">Talks about #blog #tag #othertag</p>
+                    <p className="mt-8 regular-font text-xl blog-desc">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi dapibus eu lectus id gravida...</p>
                     </div>
-                    <div className="sticky-tag">
-                        <p className="w-full text-2xl pt-2">#othertag</p>
+                    <p className="refular-font text-xl font-bold text-end date">Posted on: date</p>
                     </div>
-                    <div className="sticky-tag">
-                        <p className="w-full text-2xl pt-2">#longertag</p>                      
-                    </div>
-                </div>
             </div>
-            <div className="blog">
-                <div className="info w-3/4">
-                <div className="flex flex-row items-end">
-                    <img src={profile} alt="" className="h-10" />
-                    <Link to="" className="regular-font text-2xl ml-1">User</Link>
-                </div>
-                <img src={laptop} alt="laptop" className="mt-2 blog-img h-3/4 w-full"/>
-                <p className="mt-2 regular-font text-2xl font-bold">Here goes the title...</p>
-                <p className="mt-2 regular-font">Here goes a looooooooooooooooooooooooooooooooooooooooooooong description...</p>
-                </div>
-                <div className="tags flex flex-col justify-start items-end">
-                    <div className="sticky-tag">
-                        <p className="w-full text-2xl pt-2">#blog</p>
+             <div className="blog">
+                <img src={laptop} alt="laptop" className="mt-2 blog-img h-full w-3/5"/>
+                <div className="info p-2 flex flex-col justify-between">
+                    <div>
+                    <div className="flex flex-row items-end">
+                        <img src={profile} alt="" className="h-14 blog-profile" />
+                        <Link to="" className="regular-font text-3xl font-semibold ml-1 blog-user">User</Link>
                     </div>
-                    <div className="sticky-tag">
-                        <p className="w-full text-2xl pt-2">#tag</p>
+                    <p className="mt-8 regular-font text-2xl font-bold blog-title">Here goes the title...</p>
+                    <p className="regular-font mt-2 text-base italic blog-tags">Talks about #blog #tag #othertag</p>
+                    <p className="mt-8 regular-font text-xl blog-desc">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi dapibus eu lectus id gravida...</p>
                     </div>
-                    <div className="sticky-tag">
-                        <p className="w-full text-2xl pt-2">#othertag</p>
+                    <p className="refular-font text-xl font-bold text-end date">Posted on: date</p>
                     </div>
-                    <div className="sticky-tag">
-                        <p className="w-full text-2xl pt-2">#longertag</p>                      
-                    </div>
-                </div>
             </div>
-            
+
         </div>
     );
 }

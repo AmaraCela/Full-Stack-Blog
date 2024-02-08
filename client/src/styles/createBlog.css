@@ -10,3 +10,23 @@
 .label{
     @apply pt-4 font-semibold;
 }
+
+
+@media screen and (max-width:790px) {
+    .label{
+        @apply text-sm;
+    }
+    .submit-bt-blog{
+        @apply text-sm;
+    }
+}
+
+@media screen and (max-width:620px) {
+    .submit-bt-blog{
+        @apply w-1/4;
+    }
+
+    .file-input{
+        @apply w-1/2;
+    }
+}

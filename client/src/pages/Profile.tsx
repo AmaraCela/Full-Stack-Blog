@@ -9,6 +9,7 @@ const Profile = () => {
     const {id} = useParams<Id>();
     return ( 
        <div className="flex w-full flex-row justify-between mt-8">
+        <BlogDisplayComponent/>
             <div className="profile-card flex flex-row w-full ml-10 mr-10 h-fit items-center rounded-md sticky top-2 justify-between p-5  border-black border-double border-4">
                 <div className="flex justify-evenly flex-row">
                 <img src={profileImg} alt="" className="size-32" />
@@ -19,7 +20,7 @@ const Profile = () => {
                 <p className="regular-font text-xl">Number of posts : 3</p>
                 </div>
             </div>
-            <BlogDisplayComponent/>
+           
        </div>
      );
 }

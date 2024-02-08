@@ -1,3 +1,10 @@
 .home-main{
     top:80vh;
 }
+
+@media screen and (max-width:860px) {
+    .home-main{
+        @apply flex-col-reverse;
+    }
+    
+}

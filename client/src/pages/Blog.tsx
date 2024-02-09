@@ -8,7 +8,7 @@ interface Tag{
     name:string;
 }
 
-interface Blog {
+interface BlogType {
     blog:{
     id:number;
     author:string;
@@ -21,7 +21,7 @@ interface Blog {
     }
 }
 
-const Blog = ({blog}:Blog) => { 
+const Blog = ({blog}:BlogType) => { 
 
     const [activeIndex, setActiveIndex] = useState(0);
     const [images, setImages] = useState<HTMLElement[]>([]);
@@ -31,11 +31,11 @@ const Blog = ({blog}:Blog) => {
     }, []);
    
     const handleNavigation = (direction: "left"|"right")=>{
-        if(direction == 'left')
+        if(direction === 'left')
         {
             setActiveIndex((previousIndex:number)=>{
                 let newIndex:number;
-                if(previousIndex==0)
+                if(previousIndex===0)
                 {
                     newIndex = images.length-1;
                 }
@@ -51,7 +51,7 @@ const Blog = ({blog}:Blog) => {
         else{
             setActiveIndex((previousIndex:number)=>{
                 let newIndex;
-                if(previousIndex==images.length-1)
+                if(previousIndex===images.length-1)
                 {
                     newIndex=0;
                 }
@@ -67,23 +67,22 @@ const Blog = ({blog}:Blog) => {
     }
     return (
         <div className="blog-details px-16">
-            <h1 className="regular-font text-3xl mt-4 font-bold">{blog.author} · {blog.date.getDate()+"/"+blog.date.getMonth()+"/"+blog.date.getFullYear()} </h1>  
-           
             <div className="carousel w-full flex justify-center items-center">
-                <div className="p-4" onClick={()=>handleNavigation("left")}>
+                <div className="p-4 cursor-pointer mr-1 prev" onClick={()=>handleNavigation("left")}>
                     <p>&#10094;</p>
                 </div>
-                <div className="carousel-img">
-                    <img src={laptop} alt="" />
+                <div className="carousel-img w-1/2">
+                    <img src={laptop} alt="" className="w-full"/>
                 </div>
-                <div className="carousel-img hidden">
-                    <img src={blogImg} alt=""/>
+                <div className="carousel-img hidden w-1/2">
+                    <img src={blogImg} alt="" className="w-full"/>
                 </div>
-                <div className="p-4" onClick={()=>handleNavigation("right")}>
+                <div className="p-4 cursor-pointer ml-1 next" onClick={()=>handleNavigation("right")}>
                     <p>&#10095;</p>
                 </div>
             </div>
-
+            
+            <h1 className="regular-font text-3xl mt-4 font-bold">{blog.author} · {blog.date.getDate()+"/"+blog.date.getMonth()+"/"+blog.date.getFullYear()} </h1>  
             <h1>{blog.title}</h1>
             <p>Talks about {blog.tags.map((tag)=>("#"+tag.name+" "))}</p>
             <p>{blog.description}</p>

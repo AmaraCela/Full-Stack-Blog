@@ -6,6 +6,7 @@ import Profile from "../pages/Profile";
 import LogIn from '../pages/LogIn';
 import CreateBlog from '../pages/CreateBlog';
 import profile from "../assets/profile.png";
+import SignUp from '../pages/SignUp';
 
 const tags = [
   {id:1, name:'blog'},
@@ -38,6 +39,9 @@ const Routes = () => {
             </Route>
             <Route path='/login'>
                 <LogIn/>
+            </Route>
+            <Route path='/signup'>
+              <SignUp/>
             </Route>
             <Route path='/'>
               <Home/>

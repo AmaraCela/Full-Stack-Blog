@@ -1,0 +1,10 @@
+.footer-logo{
+    font-family: 'Berkshire Swash', serif;
+}
+
+
+@media screen and (max-width:600px) {
+    .footer-info{
+        @apply flex-col;
+    }
+}

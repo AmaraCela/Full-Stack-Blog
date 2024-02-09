@@ -7,6 +7,7 @@ import LogIn from '../pages/LogIn';
 import CreateBlog from '../pages/CreateBlog';
 import profile from "../assets/profile.png";
 import SignUp from '../pages/SignUp';
+import Footer from '../components/Footer';
 
 const tags = [
   {id:1, name:'blog'},
@@ -47,6 +48,7 @@ const Routes = () => {
               <Home/>
             </Route>
           </Switch>
+          <Footer/>
         </Router> );
 }
  

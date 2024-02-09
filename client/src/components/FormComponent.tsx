@@ -1,5 +1,6 @@
 import { Link } from "react-router-dom";
 import blog from "../assets/blog.webp";
+import "../styles/form.css";
 
 interface Inputs{
         type:string;

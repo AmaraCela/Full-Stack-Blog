@@ -1,4 +1,3 @@
-import "../styles/login.css";
 import blog from "../assets/blog.webp";
 import FormComponent from "../components/FormComponent";
 

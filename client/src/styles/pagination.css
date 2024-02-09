@@ -3,4 +3,5 @@
     background: linear-gradient(to right, rgb(159, 218, 247),rgb(204, 236, 245));
     margin-left: 10px;
     cursor: pointer;
+    @apply rounded-md;
 }

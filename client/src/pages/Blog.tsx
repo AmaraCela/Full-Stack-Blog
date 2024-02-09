@@ -67,7 +67,7 @@ const Blog = ({blog}:BlogType) => {
     }
     return (
         <div className="blog-details px-16">
-            <div className="carousel w-full flex justify-center items-center p-5 bg-black">
+            <div className="carousel w-full flex justify-center items-center p-5">
                 <div className="p-4 cursor-pointer mr-1 prev" onClick={()=>handleNavigation("left")}>
                     <p>&#10094;</p>
                 </div>

@@ -1,7 +1,7 @@
 import "../styles/footer.css";
 const Footer = () => {
     return ( 
-        <div className="bg-black px-16 pb-8">
+        <div className="bg-black px-16 pb-8 mt-8 static footer">
             <h2 className="text-white footer-logo text-3xl pt-8">Chronicles</h2>
             <div className="flex justify-evenly footer-info">
                 <div className="text-white regular-font mt-2">

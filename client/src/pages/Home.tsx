@@ -22,13 +22,13 @@ const blogs = [
 
 const Home = () => {
     return (  
+        <><TagsComponent />
         <div className="home flex items-center flex-col">
-            <TagsComponent/>
-            <div className="flex flex-row w-full relative home-main">
-                <BlogDisplay blogs={blogs}/>
-                <Sidebar/>
-            </div>
+        <div className="flex flex-row w-full home-main">
+            <BlogDisplay blogs={blogs} />
+            <Sidebar />
         </div>
+        </div></>
     );
 }
 export default Home;

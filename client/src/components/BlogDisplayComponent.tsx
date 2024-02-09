@@ -19,7 +19,7 @@ interface BlogType{
 }
 const BlogDisplay = ({blogs}:BlogType) => {
     return (  
-        <div className="relative blogs">
+        <div className="blogs">
             {blogs.map((item)=>(
                 <div className="blog" key={item.id}>
                    <img src={item.image} alt="laptop" className="mt-2 blog-img h-full w-3/5"/>

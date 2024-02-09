@@ -4,6 +4,7 @@ import TagsComponent from "../components/TagsComponent";
 import Sidebar from "../components/Sidebar";
 import profile from "../assets/profile.png";
 import laptop from '../assets/laptop.jpg';
+import Pagination from "../components/Pagination";
 
 const tags = [
     {id:1, name:'blog'},
@@ -28,6 +29,7 @@ const Home = () => {
             <BlogDisplay blogs={blogs} />
             <Sidebar />
         </div>
+        <Pagination/>
         </div></>
     );
 }

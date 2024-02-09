@@ -67,25 +67,23 @@ const Blog = ({blog}:BlogType) => {
     }
     return (
         <div className="blog-details px-16">
-            <div className="carousel w-full flex justify-center items-center">
+            <div className="carousel w-full flex justify-center items-center p-5 bg-black">
                 <div className="p-4 cursor-pointer mr-1 prev" onClick={()=>handleNavigation("left")}>
                     <p>&#10094;</p>
                 </div>
-                <div className="carousel-img w-1/2">
+                <div className="carousel-img">
                     <img src={laptop} alt="" className="w-full"/>
                 </div>
-                <div className="carousel-img hidden w-1/2">
+                <div className="carousel-img hidden">
                     <img src={blogImg} alt="" className="w-full"/>
                 </div>
                 <div className="p-4 cursor-pointer ml-1 next" onClick={()=>handleNavigation("right")}>
                     <p>&#10095;</p>
                 </div>
             </div>
-            
-            <h1 className="regular-font text-3xl mt-4 font-bold">{blog.author} · {blog.date.getDate()+"/"+blog.date.getMonth()+"/"+blog.date.getFullYear()} </h1>  
-            <h1>{blog.title}</h1>
-            <p>Talks about {blog.tags.map((tag)=>("#"+tag.name+" "))}</p>
-            <p>{blog.description}</p>
+            <h1 className="regular-font text-3xl font-bold mt-8">{blog.title}</h1>
+            <p className="mt-2 regular-font text-base italic">Talks about {blog.tags.map((tag)=>("#"+tag.name+" "))}</p>
+            <p className="mt-8 regular-font text-xl blog-description">{blog.description}</p>
         </div>
      );
 }

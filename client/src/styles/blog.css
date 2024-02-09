@@ -10,4 +10,28 @@
 
 .carousel-img{
     transition: display 0.4s ease-in;
+    width: 80%;
+}
+
+.blog-details{
+    margin-top: 20px;
+}
+
+@media screen and (max-width:1000px) {
+    .prev, .next{
+        font-size: 30px;
+        @apply p-3;
+    }
+}
+
+@media screen and (max-width:600px) {
+    .blog-details
+    {
+        @apply px-12;
+    }
+
+    .blog-description{
+        @apply text-base;
+    }
+    
 }

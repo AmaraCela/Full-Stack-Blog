@@ -1,3 +1,36 @@
 .profile-card{
     background: linear-gradient(to right, rgb(159, 218, 247),rgb(204, 236, 245));
 }
+.blogs{
+    margin-right: 4rem;
+}
+
+@media screen and (max-width:1400px) {
+    .profile-img{
+    @apply size-24
+    }
+
+    .profile, .username, .nr-posts{
+        @apply text-base
+    }
+
+    .profile-card{
+        @apply p-2;
+    }
+}
+
+
+@media screen and (max-width:1000px) {
+    .profile-content{
+        @apply flex-col;
+    }
+
+    .profile-card
+    {
+        @apply flex-row w-1/2 static;
+    }
+
+    .profile-info{
+        @apply mt-0 ml-4;
+    }
+}

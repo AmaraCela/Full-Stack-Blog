@@ -4,7 +4,7 @@ const Footer = () => {
         <div className="bg-black px-16 pb-8 mt-8 static footer">
             <div className="flex justify-between footer-info pt-8">
                 <div className="flex items-center">
-                <h2 className="text-white footer-logo text-3xl">Chronicles</h2>
+                    <h2 className="text-white footer-logo text-3xl">Chronicles</h2>
                 </div>
                 <div className="text-white regular-font mt-2">
                     <p>About us</p>

@@ -1,4 +1,4 @@
-import { BrowserRouter as Router, Route, Switch} from 'react-router-dom';
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import Navbar from "../components/Navbar";
 import Blog from "../pages/Blog";
 import Home from "../pages/Home";
@@ -8,6 +8,7 @@ import CreateBlog from '../pages/CreateBlog';
 import profile from "../assets/profile.png";
 import SignUp from '../pages/SignUp';
 import Footer from '../components/Footer';
+import PrivateRoutes from './PrivateRoutes';
 
 const tags = [
   {id:1, name:'blog'},
@@ -25,31 +26,22 @@ const blog = {
   images:[profile,profile]
 }
 
-const Routes = () => {
-    return ( <Router>
-          <Navbar></Navbar>
-          <Switch>
-            <Route path='/create'>
-              <CreateBlog/>
+const AllRoutes = () => {
+    return ( 
+    <Router>
+          <Navbar/>
+          <Routes>
+            <Route element={<PrivateRoutes/>}>
+              <Route path='/create' element={<CreateBlog/>}></Route>
+              <Route path='/profile/:id' element={<Profile/>}></Route>
             </Route>
-            <Route path='/blogs/:id'>
-              <Blog blog={blog}/>
-            </Route>
-            <Route path='/profile/:id'>
-              <Profile/>
-            </Route>
-            <Route path='/login'>
-                <LogIn/>
-            </Route>
-            <Route path='/signup'>
-              <SignUp/>
-            </Route>
-            <Route path='/'>
-              <Home/>
-            </Route>
-          </Switch>
+            <Route path='/blogs/:id' element={<Blog blog={blog}></Blog>} />
+            <Route path='/login' element={<LogIn></LogIn>}/>
+            <Route path='/signup' element={<SignUp></SignUp>}/>
+            <Route path='/' element={<Home></Home>}/>
+          </Routes>
           <Footer/>
-        </Router> );
+        </Router> 
+    );
 }
- 
-export default Routes;
+export default AllRoutes;

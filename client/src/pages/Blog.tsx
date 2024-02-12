@@ -1,7 +1,5 @@
-import laptop from "../assets/laptop.png";
-import blogImg from "../assets/blog.webp";
-import "../styles/blog.css";
-import { useEffect, useState } from "react";
+
+import "../styles/blog.css";import { useEffect, useState } from "react";
 
 interface Tag{
     id:number;
@@ -71,12 +69,11 @@ const Blog = ({blog}:BlogType) => {
                 <div className="p-4 cursor-pointer mr-1 prev" onClick={()=>handleNavigation("left")}>
                     <p>&#10094;</p>
                 </div>
-                <div className="carousel-img">
-                    <img src={laptop} alt="" className="w-full"/>
-                </div>
-                <div className="carousel-img hidden">
-                    <img src={blogImg} alt="" className="w-full"/>
-                </div>
+                {blog.images.map((image,index)=>(
+                     <div className={`carousel-img ${index!==0?`hidden`:``}`} key={image}>
+                        <img src={image} alt="" className="w-full"/>
+                    </div>
+                ))}
                 <div className="p-4 cursor-pointer ml-1 next" onClick={()=>handleNavigation("right")}>
                     <p>&#10095;</p>
                 </div>

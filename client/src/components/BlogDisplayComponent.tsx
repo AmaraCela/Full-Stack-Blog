@@ -26,7 +26,7 @@ const BlogDisplay = ({blogs}:BlogType) => {
                    <div className="info p-2 flex flex-col justify-between">
                     <div>
                     <div className="flex flex-row items-end">
-                        <img src={item.profilePic} alt="" className="h-14 blog-profile" />
+                        <img src={item.profilePic} alt="" className="h-14 blog-profile rounded-full w-14" />
                         <Link to="" className="regular-font text-3xl font-semibold ml-1 blog-user">{item.user}</Link>
                     </div>
                     <p className="mt-8 regular-font text-2xl font-bold blog-title">{item.title}</p>

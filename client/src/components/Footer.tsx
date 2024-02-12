@@ -1,4 +1,6 @@
 import "../styles/footer.css";
+import instagram from "../assets/instagram.webp";
+import facebook from "../assets/facebook.webp";
 const Footer = () => {
     return ( 
         <div className="bg-black px-16 pb-8 mt-8 static footer">
@@ -21,8 +23,10 @@ const Footer = () => {
                 <div className="text-white regular-font mt-2">
                     <p>Our socials</p>
                     <hr />
-                    <p className="mt-4">Facebook</p>
-                    <p>Instagram</p>
+                    <div className="socials flex justify-between items-center cursor-pointer">
+                    <img src={instagram} alt="" className="size-10 mt-4" />
+                    <img src={facebook} alt="" className="size-10 mt-4 fb" />
+                    </div>
                 </div>
             </div>
             <hr className="mt-4"/>

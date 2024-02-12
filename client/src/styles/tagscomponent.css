@@ -35,3 +35,10 @@
       transform: rotate(360deg);
     }
   }
+
+@media screen and (min-height:600px) {
+  .wave{
+    height: 1500px;
+  }
+  
+}

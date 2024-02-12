@@ -24,7 +24,7 @@ const blogs = [
 const Home = () => {
     return (  
         <><TagsComponent />
-        <div className="home flex items-center flex-col">
+        <div className="home flex items-center flex-col relative">
         <div className="flex flex-row w-full home-main">
             <BlogDisplay blogs={blogs} />
             <Sidebar />

@@ -2,8 +2,10 @@ import "../styles/footer.css";
 const Footer = () => {
     return ( 
         <div className="bg-black px-16 pb-8 mt-8 static footer">
-            <h2 className="text-white footer-logo text-3xl pt-8">Chronicles</h2>
-            <div className="flex justify-evenly footer-info">
+            <div className="flex justify-between footer-info pt-8">
+                <div className="flex items-center">
+                <h2 className="text-white footer-logo text-3xl">Chronicles</h2>
+                </div>
                 <div className="text-white regular-font mt-2">
                     <p>About us</p>
                     <hr />
@@ -23,6 +25,8 @@ const Footer = () => {
                     <p>Instagram</p>
                 </div>
             </div>
+            <hr className="mt-4"/>
+            <p className="text-white text-xl text-center mt-2">&copy; 2024. All rights reserved.</p>
         </div>
      );
 }

@@ -3,6 +3,16 @@
 }
 
 
+.footer-p{
+    color: rgb(223, 221, 219);
+    cursor: pointer;
+}
+
+.footer-p:hover
+{
+    color: white;
+}
+
 @media screen and (max-width:667px) {
     .footer-info{
         @apply flex-col;

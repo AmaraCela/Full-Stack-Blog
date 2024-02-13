@@ -1,6 +1,6 @@
 import "../styles/home.css"
 import BlogDisplay from "../components/BlogDisplayComponent";
-import TagsComponent from "../components/TagsComponent";
+import TagsComponent from "../components/Wave";
 import Sidebar from "../components/Sidebar";
 import profile from "../assets/profile.png";
 import laptop from '../assets/laptop.jpg';

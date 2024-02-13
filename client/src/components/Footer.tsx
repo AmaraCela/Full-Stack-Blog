@@ -11,14 +11,14 @@ const Footer = () => {
                 <div className="text-white regular-font mt-2">
                     <p>About us</p>
                     <hr />
-                    <p className="mt-4">Our company</p>
-                    <p>Our policy</p>
+                    <p className="mt-4 footer-p">Our company</p>
+                    <p className="footer-p">Our policy</p>
                 </div>
                 <div className="text-white regular-font mt-2">
                     <p>Our contacts</p>
                     <hr />
-                    <p className="mt-4">amara.cela@divsion5.co</p>
-                    <p>dummy.email@gmail.com</p>
+                    <p className="mt-4 footer-p">amara.cela@divsion5.co</p>
+                    <p className="footer-p">dummy.email@gmail.com</p>
                 </div>
                 <div className="text-white regular-font mt-2">
                     <p>Our socials</p>

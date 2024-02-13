@@ -16,9 +16,19 @@
     border-color: black;
 }
 
+
+.login-nav{
+    border: 2px solid black;
+    background-color: white;
+    padding-top: 4px;
+    padding-left: 4px;
+    padding-right: 4px;
+    @apply rounded-md h-9;
+    box-shadow: 2px 2px 2px;
+    
+}
 @media screen and (max-width:500px) {
     .search-bar{
         display: none;
     }
-    
 }

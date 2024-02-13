@@ -21,7 +21,8 @@ const BlogDisplay = ({blogs}:BlogType) => {
     return (  
         <div className="blogs">
             {blogs.map((item)=>(
-                <div className="blog" key={item.id}>
+                <Link to={`/blogs/${item.id}`} key={item.id}>
+                <div className="blog">
                    <img src={item.image} alt="laptop" className="mt-2 blog-img h-full w-3/5"/>
                    <div className="info p-2 flex flex-col justify-between">
                     <div>
@@ -36,6 +37,7 @@ const BlogDisplay = ({blogs}:BlogType) => {
                     <p className="refular-font text-xl font-bold text-end date">Posted on: {item.date.getDate()+"/"+item.date.getMonth()+"/"+item.date.getFullYear()}</p>
                 </div>
                 </div>
+                </Link>
             ))}   
 
         </div>

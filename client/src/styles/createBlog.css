@@ -1,11 +1,9 @@
-.blog-form{
-    grid-template-rows: 10% 10% 10% 15% 10% 15% 20% 10%;
-}
-
 .create-div{
     box-shadow: 3px 3px 5px rgb(196, 102, 102);
     width: 60%;
+    height: 90%;
 }
+
 
 .label{
     @apply pt-4 font-semibold;
@@ -28,5 +26,11 @@
 
     .file-input{
         @apply w-1/2;
+    }
+}
+
+@media screen and (max-height:650px) {
+    .submit-bt-blog{
+        @apply mt-4;
     }
 }

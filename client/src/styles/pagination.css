@@ -4,4 +4,13 @@
     margin-left: 10px;
     cursor: pointer;
     @apply rounded-md;
+    display: flex;
+    align-items: center;
+}
+
+.active{
+    background-color: aliceblue;
+    background: none;
+    border: 2px solid black;
+    box-shadow: 2px 2px 2px;
 }

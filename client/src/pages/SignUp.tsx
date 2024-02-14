@@ -6,25 +6,29 @@ const inputs = [
         type:"text",
         id:"username",
         placeholder:" Enter username...",
-        label : 'Username'
+        label : 'Username',
+        error : 'Enter a valid username.'
     },
     {
         type:"email",
         id:"email",
         placeholder:" Enter email...",
-        label:'Email'
+        label:'Email',
+        error : 'Enter a valid email.'
     },
     {
         type:"password",
         id:"password",
         placeholder:" Enter password...",
-        label : 'Password'
+        label : 'Password',
+        error:'Password must be longer than 8 characters.'
     },
     {
         type:"password",
         id:"verify",
         placeholder:" Retype password...",
-        label : 'Verify password'
+        label : 'Verify password',
+        error : 'Passwords do not match.'
     }
 ];
 
@@ -34,6 +38,8 @@ const formProp = {
     image:blog,
     inputs:inputs
 }
+
+
 
 
 const SignUp = () => {

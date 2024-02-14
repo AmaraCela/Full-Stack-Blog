@@ -7,13 +7,15 @@ const inputs = [
         type:"text",
         id:"username",
         placeholder:" Enter username",
-        label : 'Username'
+        label : 'Username',
+        error : 'Username not found.'
     },
     {
         type:"password",
         id:"password",
         placeholder:" Enter password",
-        label : 'Password'
+        label : 'Password',
+        error : 'Password does not match.'
     }
 ];
 

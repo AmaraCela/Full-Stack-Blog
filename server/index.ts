@@ -1,5 +1,6 @@
 import { Request, Response } from "express";
 const express = require('express');
+const cors = require('cors');
 
 const app = express();
 
@@ -8,6 +9,7 @@ const signupController = require("./controllers/signupController");
 const bodyParser = require('body-parser');
 
 app.use(bodyParser.json());
+app.use(cors());
 
 const port = 5000;
 

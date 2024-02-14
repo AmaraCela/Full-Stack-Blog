@@ -10,7 +10,7 @@ export function signup(req:Request, res:Response):void
     connection.query(query,[username,email,password], (err,result)=>{
         if(err)
         {
-            console.log("There was an error signing up the user");
+            console.log("There was an error signing up the user",err);
             res.status(500).json({message:"Registration unsuccessful"});
         }
         else

@@ -5,10 +5,13 @@ const Pagination = () => {
     const nrPages = 10;
     const paginationSlots = 4;
     const [currentPage,setCurrentPage] = useState(1);
-
     const [displayingIndexes,setDisplayingIndexes] = useState<number[]>([])
+
+    const [cursorLeft,setCursorLeft] = useState("not-allowed");
+    const [cursorRight, setCursorRight] = useState("pointer");
+
    
-    useEffect(()=>{
+    useEffect(()=>{ 
         let newIndexes = [];
         for (let i = currentPage; i < currentPage + paginationSlots; i++) {
             newIndexes.push(i);
@@ -17,24 +20,11 @@ const Pagination = () => {
     },[]);
     
 
-    function movePage(direction:string):void{
-        switch(direction)
-        {
-            case("first"):
-            {
-                setCurrentPage(1);
-                let newIndexes = [];
-                for(let i=0;i<paginationSlots;i++)
+    function moveLeft()
+    {
+        if(currentPage>1)
                 {
-                    newIndexes[i] = i+1;
-                }
-                setDisplayingIndexes(newIndexes);
-                break;
-            }
-            case("left"):
-            {
-                if(currentPage>1)
-                {
+                    setCursorRight("pointer");
                     if(displayingIndexes[0]===currentPage)
                     {
                         let newIndexes = [];
@@ -46,24 +36,16 @@ const Pagination = () => {
                     }
                     setCurrentPage(currentPage-1);
                 }
-                break;
-            }
-            case("last"):
-            {
-                setCurrentPage(nrPages-1);
-                let newIndexes = [];
-                let value = nrPages-paginationSlots;
-                for(let i=0;i<paginationSlots;i++)
-                {
-                    newIndexes[i] = value;
-                    value++;
+                else{
+                    setCursorLeft("not-allowed");
                 }
-                setDisplayingIndexes(newIndexes);
-                break;
-            }
-            case("right"):{
-                if(currentPage<nrPages-1)
+    }
+
+    function moveRight()
+    {
+        if(currentPage<nrPages-1)
                 {
+                    setCursorLeft("pointer");
                     if(displayingIndexes[paginationSlots-1]===currentPage)
                     {
                         let newIndexes = [];
@@ -75,6 +57,60 @@ const Pagination = () => {
                     }
                     setCurrentPage(currentPage+1);
                 }
+                else{
+                    setCursorRight("not-allowed");
+                }
+    }
+
+    function moveStart()
+    {
+        setCursorRight("pointer");
+        setCursorLeft("not-allowed");
+        setCurrentPage(1);
+                let newIndexes = [];
+                for(let i=0;i<paginationSlots;i++)
+                {
+                    newIndexes[i] = i+1;
+                }
+                setDisplayingIndexes(newIndexes);
+    }
+
+    function moveEnd()
+    {
+        setCursorLeft("pointer");
+        setCursorRight("not-allowed");
+        setCurrentPage(nrPages-1);
+        let newIndexes = [];
+        let value = nrPages-paginationSlots;
+        for(let i=0;i<paginationSlots;i++)
+        {
+            newIndexes[i] = value;
+            value++;
+        }
+        
+        setDisplayingIndexes(newIndexes);
+    }
+
+    function movePage(direction:string):void{
+        switch(direction)
+        {
+            case("first"):
+            {
+                moveStart();
+                break;
+            }
+            case("left"):
+            {
+                moveLeft();
+                break;
+            }
+            case("last"):
+            {
+                moveEnd();
+                break;
+            }
+            case("right"):{
+                moveRight();
                 break;
             }
         }
@@ -83,10 +119,10 @@ const Pagination = () => {
 
     return (
         <div className="flex regular-font mt-8 justify-center font-semibold">
-            <div className="pagination-item first-arrow" title="first" onClick={()=>movePage("first")}>
+            <div style={{cursor:cursorLeft}} className="pagination-item first-arrow" title="first" onClick={()=>movePage("first")}>
                 <p>&#10094;&#10094;</p>
             </div> 
-            <div className="pagination-item previous-arrow" title="previous" onClick={()=>movePage("left")}>
+            <div style={{cursor:cursorLeft}} className="pagination-item previous-arrow" title="previous" onClick={()=>movePage("left")}>
                 <p>&#10094;</p>
             </div>           
             {displayingIndexes.map((item,i)=>(
@@ -94,10 +130,10 @@ const Pagination = () => {
                     <p>{item}</p>
                 </div>
             ))}
-            <div className="pagination-item next-arrow" title="next" onClick={()=>movePage("right")}>
+            <div style={{cursor:cursorRight}} className="pagination-item next-arrow" title="next" onClick={()=>movePage("right")}>
                 <p>&#10095;</p>
             </div>
-            <div className="pagination-item last-arrow" title="last" onClick={()=>movePage("last")}>
+            <div style={{cursor:cursorRight}} className="pagination-item last-arrow" title="last" onClick={()=>movePage("last")}>
                 <p>&#10095;&#10095;</p>
             </div>
         </div>

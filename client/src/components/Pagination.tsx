@@ -18,6 +18,17 @@ const Pagination = () => {
         }
         setDisplayingIndexes(newIndexes);
     },[]);
+
+    useEffect(()=>{
+        if(currentPage===1)
+        {
+            setCursorLeft("not-allowed");
+        }
+        if(currentPage===(nrPages-1))
+        {
+            setCursorRight("not-allowed");
+        }
+    },[currentPage])
     
 
     function moveLeft()
@@ -34,7 +45,7 @@ const Pagination = () => {
                         }
                         setDisplayingIndexes(newIndexes);
                     }
-                    setCurrentPage(currentPage-1);
+                    setCurrentPage((currentPage)=>currentPage-1);
                 }
                 else{
                     setCursorLeft("not-allowed");

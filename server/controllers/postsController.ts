@@ -1,7 +1,7 @@
 import DatabaseConnection from "../database/DatabaseConnection";
 import { Request,Response } from "express";
 
-function getPosts(req:Request, res:Response):void{
+export function getPosts(req:Request, res:Response):void{
     const dbconnection = new DatabaseConnection();
     const connection = dbconnection.getConnection();
     const query = `SELECT * FROM posts`;

@@ -18,8 +18,16 @@ export function login(req:Request, res:Response):void
         }
         else
         {
+            if(result.length === 0)
+            {
+                res.status(500).json({message:"Could not retrieve user"});
+            }
+            else
+            {
+                res.status(201).json({user:result});
+            }
             console.log(result);
-            res.status(201).json({user:result});
+            
         }
     })
     dbconnection.closeConnection();

@@ -2,6 +2,7 @@ import { useState } from "react";
 import blog from "../assets/blog.webp";
 import FormComponent from "../components/FormComponent";
 
+import { useNavigate } from "react-router-dom";
 
 interface Data{
     username:string;
@@ -46,6 +47,8 @@ const SignUp = () => {
         }
     ]);
 
+
+    const navigate = useNavigate();
     const handleSubmit = async (event:React.FormEvent<HTMLFormElement>,data: Data):Promise<void>=>{
 
         event.preventDefault();
@@ -62,6 +65,7 @@ const SignUp = () => {
 
                 if(response.ok)
                 {
+                    navigate('/');
                     console.log("User signed in");
                 }
                 else{
@@ -75,7 +79,7 @@ const SignUp = () => {
             }
         }
         else{
-            console.log("input error");
+            console.log("Input error");
         }
     }
 

@@ -6,6 +6,7 @@ const app = express();
 
 const postsController = require("./controllers/postsController");
 const signupController = require("./controllers/signupController");
+const loginController = require("./controllers/loginController");
 const bodyParser = require('body-parser');
 
 app.use(bodyParser.json());
@@ -20,6 +21,8 @@ app.get('/', (req:Request,res:Response)=>{
 app.get('/api/posts', postsController.getPosts);
 
 app.post('/api/signup', signupController.signup);
+
+app.post('/api/login', loginController.login);
 
 app.listen(port, ()=>{
     console.log(`Server is running on port ${port}`)

@@ -19,13 +19,45 @@ const inputs = [
     }
 ];
 
-const formProp = {
-    height:"h-2/3",
-    name:'Login',
-    image:blog,
-    inputs:inputs
+
+interface Data{
+    username:string;
+    password:string;
 }
 const LogIn = () => {
+
+    const handleSubmit = async (event:React.FormEvent<HTMLFormElement>,data:Data):Promise<void>=>{
+
+        event.preventDefault();
+        try{
+        const response = await fetch('http://localhost:5000/api/login', {
+            method:'POST',
+            headers:{
+                'Content-Type':'application/json',
+            },
+            body:JSON.stringify(data)
+        })
+        if(response.ok)
+        {
+            console.log("User logged in");
+        }
+        else{
+            console.log("User could not be logged in");
+        }
+        }
+        catch(error)
+        {
+            console.log("API request failed");
+        }
+
+    }
+    const formProp = {
+        height:"h-2/3",
+        name:'Login',
+        image:blog,
+        inputs:inputs,
+        handle:handleSubmit
+    }
     return (
 
         <FormComponent formProp={formProp}/>

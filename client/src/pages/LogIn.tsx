@@ -2,12 +2,17 @@ import { useState } from "react";
 import blog from "../assets/blog.webp";
 import FormComponent from "../components/FormComponent";
 import { useNavigate } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import { loginUser } from "../slices/userSlice";
 
 interface Data{
     username:string;
     password:string;
 }
+
 const LogIn = () => {
+
+    const dispatch = useDispatch();
 
     const [inputs,setInputs] = useState([
         {
@@ -43,7 +48,9 @@ const LogIn = () => {
         })
         if(response.ok)
         {
-            navigate("/");
+            const data = await response.json();
+            dispatch(loginUser(data.user))
+            navigate("/")
             console.log("User logged in");
         }
         else{

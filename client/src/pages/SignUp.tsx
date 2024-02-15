@@ -1,36 +1,6 @@
+import { useState } from "react";
 import blog from "../assets/blog.webp";
 import FormComponent from "../components/FormComponent";
-
-const inputs = [
-    {
-        type:"text",
-        id:"username",
-        placeholder:" Enter username...",
-        label : 'Username',
-        error : 'Enter a valid username.'
-    },
-    {
-        type:"email",
-        id:"email",
-        placeholder:" Enter email...",
-        label:'Email',
-        error : 'Enter a valid email.'
-    },
-    {
-        type:"password",
-        id:"password",
-        placeholder:" Enter password...",
-        label : 'Password',
-        error:'Password must be longer than 8 characters.'
-    },
-    {
-        type:"password",
-        id:"verify",
-        placeholder:" Retype password...",
-        label : 'Verify password',
-        error : 'Passwords do not match.'
-    }
-];
 
 
 interface Data{
@@ -40,6 +10,41 @@ interface Data{
     verify:string;
 }
 const SignUp = () => {
+
+    const [inputs,setInputs] = useState([
+        {
+            type:"text",
+            id:"username",
+            placeholder:" Enter username...",
+            label : 'Username',
+            error : 'Enter a valid username.',
+            visible:false
+        },
+        {
+            type:"email",
+            id:"email",
+            placeholder:" Enter email...",
+            label:'Email',
+            error : 'Enter a valid email.',
+            visible:false
+        },
+        {
+            type:"password",
+            id:"password",
+            placeholder:" Enter password...",
+            label : 'Password',
+            error:'Password must be longer than 8 characters.',
+            visible:false
+        },
+        {
+            type:"password",
+            id:"verify",
+            placeholder:" Retype password...",
+            label : 'Verify password',
+            error : 'Passwords do not match.',
+            visible:false
+        }
+    ]);
 
     const handleSubmit = async (event:React.FormEvent<HTMLFormElement>,data: Data):Promise<void>=>{
 
@@ -78,27 +83,61 @@ const SignUp = () => {
     {
         if(username.length<3)
         {
+            toggleErrorVisibility("username",true);
             return false;
         }
-        return true
+        console.log("here")
+        toggleErrorVisibility("username",false);
+        return true;
     }
 
     function validateEmail(email:string):boolean
     { 
         const re = /.+@[a-zA-Z]+\..+/;
-        return re.test(email);
+        if(re.test(email))
+        {
+            toggleErrorVisibility("email",false);
+            return true;
+        }
+        toggleErrorVisibility("email",true);
+        return false;
     }
 
     function validatePassword(password:string, verify:string):boolean
     {
         if(password.length>8)
         {
-            return password === verify;
+            toggleErrorVisibility("password",false)   
+            if(password===verify)
+            {
+                toggleErrorVisibility("verify",false)
+                return true;
+            }
+
+            toggleErrorVisibility("verify",true)
+            return false;
         }
+        toggleErrorVisibility("password",true)
         return false;
     }
 
 
+    function toggleErrorVisibility(field: string, visibility: boolean) {
+        setInputs((prevInputs) =>
+          prevInputs.map((input) =>{
+            if(input.id === field)
+            {
+                return {...input, visible:visibility}
+            }
+            else
+            {
+                return input;
+            }
+          }
+          )
+        );
+      }
+      
     function validateInputs(username:string, email:string, password:string, verify:string):boolean
     {
         return (validateUsername(username)&&validateEmail(email))&&validatePassword(password, verify);

@@ -8,14 +8,16 @@ const inputs = [
         id:"username",
         placeholder:" Enter username",
         label : 'Username',
-        error : 'Username not found.'
+        error : 'Username not found.',
+        visible: false
     },
     {
         type:"password",
         id:"password",
         placeholder:" Enter password",
         label : 'Password',
-        error : 'Password does not match.'
+        error : 'Password does not match.',
+        visible:false
     }
 ];
 

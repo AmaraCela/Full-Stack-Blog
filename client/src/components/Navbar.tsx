@@ -8,7 +8,6 @@ import { RootState } from '../store/store';
 const Navbar = () => {
     const isAuth = useSelector((state:RootState)=>state.user.isLoggedIn);
     const userId = useSelector((state:RootState)=>state.user.id);
-    console.log(useSelector((state:RootState)=>state.user))
     return ( 
         <nav className="flex justify-between items-center nav">
             <Link to="/"><h1 className="title ml-16 mt-4">Chronicles</h1></Link>

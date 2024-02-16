@@ -7,6 +7,8 @@ const app = express();
 const postsController = require("./controllers/postsController");
 const signupController = require("./controllers/signupController");
 const loginController = require("./controllers/loginController");
+const editProfileController = require("./controllers/editProfileController");
+const passwordController = require("./controllers/passwordController");
 const bodyParser = require('body-parser');
 
 app.use(bodyParser.json());
@@ -23,6 +25,10 @@ app.get('/api/posts', postsController.getPosts);
 app.post('/api/signup', signupController.signup);
 
 app.post('/api/login', loginController.login);
+
+app.post('/api/edit',editProfileController.editProfile);
+
+app.post('/api/password',passwordController.validateOldPassword);
 
 app.listen(port, ()=>{
     console.log(`Server is running on port ${port}`)

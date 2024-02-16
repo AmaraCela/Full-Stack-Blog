@@ -11,6 +11,7 @@ import Footer from '../components/Footer';
 import PrivateRoutes from './PrivateRoutes';
 import lake from "../assets/lake.avif";
 import personalBlog from "../assets/personal-blog.jpg";
+import EditProfile from '../pages/EditProfile';
 
 const tags = [
   {id:1, name:'blog'},
@@ -36,6 +37,7 @@ const AllRoutes = () => {
             <Route element={<PrivateRoutes/>}>
               <Route path='/create' element={<CreateBlog/>}></Route>
               <Route path='/profile/:id' element={<Profile/>}></Route>
+              <Route path='/editprofile/:id' element={<EditProfile/>}></Route>
             </Route>
             <Route path='/blogs/:id' element={<Blog blog={blog}></Blog>} />
             <Route path='/login' element={<LogIn></LogIn>}/>

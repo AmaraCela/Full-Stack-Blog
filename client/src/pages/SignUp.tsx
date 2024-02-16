@@ -19,7 +19,8 @@ const SignUp = () => {
             placeholder:" Enter username...",
             label : 'Username',
             error : 'Enter a valid username.',
-            visible:false
+            visible:false,
+            value:"",
         },
         {
             type:"email",
@@ -27,7 +28,8 @@ const SignUp = () => {
             placeholder:" Enter email...",
             label:'Email',
             error : 'Enter a valid email.',
-            visible:false
+            visible:false,
+            value:"",
         },
         {
             type:"password",
@@ -35,7 +37,8 @@ const SignUp = () => {
             placeholder:" Enter password...",
             label : 'Password',
             error:'Password must be longer than 8 characters.',
-            visible:false
+            visible:false,
+            value:"",
         },
         {
             type:"password",
@@ -43,7 +46,8 @@ const SignUp = () => {
             placeholder:" Retype password...",
             label : 'Verify password',
             error : 'Passwords do not match.',
-            visible:false
+            visible:false,
+            value:"",
         }
     ]);
 

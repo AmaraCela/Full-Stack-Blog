@@ -21,7 +21,8 @@ const LogIn = () => {
             placeholder:" Enter username",
             label : 'Username',
             error : '',
-            visible: false
+            visible: false,
+            value:'',
         },
         {
             type:"password",
@@ -29,7 +30,8 @@ const LogIn = () => {
             placeholder:" Enter password",
             label : 'Password',
             error : 'Enter valid login information',
-            visible:false
+            visible:false,
+            value:'',
         }
     ]);
     

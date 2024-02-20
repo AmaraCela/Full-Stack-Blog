@@ -10,7 +10,6 @@ type ValidationInformation = { [key: string]: ValidationFunctionInformation };
 const useForm = (props: { values: any, validations: ValidationInformation }) => {
 
     const [errors, setErrors] = useState<{ [key: string]: string }>({})
-
     const [noErrors, setNoErrors] = useState(false);
 
     useEffect(() => {

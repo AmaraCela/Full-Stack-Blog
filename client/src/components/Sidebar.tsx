@@ -1,7 +1,9 @@
 import { Link } from "react-router-dom";
 import "../styles/sideBar.css";
 import { FaPenToSquare } from "react-icons/fa6";
+
 const Sidebar = () => {
+
     return (
         <div className="sidebar sticky flex flex-col items-center w-full justify-end mr-16">
             <h1 className="regular-font font-bold lg:text-xl text-center inspired-text">Share your story?</h1>

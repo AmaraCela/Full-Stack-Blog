@@ -4,6 +4,7 @@ import "../styles/pagination.css";
 const Pagination = () => {
     const nrPages = 10;
     const paginationSlots = 4;
+
     const [currentPage, setCurrentPage] = useState(1);
     const [displayingIndexes, setDisplayingIndexes] = useState<number[]>([])
 
@@ -13,16 +14,20 @@ const Pagination = () => {
 
     useEffect(() => {
         let newIndexes = [];
+
         for (let i = currentPage; i < currentPage + paginationSlots; i++) {
             newIndexes.push(i);
         }
+
         setDisplayingIndexes(newIndexes);
     }, []);
 
     useEffect(() => {
+
         if (currentPage === 1) {
             setCursorLeft("not-allowed");
         }
+
         if (currentPage === (nrPages - 1)) {
             setCursorRight("not-allowed");
         }
@@ -40,8 +45,7 @@ const Pagination = () => {
                 setDisplayingIndexes(newIndexes);
             }
             setCurrentPage((currentPage) => currentPage - 1);
-        }
-        else {
+        } else {
             setCursorLeft("not-allowed");
         }
     }

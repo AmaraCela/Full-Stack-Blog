@@ -1,14 +1,15 @@
 @import url('https://fonts.googleapis.com/css2?family=Berkshire+Swash&display=swap');
-.title{
+
+.title {
     font-family: 'Berkshire Swash', serif;
     font-size: 48px;
 }
 
-.nav{
+.nav {
     padding-top: 10px;
 }
 
-.search-input{
+.search-input {
     background-repeat: no-repeat;
     background-position: 6px 2px;
     border-style: solid;
@@ -17,7 +18,7 @@
 }
 
 
-.login-nav{
+.login-nav {
     border: 2px solid black;
     background-color: white;
     padding-top: 4px;
@@ -25,10 +26,11 @@
     padding-right: 4px;
     @apply rounded-md h-9;
     box-shadow: 2px 2px 2px;
-    
+
 }
+
 @media screen and (max-width:500px) {
-    .search-bar{
+    .search-bar {
         display: none;
     }
 }

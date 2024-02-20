@@ -1,44 +1,45 @@
-.tags{
-    width: 100%
+.tags {
+  width: 100%
 }
 
-.tag{
-    @apply bg-[#fdfd96be] text-center m-1 h-12 text-3xl rounded-lg flex items-center justify-center cursor-pointer ;
-    width: 100px;
-    box-shadow: 3px 3px 3px black;
+.tag {
+  @apply bg-[#fdfd96be] text-center m-1 h-12 text-3xl rounded-lg flex items-center justify-center cursor-pointer;
+  width: 100px;
+  box-shadow: 3px 3px 3px black;
 }
 
 
 .wrapper {
-    height: 125vh;
-    top: 197px;
-    transform: translate(-50%, -50%);
-    background-image: linear-gradient(to top, rgb(240 191 191), color(srgb 0.94 0.75 0.75)100%);
-  }
-  
+  height: 125vh;
+  top: 197px;
+  transform: translate(-50%, -50%);
+  background-image: linear-gradient(to top, rgb(240 191 191), color(srgb 0.94 0.75 0.75)100%);
+}
+
 .wave {
-    height: 1025px;
-    top: -25%;
-    margin-left: -500px;
-    margin-top: -500px;
-    border-radius: 35%;
-    background: rgba(255, 255, 255, .75);
-    animation: wave 15s infinite linear;
+  height: 1025px;
+  top: -25%;
+  margin-left: -500px;
+  margin-top: -500px;
+  border-radius: 35%;
+  background: rgba(255, 255, 255, .75);
+  animation: wave 15s infinite linear;
 }
 
 
-  @keyframes wave {
-    from {
-      transform: rotate(0deg);
-    }
-    from {
-      transform: rotate(360deg);
-    }
+@keyframes wave {
+  from {
+    transform: rotate(0deg);
   }
 
+  from {
+    transform: rotate(360deg);
+  }
+}
+
 @media screen and (min-height:600px) {
-  .wave{
+  .wave {
     height: 1500px;
   }
-  
+
 }

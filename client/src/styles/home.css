@@ -1,12 +1,11 @@
 @media screen and (max-width:860px) {
-    .home-main{
+    .home-main {
         @apply flex-col-reverse;
     }
-    
+
 }
 
-.home{
-    top:80vh;
+.home {
+    top: 80vh;
     margin-bottom: 90vh;
 }
-

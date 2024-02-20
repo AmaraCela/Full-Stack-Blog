@@ -1,36 +1,37 @@
-.create-div{
+.create-div {
     box-shadow: 3px 3px 5px rgb(196, 102, 102);
     width: 60%;
     height: 90%;
 }
 
 
-.label{
+.label {
     @apply pt-4 font-semibold;
 }
 
 
 @media screen and (max-width:790px) {
-    .label{
+    .label {
         @apply text-sm;
     }
-    .submit-bt-blog{
+
+    .submit-bt-blog {
         @apply text-sm;
     }
 }
 
 @media screen and (max-width:620px) {
-    .submit-bt-blog{
+    .submit-bt-blog {
         @apply w-1/4;
     }
 
-    .file-input{
+    .file-input {
         @apply w-1/2;
     }
 }
 
 @media screen and (max-height:650px) {
-    .submit-bt-blog{
+    .submit-bt-blog {
         @apply mt-4;
     }
 }

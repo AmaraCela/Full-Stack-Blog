@@ -1,4 +1,4 @@
-import { createSlice , createAsyncThunk } from "@reduxjs/toolkit";
+import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "./store";
 
@@ -27,24 +27,22 @@ export const loginUser = createAsyncThunk(
     async (inputs: {
         username: string;
         password: string;
-    }, {rejectWithValue}) => {
-        try{
-        const response = await fetch('http://localhost:5000/api/login', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify(inputs)
-        });
-        const data = await response.json();
-        if(!response.ok)
-        {  
-            return rejectWithValue(data.message);    
-        } 
+    }, { rejectWithValue }) => {
+        try {
+            const response = await fetch('http://localhost:5000/api/login', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(inputs)
+            });
+            const data = await response.json();
+            if (!response.ok) {
+                return rejectWithValue(data.message);
+            }
             return data.user[0];
         }
-        catch(error)
-        {
+        catch (error) {
             return rejectWithValue(error);
         }
     }
@@ -65,13 +63,12 @@ export const signupUser = createAsyncThunk(
             },
             body: JSON.stringify(inputs)
         })
-        if(response.ok)
-        {
+        if (response.ok) {
             const loginInputs = {
                 username: inputs.username,
                 password: inputs.password,
             }
-            
+
             await dispatch(loginUser(loginInputs) as any)
             return useSelector((state: RootState) => state.user)
         }
@@ -82,13 +79,13 @@ const userSlice = createSlice({
     name: 'user',
     initialState,
     reducers: {
-      logoutUser: (state) => {
-        state.isLoggedIn = false;
-        state.id = null;
-        state.username = null;
-        state.email = null;
-        state.error = null;
-      }
+        logoutUser: (state) => {
+            state.isLoggedIn = false;
+            state.id = null;
+            state.username = null;
+            state.email = null;
+            state.error = null;
+        }
     },
     extraReducers: builder => {
         builder.addCase(loginUser.pending, (state) => {
@@ -127,5 +124,5 @@ const userSlice = createSlice({
     }
 });
 
-export const {logoutUser} = userSlice.actions;
+export const { logoutUser } = userSlice.actions;
 export default userSlice.reducer;

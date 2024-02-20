@@ -1,27 +1,29 @@
-.sidebar{
-    top:10px;
+.sidebar {
+    top: 10px;
     height: 80vh;
 }
 
-.write{
-    background: linear-gradient(to right, rgb(159, 218, 247),rgb(204, 236, 245));
+.write {
+    background: linear-gradient(to right, rgb(159, 218, 247), rgb(204, 236, 245));
     box-shadow: 2px 2px 5px;
 }
 
 @media screen and (max-width:1023px) {
-    .write{
+    .write {
         @apply w-20 h-20;
     }
-    .pen-icon{
+
+    .pen-icon {
         @apply h-16 w-12;
     }
-    .inspired-text{
+
+    .inspired-text {
         @apply text-lg;
     }
 }
 
 @media screen and (max-width:860px) {
-    .sidebar{
+    .sidebar {
         @apply relative top-0 h-fit ml-0 flex justify-center;
     }
 }

@@ -3,18 +3,17 @@ type FormButtonType = {
     handle: () => Promise<void>;
 }
 
-const FormButton = ({value, handle}: FormButtonType) => {
-    const onClick = async (): Promise<void> => 
-    {
+const FormButton = ({ value, handle }: FormButtonType) => {
+    const onClick = async (): Promise<void> => {
         await handle();
     }
 
-    return ( 
+    return (
         <button type="button" onClick={onClick}
             className="text-xl p-1 input-format cursor-pointer regular-font font-semibold">
             {value}
         </button>
-     );
+    );
 }
- 
+
 export default FormButton;

@@ -14,7 +14,7 @@ const LogIn = () => {
     const navigate = useNavigate();
     const isLoggedIn = useSelector((state: RootState) => state.user.isLoggedIn)
     const error = useSelector((state: RootState) => state.user.error)
-    
+
     const [inputs, setInputs] = useState({
         username: "",
         password: ""
@@ -24,54 +24,50 @@ const LogIn = () => {
         username: '',
         password: ''
     });
-    
+
     useEffect(() => {
-        if(isLoggedIn)
-        {
+        if (isLoggedIn) {
             navigate('/');
         }
-    },[isLoggedIn])
+    }, [isLoggedIn])
 
 
     useEffect(() => {
-        if(error)
-        {
-            setInputsError({...inputsError, password: error}); 
+        if (error) {
+            setInputsError({ ...inputsError, password: error });
         }
     }, [error])
 
-    const handleSubmit = async (): Promise<void> => {  
-       try
-       {
-        await(dispatch(loginUser(inputs)));
+    const handleSubmit = async (): Promise<void> => {
+        try {
+            await (dispatch(loginUser(inputs)));
         }
-       catch (error)
-       {
-        setInputsError({...inputsError, password: 'Check username and password'}); 
-       }
+        catch (error) {
+            setInputsError({ ...inputsError, password: 'Check username and password' });
+        }
     };
 
     return (
-        <div className = "flex justify-center h-full items-center">
-            <div className = "h-2/3 login-div flex rounded-md ">
-                <div className = "bg-[#ffffff] grid justify-evenly p-4 items-center rounded-l-md login-form">
-                    <h1 className = "regular-font text-3xl font-bold">Login</h1>
+        <div className="flex justify-center h-full items-center">
+            <div className="h-2/3 login-div flex rounded-md ">
+                <div className="bg-[#ffffff] grid justify-evenly p-4 items-center rounded-l-md login-form">
+                    <h1 className="regular-font text-3xl font-bold">Login</h1>
 
-                    <FormInput label = "Username" value = {inputs.username} placeholder = "Enter Username"
-                        errorMessage = {inputsError.username} updateValue = {(value) => setInputs({...inputs, username: value})}/>
+                    <FormInput label="Username" value={inputs.username} placeholder="Enter Username"
+                        errorMessage={inputsError.username} updateValue={(value) => setInputs({ ...inputs, username: value })} />
 
-                    <FormInput label = "Password" value = {inputs.password} placeholder = "Enter Password"
-                        errorMessage = {inputsError.password} updateValue = {(value) => setInputs({...inputs, password: value})}/>
+                    <FormInput label="Password" value={inputs.password} placeholder="Enter Password"
+                        errorMessage={inputsError.password} updateValue={(value) => setInputs({ ...inputs, password: value })} />
 
-                    <div className = "flex flex-col items-baseline">
-                        <FormButton value = "Login" handle = {handleSubmit}/>
-                        <FormLink descriptionText = "Don't have an account?" to = "/signup" linkText = "Signup" />
+                    <div className="flex flex-col items-baseline">
+                        <FormButton value="Login" handle={handleSubmit} />
+                        <FormLink descriptionText="Don't have an account?" to="/signup" linkText="Signup" />
                     </div>
                 </div>
-                <img src = {blog} alt = "" className = "login-blog rounded-r-md"/>
+                <img src={blog} alt="" className="login-blog rounded-r-md" />
             </div>
         </div>
-     );
+    );
 }
- 
+
 export default LogIn;

@@ -1,71 +1,76 @@
 @import url('https://fonts.googleapis.com/css2?family=Grandstander:wght@300&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Martel+Sans&display=swap');
-.blogs{
+
+.blogs {
     width: 100%;
     height: fit-content;
     flex: 0 0 75%;
 }
 
-.blog{
+.blog {
     height: 70vh;
     margin-top: 20px;
     @apply ml-16 pl-1 pb-10 pt-2 flex cursor-pointer shadow-lg
 }
 
-.blog:hover{
+.blog:hover {
     box-shadow: 3px 3px 5px #c46666;
 }
 
-.regular-font{
-    font-family: 'Martel Sans',sans-serif;
+.regular-font {
+    font-family: 'Martel Sans', sans-serif;
 }
 
-.info{
+.info {
     flex: 0 0 40%;
 }
 
-.sticky-tag{
+.sticky-tag {
     box-shadow: 0px 3px 3px black;
     @apply flex justify-end w-3/4 bg-[#FEFF9C] regular-font text-center mt-4;
 }
 
 @media screen and (max-width:860px) {
-    .blog{
+    .blog {
         width: auto;
         @apply ml-16 mr-16;
         height: 65vh;
     }
 
-    .blog-profile{
+    .blog-profile {
         @apply h-10;
     }
-    .blog-user{
+
+    .blog-user {
         @apply text-base
     }
-    .blog-title{
+
+    .blog-title {
         @apply text-xl;
     }
-    .blog-tags{
+
+    .blog-tags {
         @apply text-sm;
     }
-    .blog-desc{
+
+    .blog-desc {
         @apply text-sm;
     }
-    .date{
+
+    .date {
         @apply text-base;
     }
 }
 
 
 @media screen and (max-width:550px) {
-    .blog{
+    .blog {
         @apply flex-col mt-0 pl-0;
         height: 100vh;
     }
 
-    .blog-img
-    {
+    .blog-img {
         width: 100%;
     }
-    
+
 }

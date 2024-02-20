@@ -1,36 +1,36 @@
-.profile-card{
-    background: linear-gradient(to right, rgb(159, 218, 247),rgb(204, 236, 245));
+.profile-card {
+    background: linear-gradient(to right, rgb(159, 218, 247), rgb(204, 236, 245));
 }
-.blogs{
+
+.blogs {
     margin-right: 4rem;
 }
 
 @media screen and (max-width:1400px) {
-    .profile-img{
-    @apply size-24
+    .profile-img {
+        @apply size-24
     }
 
-    .profile, .username, .nr-posts{
+    .profile, .username, .nr-posts {
         @apply text-base
     }
 
-    .profile-card{
+    .profile-card {
         @apply p-2;
     }
 }
 
 
 @media screen and (max-width:1000px) {
-    .profile-content{
+    .profile-content {
         @apply flex-col;
     }
 
-    .profile-card
-    {
-        @apply flex-row w-1/2 static ml-0 mr-0 ;
+    .profile-card {
+        @apply flex-row w-1/2 static ml-0 mr-0;
     }
 
-    .profile-info{
+    .profile-info {
         @apply mt-0 ml-4;
     }
 }

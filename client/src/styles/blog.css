@@ -1,37 +1,40 @@
-.prev, .next{
+.prev,
+.next {
     transition: 0.4s ease-in;
     font-size: 40px;
 }
 
-.prev:hover, .next:hover {
-    background-color: rgba(0,0,0,0.8);
+.prev:hover,
+.next:hover {
+    background-color: rgba(0, 0, 0, 0.8);
     color: aliceblue;
 }
 
-.carousel-img{
+.carousel-img {
     transition: display 0.4s ease-in;
     width: 80%;
 }
 
-.blog-details{
+.blog-details {
     margin-top: 20px;
 }
 
 @media screen and (max-width:1000px) {
-    .prev, .next{
+
+    .prev,
+    .next {
         font-size: 30px;
         @apply p-3;
     }
 }
 
 @media screen and (max-width:600px) {
-    .blog-details
-    {
+    .blog-details {
         @apply px-12;
     }
 
-    .blog-description{
+    .blog-description {
         @apply text-base;
     }
-    
+
 }

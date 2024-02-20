@@ -1,27 +1,27 @@
-.footer-logo{
+.footer-logo {
     font-family: 'Berkshire Swash', serif;
 }
 
 
-.footer-p{
+.footer-p {
     color: rgb(223, 221, 219);
     cursor: pointer;
 }
 
-.footer-p:hover
-{
+.footer-p:hover {
     color: white;
 }
 
 @media screen and (max-width:667px) {
-    .footer-info{
+    .footer-info {
         @apply flex-col;
     }
 
-    .socials{
+    .socials {
         @apply justify-start
     }
-    .fb{
+
+    .fb {
         @apply ml-2
     }
 }

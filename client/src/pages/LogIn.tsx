@@ -1,82 +1,76 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import blog from "../assets/blog.webp";
-import FormComponent from "../components/FormComponent";
+import '../styles/form.css';
+import { useDispatch, useSelector } from "react-redux";
+import { loginUser } from "../store/userSlice";
+import FormInput from "../components/FormInput";
+import FormLink from "../components/FormLink";
+import FormButton from "../components/FormButton";
+import { AppDispatch, RootState } from "../store/store";
 import { useNavigate } from "react-router-dom";
-import { useDispatch } from "react-redux";
-import { loginUser } from "../slices/userSlice";
-
-interface Data{
-    username:string;
-    password:string;
-}
 
 const LogIn = () => {
-
-    const dispatch = useDispatch();
-
-    const [inputs,setInputs] = useState([
-        {
-            type:"text",
-            id:"username",
-            placeholder:" Enter username",
-            label : 'Username',
-            error : '',
-            visible: false,
-            value:'',
-        },
-        {
-            type:"password",
-            id:"password",
-            placeholder:" Enter password",
-            label : 'Password',
-            error : 'Enter valid login information',
-            visible:false,
-            value:'',
-        }
-    ]);
-    
+    const dispatch = useDispatch<AppDispatch>();
     const navigate = useNavigate();
+    const isLoggedIn = useSelector((state: RootState) => state.user.isLoggedIn)
+    const error = useSelector((state: RootState) => state.user.error)
+    
+    const [inputs, setInputs] = useState({
+        username: "",
+        password: ""
+    });
 
-    const handleSubmit = async (event:React.FormEvent<HTMLFormElement>,data:Data):Promise<void>=>{
-
-        event.preventDefault();
-        try{
-        const response = await fetch('http://localhost:5000/api/login', {
-            method:'POST',
-            headers:{
-                'Content-Type':'application/json',
-            },
-            body:JSON.stringify(data)
-        })
-        if(response.ok)
+    const [inputsError, setInputsError] = useState({
+        username: '',
+        password: ''
+    });
+    
+    useEffect(() => {
+        if(isLoggedIn)
         {
-            const data = await response.json();
-            dispatch(loginUser(data.user))
-            navigate("/")
-            console.log("User logged in");
+            navigate('/');
         }
-        else{
+    },[isLoggedIn])
 
-            setInputs([inputs[0], {...inputs[1], visible:true}])
-            console.log("User could not be logged in");
-        }
-        }
-        catch(error)
+
+    useEffect(() => {
+        if(error)
         {
-            console.log("API request failed");
+            setInputsError({...inputsError, password: error}); 
         }
+    }, [error])
 
-    }
-    const formProp = {
-        height:"h-2/3",
-        name:'Login',
-        image:blog,
-        inputs:inputs,
-        handle:handleSubmit
-    }
+    const handleSubmit = async (): Promise<void> => {  
+       try
+       {
+        await(dispatch(loginUser(inputs)));
+        }
+       catch (error)
+       {
+        setInputsError({...inputsError, password: 'Check username and password'}); 
+       }
+    };
+
     return (
+        <div className = "flex justify-center h-full items-center">
+            <div className = "h-2/3 login-div flex rounded-md ">
+                <div className = "bg-[#ffffff] grid justify-evenly p-4 items-center rounded-l-md login-form">
+                    <h1 className = "regular-font text-3xl font-bold">Login</h1>
 
-        <FormComponent formProp={formProp}/>
+                    <FormInput label = "Username" value = {inputs.username} placeholder = "Enter Username"
+                        errorMessage = {inputsError.username} updateValue = {(value) => setInputs({...inputs, username: value})}/>
+
+                    <FormInput label = "Password" value = {inputs.password} placeholder = "Enter Password"
+                        errorMessage = {inputsError.password} updateValue = {(value) => setInputs({...inputs, password: value})}/>
+
+                    <div className = "flex flex-col items-baseline">
+                        <FormButton value = "Login" handle = {handleSubmit}/>
+                        <FormLink descriptionText = "Don't have an account?" to = "/signup" linkText = "Signup" />
+                    </div>
+                </div>
+                <img src = {blog} alt = "" className = "login-blog rounded-r-md"/>
+            </div>
+        </div>
      );
 }
  

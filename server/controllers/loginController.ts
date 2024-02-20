@@ -14,17 +14,17 @@ export function login(req:Request, res:Response):void
         if(err)
         {
             console.log("There was an error retireving the user: ",err);
-            res.status(500).json({message:"Could not retrieve user"});
+            res.status(500).json({message: "There was an error retrieving the user"});
         }
         else
         {
             if(result.length === 0)
             {
-                res.status(500).json({message:"Could not retrieve user"});
+                res.status(401).json({message: "Invalid username or password"});
             }
             else
             {
-                res.status(201).json({user:result});
+                res.status(201).json({user: result});
             }
             console.log(result);
             

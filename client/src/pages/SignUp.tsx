@@ -1,166 +1,99 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import blog from "../assets/blog.webp";
-import FormComponent from "../components/FormComponent";
 
 import { useNavigate } from "react-router-dom";
+import FormButton from "../components/FormButton";
+import FormInput from "../components/FormInput";
+import FormLink from "../components/FormLink";
+import { useDispatch } from "react-redux";
+import useForm from "../hooks/useForm";
+import { signupUser } from "../store/userSlice";
 
-interface Data{
-    username:string;
-    email:string;
-    password:string;
-    verify:string;
-}
 const SignUp = () => {
 
-    const [inputs,setInputs] = useState([
-        {
-            type:"text",
-            id:"username",
-            placeholder:" Enter username...",
-            label : 'Username',
-            error : 'Enter a valid username.',
-            visible:false,
-            value:"",
-        },
-        {
-            type:"email",
-            id:"email",
-            placeholder:" Enter email...",
-            label:'Email',
-            error : 'Enter a valid email.',
-            visible:false,
-            value:"",
-        },
-        {
-            type:"password",
-            id:"password",
-            placeholder:" Enter password...",
-            label : 'Password',
-            error:'Password must be longer than 8 characters.',
-            visible:false,
-            value:"",
-        },
-        {
-            type:"password",
-            id:"verify",
-            placeholder:" Retype password...",
-            label : 'Verify password',
-            error : 'Passwords do not match.',
-            visible:false,
-            value:"",
-        }
-    ]);
-
-
     const navigate = useNavigate();
-    const handleSubmit = async (event:React.FormEvent<HTMLFormElement>,data: Data):Promise<void>=>{
+    const dispatch = useDispatch();
 
-        event.preventDefault();
-        if(validateInputs(data.username,data.email, data.password, data.verify))
+    const [inputs, setInputs] = useState({
+        username: "",
+        email: "",
+        password: "",
+        verify: "",
+    });
+
+    const [inputErrors, setInputErrors] = useState({
+        noErrors: false,
+        username: '',
+        email: '',
+        password: '',
+        verify: '',
+    })
+
+    const {handleChange, errors} = useForm();
+    
+    useEffect(() => {
+        setInputErrors(errors);
+    }, [errors]);
+
+
+    const handleSubmit = async ():Promise<void>=>{
+
+        if(inputErrors.noErrors)
         {
             try{
-                const response = await fetch("http://localhost:5000/api/signup",{
-                    method:"POST",
-                    headers:{
-                        "Content-Type":"application/json",
-                    },
-                    body:JSON.stringify(data)
-                });
-
-                if(response.ok)
-                {
-                    navigate('/');
-                    console.log("User signed in");
-                }
-                else{
-                    console.log("User could not be signed in");
-                }
-
+                await dispatch(signupUser({
+                    username: inputs.username,
+                    email: inputs.email,
+                    password: inputs.password
+                }) as any);
+                
             }
             catch(error)
             {
-                console.log("API request failed");
+                    
             }
+
         }
         else{
             console.log("Input error");
         }
     }
 
-    function validateUsername(username:string):boolean
-    {
-        if(username.length<3)
-        {
-            toggleErrorVisibility("username",true);
-            return false;
-        }
-        console.log("here")
-        toggleErrorVisibility("username",false);
-        return true;
-    }
-
-    function validateEmail(email:string):boolean
-    { 
-        const re = /.+@[a-zA-Z]+\..+/;
-        if(re.test(email))
-        {
-            toggleErrorVisibility("email",false);
-            return true;
-        }
-        toggleErrorVisibility("email",true);
-        return false;
-    }
-
-    function validatePassword(password:string, verify:string):boolean
-    {
-        if(password.length>8)
-        {
-            toggleErrorVisibility("password",false)   
-            if(password===verify)
-            {
-                toggleErrorVisibility("verify",false)
-                return true;
-            }
-
-            toggleErrorVisibility("verify",true)
-            return false;
-        }
-        toggleErrorVisibility("password",true)
-        return false;
-    }
-
-
-    function toggleErrorVisibility(field: string, visibility: boolean) {
-        setInputs((prevInputs) =>
-          prevInputs.map((input) =>{
-            if(input.id === field)
-            {
-                return {...input, visible:visibility}
-            }
-            else
-            {
-                return input;
-            }
-          }
-          )
-        );
-      }
-      
-    function validateInputs(username:string, email:string, password:string, verify:string):boolean
-    {
-        return (validateUsername(username)&&validateEmail(email))&&validatePassword(password, verify);
-    }
-
-    const formProp = {
-        height:"h-4/5",
-        name:'Signup',
-        image:blog,
-        inputs:inputs,
-        handle:handleSubmit,
-    }
 
     return ( 
-       < FormComponent formProp={formProp}/>
+        <div className = "flex justify-center h-full items-center">
+        <div className = "h-4/5 login-div flex rounded-md ">
+            <div className = "bg-[#ffffff] grid justify-evenly p-4 items-center rounded-l-md login-form">
+                <h1 className = "regular-font text-3xl font-bold">Signup</h1>
+
+                <FormInput label = "Username" value = {inputs.username} placeholder = "Enter Username" name = "username"
+                    errorMessage = {inputErrors.username}
+                    updateValue = {(value) => setInputs({...inputs, username: value})}
+                    handleChange = {handleChange}/>
+
+                <FormInput label = "Email" value = {inputs.email} placeholder = "Enter Email" name = "email"
+                    errorMessage = {inputErrors.email}
+                    updateValue = {(value) => setInputs({...inputs, email: value})}
+                    handleChange = {handleChange}/>
+
+                <FormInput label = "Password" value = {inputs.password} inputType="password" placeholder = "Enter Password" name = "password"
+                    errorMessage = {inputErrors.password}
+                    updateValue = {(value) => setInputs({...inputs, password: value})}
+                    handleChange = {handleChange}/>
+                
+                <FormInput label = "Verify password" value = {inputs.verify} inputType="password" placeholder = "Retype password" name = "verify"
+                    errorMessage = {inputErrors.verify}
+                    updateValue = {(value) => setInputs({...inputs, verify: value})}
+                    handleChange = {handleChange}/>
+
+                <div className = "flex flex-col items-baseline">
+                    <FormButton value = "Signup" handle ={handleSubmit}/>
+                    <FormLink descriptionText = "Already have an account?" to = "/login" linkText = "Login" />
+                </div>
+            </div>
+            <img src = {blog} alt = "" className = "login-blog rounded-r-md"/>
+        </div>
+    </div>
      );
 }
  

@@ -2,7 +2,8 @@ import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import "../styles/form.css";
-import FormInput from "../components/FormInput";
+import FormInput from "..";
+import React from "react";
 
 interface Data{
     username:string;

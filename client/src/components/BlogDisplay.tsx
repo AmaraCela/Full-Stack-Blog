@@ -5,6 +5,7 @@ interface Tag {
     id: number;
     name: string;
 }
+
 interface BlogType {
     blogs: {
         id: number;
@@ -17,9 +18,12 @@ interface BlogType {
         tags: Tag[];
     }[];
 }
+
 const BlogDisplay = ({ blogs }: BlogType) => {
+
     return (
         <div className="blogs">
+
             {blogs.map((item) => (
                 <Link to={`/blogs/${item.id}`} key={`blog-${item.id}`}>
                     <div className="blog">

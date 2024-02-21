@@ -10,7 +10,8 @@ type FormInputType = {
 
 const FormInput = ({ value, label, placeholder, inputType = 'text',
     errorMessage, updateValue, name = '' }: FormInputType) => {
-    console.log(errorMessage);
+
+    
     const onChange = (event: React.ChangeEvent<HTMLInputElement>, value: string) => {
         updateValue(value);
     }

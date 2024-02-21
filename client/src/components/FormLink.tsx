@@ -7,6 +7,7 @@ type FormLinkType = {
 }
 
 const FormLink = ({ descriptionText, to, linkText }: FormLinkType) => {
+    
     return (
         <p className="regular-font mt-2">
             {descriptionText}

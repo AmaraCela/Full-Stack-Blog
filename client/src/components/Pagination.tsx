@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import "../styles/pagination.css";
 
 const Pagination = () => {
+
     const nrPages = 10;
     const paginationSlots = 4;
 
@@ -31,19 +32,20 @@ const Pagination = () => {
         if (currentPage === (nrPages - 1)) {
             setCursorRight("not-allowed");
         }
+
     }, [currentPage])
 
 
     function moveLeft() {
         if (currentPage > 1) {
             setCursorRight("pointer");
+
             if (displayingIndexes[0] === currentPage) {
-                let newIndexes = [];
-                for (let i = 0; i < paginationSlots; i++) {
-                    newIndexes[i] = currentPage - 1 + i;
-                }
+                let newIndexes = [(currentPage - 1), ...displayingIndexes];
+                newIndexes.pop();
                 setDisplayingIndexes(newIndexes);
             }
+
             setCurrentPage((currentPage) => currentPage - 1);
         } else {
             setCursorLeft("not-allowed");
@@ -53,16 +55,16 @@ const Pagination = () => {
     function moveRight() {
         if (currentPage < nrPages - 1) {
             setCursorLeft("pointer");
+
             if (displayingIndexes[paginationSlots - 1] === currentPage) {
-                let newIndexes = [];
-                for (let i = 0; i < paginationSlots; i++) {
-                    newIndexes[i] = currentPage - paginationSlots + i + 2;
-                }
+                
+                let newIndexes = displayingIndexes.slice(1);
+                newIndexes = [...newIndexes, (currentPage + 1)]
                 setDisplayingIndexes(newIndexes);
             }
+
             setCurrentPage(currentPage + 1);
-        }
-        else {
+        } else {
             setCursorRight("not-allowed");
         }
     }
@@ -71,7 +73,9 @@ const Pagination = () => {
         setCursorRight("pointer");
         setCursorLeft("not-allowed");
         setCurrentPage(1);
+
         let newIndexes = [];
+
         for (let i = 0; i < paginationSlots; i++) {
             newIndexes[i] = i + 1;
         }

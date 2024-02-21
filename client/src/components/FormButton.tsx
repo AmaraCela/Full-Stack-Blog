@@ -4,6 +4,7 @@ type FormButtonType = {
 }
 
 const FormButton = ({ value, handle }: FormButtonType) => {
+    
     const onClick = async (): Promise<void> => {
         await handle();
     }

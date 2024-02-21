@@ -4,18 +4,20 @@ import { useNavigate } from "react-router-dom";
 import FormButton from "../components/FormButton";
 import FormInput from "../components/FormInput";
 import FormLink from "../components/FormLink";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import useUsernameValidation from "../hooks/useUsernameValidation";
 import useEmailValidation from "../hooks/useEmailValidation";
 import usePasswordValidation from "../hooks/usePasswordValidation";
 import useVerifyPasswordValidation from "../hooks/useVerifyPasswordValidation";
-import { signupUser } from "../store/userSlice";
+import { signupUser } from "../store/authThunks";
+import { RootState } from "../store/store";
 
 const SignUp = () => {
     const navigate = useNavigate();
     const dispatch = useDispatch();
 
     const [validForm, setValidForm] = useState(false);
+    const isLoggedIn = useSelector((state: RootState) => state.user.isLoggedIn);
     
     const [inputs, setInputs] = useState({
         username: "",
@@ -36,11 +38,17 @@ const SignUp = () => {
     const passwordError = usePasswordValidation(inputs.password);
     const verifyError = useVerifyPasswordValidation(inputs.password, inputs.verify);
 
+    useEffect(() => {
+        const valid = usernameError === '' && emailError === '' && passwordError === '' && verifyError === ''
+        setValidForm(valid);
+    }, [inputs]);
 
     useEffect(() => {
-        const valid = errors.username === '' && errors.email === '' && errors.password === '' && errors.verify === ''
-        setValidForm(valid);
-    }, [inputs])
+        if (isLoggedIn) {
+            navigate('/');
+        }
+    }, [isLoggedIn]);
+
 
     const handleSubmit = async (): Promise<void> => {
         setErrors({

@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import blog from "../assets/blog.webp";
 import '../styles/form.css';
 import { useDispatch, useSelector } from "react-redux";
-import { loginUser } from "../store/userSlice";
+import { loginUser } from "../store/authThunks";
 import FormInput from "../components/FormInput";
 import FormLink from "../components/FormLink";
 import FormButton from "../components/FormButton";
@@ -30,7 +30,6 @@ const LogIn = () => {
             navigate('/');
         }
     }, [isLoggedIn])
-
 
     useEffect(() => {
         if (error) {

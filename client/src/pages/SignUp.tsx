@@ -18,7 +18,8 @@ const SignUp = () => {
 
     const [validForm, setValidForm] = useState(false);
     const isLoggedIn = useSelector((state: RootState) => state.user.isLoggedIn);
-    
+    const error = useSelector((state: RootState) => state.user.error)
+
     const [inputs, setInputs] = useState({
         username: "",
         email: "",
@@ -30,7 +31,7 @@ const SignUp = () => {
         username: "",
         email: "",
         password: "",
-        verify: "",  
+        verify: "",
     });
 
     const usernameError = useUsernameValidation(inputs.username);
@@ -49,6 +50,9 @@ const SignUp = () => {
         }
     }, [isLoggedIn]);
 
+    useEffect(() => {
+        if (error) setErrors({ ...errors, username: error })
+    }, [error])
 
     const handleSubmit = async (): Promise<void> => {
         setErrors({
@@ -63,7 +67,8 @@ const SignUp = () => {
                 username: inputs.username,
                 email: inputs.email,
                 password: inputs.password
-            }) as any);
+            }) as any)
+
         } else {
             console.log("Input error");
         }

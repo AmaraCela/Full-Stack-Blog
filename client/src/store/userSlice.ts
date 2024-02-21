@@ -1,7 +1,5 @@
-import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
-import { useDispatch, useSelector } from "react-redux";
-import { RootState } from "./store";
-import { loginUser } from "./authThunks";
+import { createSlice } from "@reduxjs/toolkit";
+import { loginUser, signupUser } from "./authThunks";
 
 interface UserState {
     isLoggedIn: boolean;
@@ -53,7 +51,9 @@ const userSlice = createSlice({
             state.email = null;
             state.id = null;
             state.error = action.payload as string;
-        })
+        }).addCase(signupUser.rejected, (state, action) => {
+            state.error = action.payload as string;
+        });
     }
 });
 

@@ -9,11 +9,12 @@ import FormInput from "../components/FormInput";
 import useUsernameValidation from "../hooks/useUsernameValidation";
 import useEmailValidation from "../hooks/useEmailValidation";
 import usePasswordValidation from "../hooks/usePasswordValidation";
+import useCurrentPasswordValidate from "../hooks/useCurrentPasswordValidate";
 
 interface Data {
     username: string;
     email: string;
-    oldPassword: string;
+    currentPassword: string;
     newPassword: string;
 }
 
@@ -21,36 +22,17 @@ const EditProfile = () => {
     const dispatch = useDispatch();
     const navigate = useNavigate();
 
-    const oldid = useSelector((state: RootState) => state.user.id);
-    const oldUsername = useSelector((state: RootState) => state.user.username);
-    const oldEmail = useSelector((state: RootState) => state.user.email);
+    const currentId = useSelector((state: RootState) => state.user.id);
+    const currentUsername = useSelector((state: RootState) => state.user.username);
+    const currentEmail = useSelector((state: RootState) => state.user.email);
 
     const [validForm, setValidForm] = useState(false);
 
-
-    // async function validateOldPassword(oldPassword: string) {
-    //     const passwordData = { user_id: oldid, password: oldPassword };
-    //     try {
-    //         const response = await fetch("http://localhost:5000/api/password", {
-    //             method: 'POST',
-    //             headers: {
-    //                 "Content-Type": "application/json",
-    //             },
-    //             body: JSON.stringify(passwordData)
-    //         });
-    //         console.log(response.ok)
-    //         return response.ok;
-    //     }
-    //     catch (error) {
-
-    //     }
-    // }
-
     const [inputs, setInputs] = useState<Data>(
         {
-            username: oldUsername ?? '',
-            email: oldEmail ?? '',
-            oldPassword: '',
+            username: currentUsername ?? '',
+            email: currentEmail ?? '',
+            currentPassword: '',
             newPassword: ''
         }
     );
@@ -59,7 +41,7 @@ const EditProfile = () => {
         {
             username: '',
             email: '',
-            oldPassword: '',
+            currentPassword: '',
             newPassword: ''
         }
     );
@@ -67,16 +49,17 @@ const EditProfile = () => {
     const usernameError = useUsernameValidation(inputs.username);
     const emailError = useEmailValidation(inputs.email);
     const newPasswordError = usePasswordValidation(inputs.newPassword);
+    const currentPasswordError = useCurrentPasswordValidate(currentId ?? '', inputs.currentPassword)
 
     const handleSubmit = async (): Promise<void> => {
         setErrors({
             username: usernameError,
             email: emailError,
-            oldPassword: '',
+            currentPassword: await currentPasswordError,
             newPassword: newPasswordError
         });
 
-        const valid = errors.username === '' && errors.email === '' && errors.oldPassword === '' && errors.newPassword === '';
+        const valid = errors.username === '' && errors.email === '' && errors.currentPassword === '' && errors.newPassword === '';
         setValidForm(valid);
 
         if (validForm) {
@@ -85,7 +68,7 @@ const EditProfile = () => {
                 username: inputs.username,
                 email: inputs.email,
                 password: inputs.newPassword,
-                user_id: oldid
+                user_id: currentId
             };
 
             // try {
@@ -123,8 +106,8 @@ const EditProfile = () => {
                     <FormInput label="Email" inputType="email" value={inputs.email ? inputs.email : ''} placeholder="Enter Username"
                         errorMessage={errors.email} updateValue={(value) => setInputs({ ...inputs, email: value })} />
 
-                    <FormInput label="Current password" value={inputs.oldPassword ? inputs.oldPassword : ''} placeholder="Enter current password..."
-                        errorMessage={errors.oldPassword} updateValue={(value) => setInputs({ ...inputs, oldPassword: value })} />
+                    <FormInput label="Current password" value={inputs.currentPassword ? inputs.currentPassword : ''} placeholder="Enter current password..."
+                        errorMessage={errors.currentPassword} updateValue={(value) => setInputs({ ...inputs, currentPassword: value })} />
 
                     <FormInput label="New password" value={inputs.newPassword ? inputs.newPassword : ''} placeholder="Enter new password..."
                         errorMessage={errors.newPassword} updateValue={(value) => setInputs({ ...inputs, newPassword: value })} />

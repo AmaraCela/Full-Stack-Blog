@@ -88,6 +88,15 @@ const EditProfile = () => {
             newPassword: ''
         }
     );
+    
+    const [errors, setErrors] = useState<Data>(
+        {
+            username: '',
+            email: '',
+            oldPassword: '',
+            newPassword: ''
+        }
+    );
 
     const [validations, setValidations] = useState({
         username: { function: validateUsername },
@@ -97,7 +106,7 @@ const EditProfile = () => {
     })
 
 
-    const { errors, noErrors } = useForm({ values: inputs, validations });
+    // const { errors, noErrors } = useForm({ values: inputs, validations });
 
     return (
         <div className="flex justify-center h-full items-center">
@@ -105,7 +114,7 @@ const EditProfile = () => {
                 <div className="bg-[#ffffff] grid justify-evenly p-4 items-center rounded-l-md login-form">
                     <h1 className="regular-font text-3xl font-bold">Edit Profile</h1>
 
-                    <FormInput label="Username" value={inputs.username ? inputs.username : ''} placeholder="Enter Username"
+                    {/* <FormInput label="Username" value={inputs.username ? inputs.username : ''} placeholder="Enter Username"
                         errorMessage={errors.username} updateValue={(value) => setInputs({ ...inputs, username: value })} />
 
                     <FormInput label="Email" inputType="email" value={inputs.email ? inputs.email : ''} placeholder="Enter Username"
@@ -115,7 +124,7 @@ const EditProfile = () => {
                         errorMessage={errors.oldPassword} updateValue={(value) => setInputs({ ...inputs, oldPassword: value })} />
 
                     <FormInput label="New password" value={inputs.newPassword ? inputs.newPassword : ''} placeholder="Enter new password..."
-                        errorMessage={errors.newPassword} updateValue={(value) => setInputs({ ...inputs, newPassword: value })} />
+                        errorMessage={errors.newPassword} updateValue={(value) => setInputs({ ...inputs, newPassword: value })} /> */}
 
                     <div className="flex flex-col items-baseline">
                         <FormButton value="Login" handle={handleSubmit} />

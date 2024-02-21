@@ -5,14 +5,18 @@ import FormButton from "../components/FormButton";
 import FormInput from "../components/FormInput";
 import FormLink from "../components/FormLink";
 import { useDispatch } from "react-redux";
-import useForm from "../hooks/useForm";
+import useUsernameValidation from "../hooks/useUsernameValidation";
+import useEmailValidation from "../hooks/useEmailValidation";
+import usePasswordValidation from "../hooks/usePasswordValidation";
+import useVerifyPasswordValidation from "../hooks/useVerifyPasswordValidation";
 import { signupUser } from "../store/userSlice";
-import { validateUsername, validateEmail, validatePassword, validateVerify } from "../utils/validations";
 
 const SignUp = () => {
     const navigate = useNavigate();
     const dispatch = useDispatch();
 
+    const [validForm, setValidForm] = useState(false);
+    
     const [inputs, setInputs] = useState({
         username: "",
         email: "",
@@ -20,21 +24,33 @@ const SignUp = () => {
         verify: "",
     });
 
-    const [validations, setValidations] = useState({
-        username: { function: validateUsername },
-        email: { function: validateEmail },
-        password: { function: validatePassword },
-        verify: { function: validateVerify, extraParams: ['password'] },
-    })
+    const [errors, setErrors] = useState({
+        username: "",
+        email: "",
+        password: "",
+        verify: "",  
+    });
 
-    const { errors, noErrors } = useForm({ values: inputs, validations });
+    const usernameError = useUsernameValidation(inputs.username);
+    const emailError = useEmailValidation(inputs.email);
+    const passwordError = usePasswordValidation(inputs.password);
+    const verifyError = useVerifyPasswordValidation(inputs.password, inputs.verify);
+
 
     useEffect(() => {
-        console.log("errors changed")
-    }, [errors])
+        const valid = errors.username === '' && errors.email === '' && errors.password === '' && errors.verify === ''
+        setValidForm(valid);
+    }, [inputs])
 
     const handleSubmit = async (): Promise<void> => {
-        if (noErrors) {
+        setErrors({
+            username: usernameError,
+            email: emailError,
+            password: passwordError,
+            verify: verifyError
+        });
+
+        if (validForm) {
             await dispatch(signupUser({
                 username: inputs.username,
                 email: inputs.email,

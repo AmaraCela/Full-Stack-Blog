@@ -43,7 +43,7 @@ const LogIn = () => {
             await (dispatch(loginUser(inputs)));
         }
         catch (error) {
-            setInputsError({ ...inputsError, password: 'Check username and password' });
+            setInputsError({ ...inputsError, password: 'Check username and password.' });
         }
     };
 

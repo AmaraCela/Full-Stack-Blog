@@ -10,7 +10,6 @@ import Footer from '../components/Footer';
 import PrivateRoutes from './PrivateRoutes';
 import EditProfile from '../pages/EditProfile';
 
-
 const AllRoutes = () => {
   return (
     <Router>
@@ -21,13 +20,14 @@ const AllRoutes = () => {
           <Route path='/profile/:id' element={<Profile />}></Route>
           <Route path='/editprofile/:id' element={<EditProfile />}></Route>
         </Route>
-        <Route path='/blogs/:id' element={<Blog></Blog>} />
-        <Route path='/login' element={<LogIn></LogIn>} />
-        <Route path='/signup' element={<SignUp></SignUp>} />
-        <Route path='/' element={<Home></Home>} />
+        <Route path='/blogs/:id' element={<Blog />} />
+        <Route path='/login' element={<LogIn />} />
+        <Route path='/signup' element={<SignUp />} />
+        <Route path='/' element={<Home />} />
       </Routes>
       <Footer />
     </Router>
   );
 }
+
 export default AllRoutes;

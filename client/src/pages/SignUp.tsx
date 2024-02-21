@@ -10,7 +10,6 @@ import { signupUser } from "../store/userSlice";
 import { validateUsername, validateEmail, validatePassword, validateVerify } from "../utils/validations";
 
 const SignUp = () => {
-
     const navigate = useNavigate();
     const dispatch = useDispatch();
 

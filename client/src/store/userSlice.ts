@@ -46,7 +46,7 @@ export const loginUser = createAsyncThunk(
             return rejectWithValue(error);
         }
     }
-)
+);
 
 export const signupUser = createAsyncThunk(
     'signupUser',

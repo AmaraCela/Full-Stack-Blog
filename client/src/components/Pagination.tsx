@@ -2,13 +2,11 @@ import { useEffect, useState } from "react";
 import "../styles/pagination.css";
 
 const Pagination = () => {
-
     const nrPages = 10;
     const paginationSlots = 4;
 
     const [currentPage, setCurrentPage] = useState(1);
-    const [displayingIndexes, setDisplayingIndexes] = useState<number[]>([])
-
+    const [displayingIndexes, setDisplayingIndexes] = useState<number[]>([]);
     const [cursorLeft, setCursorLeft] = useState("not-allowed");
     const [cursorRight, setCursorRight] = useState("pointer");
 
@@ -57,7 +55,6 @@ const Pagination = () => {
             setCursorLeft("pointer");
 
             if (displayingIndexes[paginationSlots - 1] === currentPage) {
-                
                 let newIndexes = displayingIndexes.slice(1);
                 newIndexes = [...newIndexes, (currentPage + 1)]
                 setDisplayingIndexes(newIndexes);
@@ -79,6 +76,7 @@ const Pagination = () => {
         for (let i = 0; i < paginationSlots; i++) {
             newIndexes[i] = i + 1;
         }
+
         setDisplayingIndexes(newIndexes);
     }
 
@@ -86,8 +84,10 @@ const Pagination = () => {
         setCursorLeft("pointer");
         setCursorRight("not-allowed");
         setCurrentPage(nrPages - 1);
+
         let newIndexes = [];
         let value = nrPages - paginationSlots;
+
         for (let i = 0; i < paginationSlots; i++) {
             newIndexes[i] = value;
             value++;
@@ -123,23 +123,29 @@ const Pagination = () => {
 
     return (
         <div className="flex regular-font mt-8 justify-center font-semibold">
-            <div style={{ cursor: cursorLeft }} className="pagination-item first-arrow" title="first" onClick={() => movePage("first")}>
+
+            <button style={{ cursor: cursorLeft }} className="pagination-item first-arrow" title="first" onClick={() => movePage("first")}>
                 <p>&#10094;&#10094;</p>
-            </div>
-            <div style={{ cursor: cursorLeft }} className="pagination-item previous-arrow" title="previous" onClick={() => movePage("left")}>
+            </button>
+
+            <button style={{ cursor: cursorLeft }} className="pagination-item previous-arrow" title="previous" onClick={() => movePage("left")}>
                 <p>&#10094;</p>
-            </div>
+            </button>
+
             {displayingIndexes.map((item, i) => (
                 <div key={item} className={`pagination-item page ${item === currentPage ? 'active' : ''}`}>
                     <p>{item}</p>
                 </div>
             ))}
-            <div style={{ cursor: cursorRight }} className="pagination-item next-arrow" title="next" onClick={() => movePage("right")}>
+
+            <button style={{ cursor: cursorRight }} className="pagination-item next-arrow" title="next" onClick={() => movePage("right")}>
                 <p>&#10095;</p>
-            </div>
-            <div style={{ cursor: cursorRight }} className="pagination-item last-arrow" title="last" onClick={() => movePage("last")}>
+            </button>
+
+            <button style={{ cursor: cursorRight }} className="pagination-item last-arrow" title="last" onClick={() => movePage("last")}>
                 <p>&#10095;&#10095;</p>
-            </div>
+            </button>
+
         </div>
     );
 }

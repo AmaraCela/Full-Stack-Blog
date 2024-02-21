@@ -67,9 +67,9 @@ const Blog = () => {
         <div className="blog-details px-16">
             <div className="carousel w-full flex justify-center items-center p-5">
 
-                <div className="p-4 cursor-pointer mr-1 prev" onClick={() => handleNavigation("left")}>
+                <button className="p-4 cursor-pointer mr-1 prev" onClick={() => handleNavigation("left")}>
                     <p>&#10094;</p>
-                </div>
+                </button>
 
                 {blog.images.map((image, index) => (
                     <div className={`carousel-img ${index !== 0 ? `hidden` : ``}`} key={image}>
@@ -77,9 +77,9 @@ const Blog = () => {
                     </div>
                 ))}
 
-                <div className="p-4 cursor-pointer ml-1 next" onClick={() => handleNavigation("right")}>
+                <button className="p-4 cursor-pointer ml-1 next" onClick={() => handleNavigation("right")}>
                     <p>&#10095;</p>
-                </div>
+                </button>
 
             </div>
             <h1 className="regular-font text-3xl font-bold mt-8">{blog.title}</h1>

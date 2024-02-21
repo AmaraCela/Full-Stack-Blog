@@ -26,7 +26,6 @@ const EditProfile = () => {
     const oldEmail = useSelector((state: RootState) => state.user.email);
 
     const handleSubmit = async (): Promise<void> => {
-
         const newData =
         {
             username: inputs.username,
@@ -99,8 +98,6 @@ const EditProfile = () => {
 
 
     const { errors, noErrors } = useForm({ values: inputs, validations });
-
-
 
     return (
         <div className="flex justify-center h-full items-center">

@@ -1,12 +1,11 @@
-class Post{
-    private post_id:number;
-    private title:string;
-    private description:string;
-    private date_posted:Date;
+class Post {
+    private post_id: number;
+    private title: string;
+    private description: string;
+    private date_posted: Date;
     private user_id: number;
 
-    constructor(post_id:number, title:string, description:string, date_posted:Date,user_id:number)
-    {
+    constructor(post_id: number, title: string, description: string, date_posted: Date, user_id: number) {
         this.post_id = post_id;
         this.title = title;
         this.description = description;
@@ -14,23 +13,23 @@ class Post{
         this.user_id = user_id;
     }
 
-    getPostId():number{
+    getPostId(): number {
         return this.post_id;
     }
 
-    getTitle():string{
+    getTitle(): string {
         return this.title;
     }
 
-    getDescription():string{
+    getDescription(): string {
         return this.description;
     }
 
-    getDatePosted():Date{
+    getDatePosted(): Date {
         return this.date_posted;
     }
 
-    getUserId():number{
+    getUserId(): number {
         return this.user_id;
     }
 }

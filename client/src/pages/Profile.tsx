@@ -7,6 +7,7 @@ import Pagination from "../components/Pagination";
 import { useSelector } from "react-redux";
 import { RootState } from "../store/store";
 import { Link, useParams } from "react-router-dom";
+import edit from '../assets/edit-246.png';
 
 const Profile = () => {
     const userId = useSelector((state: RootState) => state.user.id)
@@ -41,9 +42,28 @@ const Profile = () => {
                         <img src={profileImg} alt="" className="size-32 profile-img" />
                         <div className="flex flex-col justify-evenly w-full mt-4 profile-info">
                             <h1 className="regular-font font-bold text-xl profile">Profile</h1>
-                            <h1 className="regular-font text-xl username">Username</h1>
-                            <p className="regular-font text-xl nr-posts">Number of posts : 3</p>
-                            <Link to={`/editprofile/${userId}`}>{userId == id ? <p>Edit</p> : ""}</Link>
+
+                            <hr className="border-black border-t-2" />
+
+                            <div className="flex flex-wrap justify-between mt-2">
+                                <div>
+                                    <h1 className="regular-font text-xl username font-bold">Username</h1>
+                                    <input type="text" className="regular-font text-xl username" value='amara' />
+                                    <h1 className="regular-font text-xl username">amara</h1>
+                                </div>
+                                <Link to={`/editprofile/${userId}`}> {userId == id ? <img src={edit} alt="" className="w-8" /> : ""} </Link>
+                            </div>
+
+                            <div className="flex flex-wrap justify-between mt-2">
+                                <div>
+                                    <h1 className="regular-font text-xl username font-bold">Email</h1>
+                                    <h1 className="regular-font text-xl username">acela@gmail.com</h1>
+                                </div>
+                                <Link to={`/editprofile/${userId}`}>{userId == id ? <img src={edit} alt="" className="w-8" /> : ""}</Link>
+                            </div>
+
+                            <p className="regular-font text-xl nr-posts mt-2 font-semibold">Number of posts : 3</p>
+
                         </div>
                     </div>
                 </div>

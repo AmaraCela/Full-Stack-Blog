@@ -1,8 +1,8 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { RootState } from "../store/store";
+import { AppDispatch, RootState } from "../store/store";
 import edit from "../assets/edit.jpg";
-import { loginUser } from "../store/authThunks";
+import { editProfile } from "../store/auth/authThunks";
 import { useNavigate } from "react-router-dom";
 import FormButton from "../components/FormButton";
 import FormInput from "../components/FormInput";
@@ -19,12 +19,13 @@ interface Data {
 }
 
 const EditProfile = () => {
-    const dispatch = useDispatch();
+    const dispatch = useDispatch<AppDispatch>();
     const navigate = useNavigate();
-
     const currentId = useSelector((state: RootState) => state.user.id);
     const currentUsername = useSelector((state: RootState) => state.user.username);
     const currentEmail = useSelector((state: RootState) => state.user.email);
+    const isLoading = useSelector((state: RootState) => state.user.loading);
+    const error = useSelector((state: RootState) => state.user.error);
 
     const [validForm, setValidForm] = useState(false);
 
@@ -51,6 +52,21 @@ const EditProfile = () => {
     const newPasswordError = usePasswordValidation(inputs.newPassword);
     const currentPasswordError = useCurrentPasswordValidate(currentId ?? '', inputs.currentPassword)
 
+    useEffect(() => {
+        if (validForm) {
+            const newData =
+            {
+                username: inputs.username,
+                email: inputs.email,
+                password: inputs.newPassword,
+                user_id: currentId ?? '',
+            };
+            dispatch(editProfile(newData));
+            navigate(`/profile/${currentId}`);
+        }
+    }, [validForm]);
+
+
     const handleSubmit = async (): Promise<void> => {
         setErrors({
             username: usernameError,
@@ -59,39 +75,8 @@ const EditProfile = () => {
             newPassword: newPasswordError
         });
 
-        const valid = errors.username === '' && errors.email === '' && errors.currentPassword === '' && errors.newPassword === '';
+        const valid = usernameError === '' && emailError === '' && await currentPasswordError === '' && errors.newPassword === '';
         setValidForm(valid);
-
-        if (validForm) {
-            const newData =
-            {
-                username: inputs.username,
-                email: inputs.email,
-                password: inputs.newPassword,
-                user_id: currentId
-            };
-
-            // try {
-            //     const response = await fetch('http://localhost:5000/api/edit', {
-            //         method: 'POST',
-            //         headers: {
-            //             'Content-Type': 'application/json'
-            //         },
-            //         body: JSON.stringify(newData)
-            //     });
-            //     if (response.ok) {
-            //         const data = await response.json();
-            //         console.log(data.user);
-            //         dispatch(loginUser(data.user));
-
-            //     }
-            //     else {
-            //         console.log(response);
-            //     }
-            // }
-            // catch (error) {
-            // }
-        }
     }
 
     return (

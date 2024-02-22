@@ -72,7 +72,7 @@ const Blog = () => {
                 </button>
 
                 {blog.images.map((image, index) => (
-                    <div className={`carousel-img ${index !== 0 ? `hidden` : ``}`} key={image}>
+                    <div className={`carousel-img ${index !== 0 ? 'hidden' : ''}`} key={image}>
                         <img src={image} alt="" className="w-full" />
                     </div>
                 ))}

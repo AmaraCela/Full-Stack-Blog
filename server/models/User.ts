@@ -1,30 +1,28 @@
-class User{
-    private user_id:number;
-    private username:string;
-    private email:string;
-    private password:string;
+class User {
+    private user_id: number;
+    private username: string;
+    private email: string;
+    private password: string;
 
-    constructor(user_id:number, username:string, email:string, password:string)
-    {
+    constructor(user_id: number, username: string, email: string, password: string) {
         this.user_id = user_id;
         this.username = username;
         this.email = email;
         this.password = password;
     }
-    getUserId():number
-    {
+    getUserId(): number {
         return this.user_id;
     }
 
-    getUsername():string{
+    getUsername(): string {
         return this.username;
     }
 
-    getEmail():string{
+    getEmail(): string {
         return this.email;
     }
 
-    getPassword():string{
+    getPassword(): string {
         return this.password;
     }
 

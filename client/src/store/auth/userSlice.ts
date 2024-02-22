@@ -1,5 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { loginUser, signupUser } from "./authThunks";
+import { loginUser, signupUser, editProfile } from "./authThunks";
 
 interface UserState {
     isLoggedIn: boolean;
@@ -52,6 +52,18 @@ const userSlice = createSlice({
             state.id = null;
             state.error = action.payload as string;
         }).addCase(signupUser.rejected, (state, action) => {
+            state.error = action.payload as string;
+        }).addCase(editProfile.pending, (state) => {
+            state.loading = true;
+            state.error = null;
+        }).addCase(editProfile.fulfilled, (state, action) => {
+            state.loading = false;
+            state.isLoggedIn = true;
+            state.username = action.payload.username;
+            state.id = action.payload.user_id;
+            state.email = action.payload.email;
+        }).addCase(editProfile.rejected, (state, action) => {
+            state.loading = false;
             state.error = action.payload as string;
         });
     }

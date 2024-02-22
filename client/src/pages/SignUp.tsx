@@ -9,7 +9,7 @@ import useUsernameValidation from "../hooks/useUsernameValidation";
 import useEmailValidation from "../hooks/useEmailValidation";
 import usePasswordValidation from "../hooks/usePasswordValidation";
 import useVerifyPasswordValidation from "../hooks/useVerifyPasswordValidation";
-import { signupUser } from "../store/authThunks";
+import { signupUser } from "../store/auth/authThunks";
 import { RootState } from "../store/store";
 
 const SignUp = () => {

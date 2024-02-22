@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import blog from "../assets/blog.webp";
 import '../styles/form.css';
 import { useDispatch, useSelector } from "react-redux";
-import { loginUser } from "../store/authThunks";
+import { loginUser } from "../store/auth/authThunks";
 import FormInput from "../components/FormInput";
 import FormLink from "../components/FormLink";
 import FormButton from "../components/FormButton";
@@ -35,7 +35,7 @@ const LogIn = () => {
         if (error) {
             setInputsError({ ...inputsError, password: error });
         }
-    }, [error])
+    }, [error]);
 
     const handleSubmit = async (): Promise<void> => {
         try {
@@ -52,10 +52,10 @@ const LogIn = () => {
                 <div className="bg-[#ffffff] grid justify-evenly p-4 items-center rounded-l-md login-form">
                     <h1 className="regular-font text-3xl font-bold">Login</h1>
 
-                    <FormInput label="Username" value={inputs.username} placeholder="Enter Username"
+                    <FormInput label="Username" value={inputs.username} placeholder="Enter Username..."
                         errorMessage={inputsError.username} updateValue={(value) => setInputs({ ...inputs, username: value })} />
 
-                    <FormInput label="Password" value={inputs.password} placeholder="Enter Password"
+                    <FormInput label="Password" value={inputs.password} placeholder="Enter Password..." inputType="password"
                         errorMessage={inputsError.password} updateValue={(value) => setInputs({ ...inputs, password: value })} />
 
                     <div className="flex flex-col items-baseline">

@@ -1,5 +1,5 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
-import { createAPI } from "../utils/api";
+import { createAPI } from "../../utils/api";
 
 export const loginUser = createAsyncThunk(
     'loginUser',
@@ -9,8 +9,8 @@ export const loginUser = createAsyncThunk(
     }, { rejectWithValue }) => {
         try {
             const response = await createAPI('login', { method: 'POST' })(inputs);
-
             const data = await response.json();
+
             return !response.ok ? rejectWithValue(data.message) : data.user[0];
         }
         catch (error) {
@@ -40,5 +40,22 @@ export const signupUser = createAsyncThunk(
             const message = await response.json();
             return rejectWithValue(message.message);
         }
+    }
+);
+
+
+export const editProfile = createAsyncThunk(
+    'editProfile',
+    async (inputs: {
+        username: string;
+        email: string;
+        password: string;
+        user_id: string;
+
+    }, { rejectWithValue }) => {
+
+        const response = await createAPI('edit', { method: 'POST' })(inputs);
+        const data = await response.json();
+        return response.status === 500 ? rejectWithValue(data.message) : data.user;
     }
 );

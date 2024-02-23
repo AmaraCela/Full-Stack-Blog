@@ -5,10 +5,10 @@ export function editProfile(req: Request, res: Response) {
     const dbconnection = new DatabaseConnection();
     const connection = dbconnection.getConnection();
 
-    const { username, email, password, user_id } = req.body;
+    const { username, email, user_id } = req.body;
 
-    const query = 'UPDATE users SET username = ?, email = ?, password = ? WHERE user_id = ?';
-    connection.query(query, [username, email, password, user_id], (error, result) => {
+    const query = 'UPDATE users SET username = ?, email = ? WHERE user_id = ?';
+    connection.query(query, [username, email, user_id], (error, result) => {
         if (error) {
             console.log("Could not edit the users information.");
             res.status(500).json({ message: "Could not update user." })

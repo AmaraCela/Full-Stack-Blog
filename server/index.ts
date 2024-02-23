@@ -31,7 +31,7 @@ app.post('/api/edit', editProfileController.editProfile);
 
 app.post('/api/password', passwordController.validateOldPassword);
 
-app.get('/api/profile', profileController.profile);
+app.get('/api/profile/', profileController.profile);
 
 app.listen(port, () => {
     console.log(`Server is running on port ${port}`)

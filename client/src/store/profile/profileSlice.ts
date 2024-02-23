@@ -43,10 +43,10 @@ const profileSlice = createSlice({
         builder.addCase(populateProfile.pending, (state) => {
             state.user = null;
             state.posts = [];
-            state.loading = true; 
+            state.loading = true;
             state.error = '';
         }).addCase(populateProfile.fulfilled, (state, action) => {
-            state.user = action.payload.user;
+            state.user = action.payload.user[0];
             state.posts = [];
             state.loading = false;
         }).addCase(populateProfile.rejected, (state, action) => {
@@ -55,3 +55,5 @@ const profileSlice = createSlice({
 
     }
 });
+
+export default profileSlice.reducer;

@@ -5,7 +5,12 @@ export function profile(req: Request, res: Response): void {
     const dbconnection = new DatabaseConnection();
     const connection = dbconnection.getConnection();
 
-    const { user_id } = req.body;
+    const  user_id  = req.query.user_id;
+
+    if (!user_id) {
+        res.status(400).json({ message: 'User ID is required in the query parameters.' });
+        return;
+    }
 
     const query = 'SELECT user_id, username, email FROM users WHERE user_id = ?';
 

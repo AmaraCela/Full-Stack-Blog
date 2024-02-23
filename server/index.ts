@@ -4,13 +4,14 @@ const cors = require('cors');
 
 const app = express();
 
-const postsController = require("./controllers/postsController");
+const postsController = require("./controllers/getPostsController");
 const signupController = require("./controllers/signupController");
 const loginController = require("./controllers/loginController");
 const editProfileController = require("./controllers/editProfileController");
 const passwordController = require("./controllers/passwordController");
 const profileController = require("./controllers/profileController");
 const bodyParser = require('body-parser');
+const postController = require('./controllers/postController');
 
 app.use(bodyParser.json());
 app.use(cors());
@@ -32,6 +33,8 @@ app.post('/api/edit', editProfileController.editProfile);
 app.post('/api/password', passwordController.validateOldPassword);
 
 app.get('/api/profile/', profileController.profile);
+
+app.post('/api/post/', postController.postController);
 
 app.listen(port, () => {
     console.log(`Server is running on port ${port}`)

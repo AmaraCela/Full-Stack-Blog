@@ -1,5 +1,6 @@
 import { createSlice } from "@reduxjs/toolkit";
 import { populateProfile } from './profileThunks';
+
 interface User {
     user_id: string;
     username: string;

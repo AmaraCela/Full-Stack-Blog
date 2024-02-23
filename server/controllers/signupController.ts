@@ -6,9 +6,9 @@ export function signup(req: Request, res: Response): void {
     const connection = dbconnection.getConnection();
     const { username, email, password } = req.body;
 
-    const query = `INSERT INTO users (username,email,password) VALUES(?,?,?)`;
-    connection.query(query, [username, email, password], (err, result) => {
+    const query = 'INSERT INTO users (username, email, password) VALUES(?, ?, ?)';
 
+    connection.query(query, [username, email, password], (err, result) => {
         if (err) {
             console.log("There was an error signing up the user", err.code);
 

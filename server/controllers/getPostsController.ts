@@ -4,7 +4,7 @@ import { Request, Response } from "express";
 export function getPosts(req: Request, res: Response): void {
     const dbconnection = new DatabaseConnection();
     const connection = dbconnection.getConnection();
-    const query = `SELECT * FROM posts`;
+    const query = 'SELECT * FROM posts';
     connection.query(query, (err, results) => {
         if (err) {
             console.log("An error occurred when retrieving data");

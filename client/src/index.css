@@ -3,15 +3,16 @@
 @import 'tailwindcss/utilities';
 
 body {
-    background: linear-gradient(rgba(248, 238, 238, 1), rgba(248, 238, 238, 0.1));
-    background-repeat: no-repeat;
-    height: 100vh;
-}
-
-#root{
+  background: linear-gradient(rgba(248, 238, 238, 1), rgba(248, 238, 238, 0.1));
+  background-repeat: no-repeat;
   height: 100vh;
 }
 
-.input-format{
-@apply border-2 border-[#000000] rounded-md;
+#root {
+  height: 100vh;
+}
+
+.input-format {
+  @apply border-2 border-[#000000] rounded-md pl-1 h-9;
+
 }

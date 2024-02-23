@@ -8,7 +8,9 @@ interface UserState {
     username: string | null;
     email: string | null;
     id: string | null;
-    error: string | null;
+    loginError: string | null;
+    signupError: string | null;
+    editError: string | null;
 }
 
 const initialState: UserState = {
@@ -18,7 +20,9 @@ const initialState: UserState = {
     username: null,
     email: null,
     id: null,
-    error: null,
+    loginError: null,
+    signupError: null,
+    editError: null,
 }
 
 const userSlice = createSlice({
@@ -30,7 +34,7 @@ const userSlice = createSlice({
             state.id = null;
             state.username = null;
             state.email = null;
-            state.error = null;
+            state.loginError = null;
         }
     },
     extraReducers: builder => {
@@ -43,19 +47,19 @@ const userSlice = createSlice({
             state.username = action.payload.username;
             state.email = action.payload.email;
             state.id = action.payload.user_id;
-            state.error = null;
+            state.loginError = null;
         }).addCase(loginUser.rejected, (state, action) => {
             state.isLoggedIn = false;
             state.loading = false;
             state.username = null;
             state.email = null;
             state.id = null;
-            state.error = action.payload as string;
+            state.loginError = action.payload as string;
         }).addCase(signupUser.rejected, (state, action) => {
-            state.error = action.payload as string;
+            state.signupError = action.payload as string;
         }).addCase(editProfile.pending, (state) => {
             state.loading = true;
-            state.error = null;
+            state.editError = null;
         }).addCase(editProfile.fulfilled, (state, action) => {
             state.loading = false;
             state.isLoggedIn = true;
@@ -64,7 +68,7 @@ const userSlice = createSlice({
             state.email = action.payload.email;
         }).addCase(editProfile.rejected, (state, action) => {
             state.loading = false;
-            state.error = action.payload as string;
+            state.editError = action.payload as string;
         });
     }
 });

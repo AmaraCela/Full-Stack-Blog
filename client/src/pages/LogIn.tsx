@@ -13,7 +13,7 @@ const LogIn = () => {
     const dispatch = useDispatch<AppDispatch>();
     const navigate = useNavigate();
     const isLoggedIn = useSelector((state: RootState) => state.user.isLoggedIn)
-    const error = useSelector((state: RootState) => state.user.error)
+    const error = useSelector((state: RootState) => state.user.loginError)
 
     const [inputs, setInputs] = useState({
         username: "",

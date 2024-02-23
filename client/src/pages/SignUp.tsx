@@ -18,7 +18,9 @@ const SignUp = () => {
 
     const [validForm, setValidForm] = useState(false);
     const isLoggedIn = useSelector((state: RootState) => state.user.isLoggedIn);
-    const error = useSelector((state: RootState) => state.user.error)
+    const error = useSelector((state: RootState) => state.user.signupError)
+
+    const [buttonPressed, setButtonPressed] = useState(false);
 
     const [inputs, setInputs] = useState({
         username: "",
@@ -42,6 +44,7 @@ const SignUp = () => {
     useEffect(() => {
         const valid = usernameError === '' && emailError === '' && passwordError === '' && verifyError === ''
         setValidForm(valid);
+        if (buttonPressed) setErrors({ username: usernameError, email: emailError, password: passwordError, verify: verifyError });
     }, [inputs]);
 
     useEffect(() => {
@@ -62,6 +65,8 @@ const SignUp = () => {
             verify: verifyError
         });
 
+        setButtonPressed(true);
+
         if (validForm) {
             await dispatch(signupUser({
                 username: inputs.username,
@@ -76,7 +81,7 @@ const SignUp = () => {
 
     return (
         <div className="flex justify-center h-full items-center">
-            <div className="h-4/5 login-div flex rounded-md ">
+            <div className="h-5/6 login-div flex rounded-md mt-8">
                 <div className="bg-[#ffffff] grid justify-evenly p-4 items-center rounded-l-md login-form">
                     <h1 className="regular-font text-3xl font-bold">Signup</h1>
 

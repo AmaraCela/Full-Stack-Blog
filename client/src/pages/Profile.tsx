@@ -17,9 +17,7 @@ const Profile = () => {
 
     const loggedInUserId = useSelector((state: RootState) => state.user.id);
     const user = useSelector((state: RootState) => state.profile.user);
-
-    console.log(user);
-
+    
     useEffect(() => {
         dispatch(populateProfile(id ?? ''));
     }, [])
@@ -70,7 +68,11 @@ const Profile = () => {
                                 <h1 className="regular-font text-xl username">{user?.email}</h1>
                             </div>
 
-                            <p className="regular-font text-xl nr-posts mt-2 font-semibold">Number of posts : 3</p>
+                            <div className="flex flex-wrap justify-between mt-2">
+                                <p className="regular-font text-xl nr-posts mt-2 font-semibold">Number of posts</p>
+                                <p className="regular-font text-xl nr-posts mt-2">3</p>
+                            </div>
+
 
                         </div>
                     </div>

@@ -1,13 +1,14 @@
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { AppDispatch, RootState } from "../store/store";
-import edit from "../assets/edit.jpg";
 import { editProfile } from "../store/auth/authThunks";
 import { useNavigate } from "react-router-dom";
+import edit from "../assets/pencilGirl-transformed-removebg-preview.png";
 import FormButton from "../components/FormButton";
 import FormInput from "../components/FormInput";
 import useUsernameValidation from "../hooks/useUsernameValidation";
 import useEmailValidation from "../hooks/useEmailValidation";
+import "../styles/editProfile.css";
 
 
 interface Data {
@@ -66,8 +67,8 @@ const EditProfile = () => {
 
     return (
         <div className="flex justify-center h-full items-center">
-            <div className="h-2/3 login-div flex rounded-md ">
-                <div className="bg-[#ffffff] grid justify-evenly p-4 items-center rounded-l-md login-form">
+            <div className="h-2/3 edit-div flex rounded-md bg-white w-1/2">
+                <div className="grid justify-evenly p-4 items-center rounded-l-md login-form">
                     <h1 className="regular-font text-3xl font-bold">Edit Profile</h1>
 
                     <FormInput label="Username" value={inputs.username ? inputs.username : ''} placeholder="Enter Username"
@@ -80,7 +81,7 @@ const EditProfile = () => {
                         <FormButton value="Save" handle={handleSubmit} />
                     </div>
                 </div>
-                <img src={edit} alt="" className="login-blog rounded-r-md" />
+                <img src={edit} alt="" className="login-blog rounded-r-md p-9" />
             </div>
         </div>
     );

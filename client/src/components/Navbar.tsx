@@ -4,11 +4,11 @@ import search from "../assets/search.png";
 import { Link } from "react-router-dom";
 import { useSelector } from "react-redux";
 import { RootState } from '../store/store';
+import Dropdown from "./Dropdown";
 
 const Navbar = () => {
 
-    const isAuth = useSelector((state: RootState) => state.user.isLoggedIn);
-    const userId = useSelector((state: RootState) => state.user.id);
+    const isAuthenticated = useSelector((state: RootState) => state.user.isLoggedIn);
 
     return (
         <nav className="flex justify-between items-center nav">
@@ -17,7 +17,9 @@ const Navbar = () => {
                 <div className="flex items-center search-bar">
                     <input className="mr-2 relative text-center h-9 rounded-md w-52 md:w-96 search-input pl-10" type="search" placeholder="Search..." style={{ backgroundImage: `url(${search})` }} />
                 </div>
-                {isAuth ? <Link to={`/profile/${userId}`}><img src={profileImg} alt="profile-img" className="w-12 h-12 cursor-pointer" /></Link> : <Link to="/login"><button className="login-nav regular-font">Login</button></Link>}
+                {isAuthenticated ?
+                    <div><img src={profileImg} alt="profile-img" className="w-12 h-12 cursor-pointer profile-link" /><Dropdown /></div> :
+                    <Link to="/login"><button className="login-nav regular-font">Login</button></Link>}
             </div>
         </nav>
     )

@@ -7,7 +7,13 @@ const Footer = () => {
     
     return (
         <div className="bg-black px-16 pb-8 mt-8 static footer">
-            <img src={pencil} alt="" className="h-52"/>
+
+            <div className="flex items-end">
+                <img src={pencil} alt="" className="h-52"/>
+                <hr className="w-full border-t-white" />
+            </div>
+            
+
             <div className="flex justify-between footer-info pt-8">
                 
                 <div className="flex items-center">
@@ -38,7 +44,7 @@ const Footer = () => {
                 </div>
                 
             </div>
-            <hr className="mt-4" />
+            <hr className="mt-8" />
             <p className="text-white text-xl text-center mt-2">&copy; 2024. All rights reserved.</p>
         </div>
     );

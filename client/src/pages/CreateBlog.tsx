@@ -2,12 +2,20 @@ import { useState } from "react";
 import FormInput from "../components/FormInput";
 import "../styles/createBlog.css";
 import { useTitleValidation } from "../hooks/useTitleValidation";
+import { useDispatch, useSelector } from "react-redux";
+import { AppDispatch, RootState } from "../store/store";
+import { createBlog } from "../store/blog/blogThunk";
 
 const CreateBlog = () => {
+
+    const dispatch = useDispatch<AppDispatch>();
+    const user_id = useSelector((state: RootState) => state.user.id);
+
     const [inputs, setInputs] = useState({
         title: '',
         description: '',
         tags: [] as string[],
+        user_id: user_id ?? '',
     });
 
     const [errors, setErrors] = useState({
@@ -16,10 +24,17 @@ const CreateBlog = () => {
 
     const titleError = useTitleValidation(inputs.title);
 
+    const handleSubmit = (event: React.FormEvent<HTMLElement>) => {
+        event.preventDefault();
+        if (!errors.title) {
+            dispatch(createBlog(inputs));
+        }
+    }
+
     return (
         <div className="flex justify-center h-full items-center">
             <div className="flex rounded-md w-3/4 bg-[#ffffff] create-div pl-4 pr-4">
-                <form className="grid blog-form align-middle w-full mt-4">
+                <form className="grid blog-form align-middle w-full mt-4" onSubmit={(event) => handleSubmit(event)}>
 
                     <FormInput label="Title for new blog:" value={inputs.title} placeholder="Enter title..."
                         updateValue={(value) => setInputs({ ...inputs, title: value })} errorMessage={errors.title} />

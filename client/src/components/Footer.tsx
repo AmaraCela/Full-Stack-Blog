@@ -1,11 +1,13 @@
 import "../styles/footer.css";
 import instagram from "../assets/instagram.webp";
 import facebook from "../assets/facebook.webp";
+import pencil from "../assets/pencilMan-transformed-removebg-preview.png";
 
 const Footer = () => {
     
     return (
         <div className="bg-black px-16 pb-8 mt-8 static footer">
+            <img src={pencil} alt="" className="h-52"/>
             <div className="flex justify-between footer-info pt-8">
                 
                 <div className="flex items-center">

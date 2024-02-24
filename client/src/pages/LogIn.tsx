@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import blog from "../assets/blog.webp";
+import login from "../assets/login-transformed.jpeg";
 import '../styles/form.css';
 import { useDispatch, useSelector } from "react-redux";
 import { loginUser } from "../store/auth/authThunks";
@@ -47,10 +47,10 @@ const LogIn = () => {
     };
 
     return (
-        <div className="flex justify-center h-full items-center">
-            <div className="h-2/3 login-div flex rounded-md ">
+        <div className="flex justify-center h-4/5 items-center">
+            <div className="h-4/5 login-div flex rounded-md bg-white">
                 <div className="bg-[#ffffff] grid justify-evenly p-4 items-center rounded-l-md login-form">
-                    <h1 className="regular-font text-3xl font-bold">Login</h1>
+                    <h1 className="regular-font text-3xl font-bold form-title">Login</h1>
 
                     <FormInput label="Username" value={inputs.username} placeholder="Enter Username..."
                         errorMessage={inputsError.username} updateValue={(value) => setInputs({ ...inputs, username: value })} />
@@ -63,7 +63,7 @@ const LogIn = () => {
                         <FormLink descriptionText="Don't have an account?" to="/signup" linkText="Signup" />
                     </div>
                 </div>
-                <img src={blog} alt="" className="login-blog rounded-r-md" />
+                <img src={login} alt="" className="login-blog rounded-r-md" />
             </div>
         </div>
     );

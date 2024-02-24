@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import blog from "../assets/blog.webp";
+import signup from "../assets/signup-transformed.jpeg";
 import { useNavigate } from "react-router-dom";
 import FormButton from "../components/FormButton";
 import FormInput from "../components/FormInput";
@@ -81,9 +81,9 @@ const SignUp = () => {
 
     return (
         <div className="flex justify-center h-full items-center">
-            <div className="h-5/6 login-div flex rounded-md mt-8">
-                <div className="bg-[#ffffff] grid justify-evenly p-4 items-center rounded-l-md login-form">
-                    <h1 className="regular-font text-3xl font-bold">Signup</h1>
+            <div className="h-5/6 login-div flex rounded-md mt-8 bg-white">
+                <div className="grid justify-evenly p-4 items-center rounded-l-md login-form">
+                    <h1 className="regular-font text-3xl font-bold form-title">Signup</h1>
 
                     <FormInput label="Username" value={inputs.username} placeholder="Enter Username" name="username"
                         errorMessage={errors.username}
@@ -111,7 +111,7 @@ const SignUp = () => {
                     </div>
 
                 </div>
-                <img src={blog} alt="" className="login-blog rounded-r-md" />
+                <img src={ signup } alt="" className="login-blog rounded-r-md" />
             </div>
         </div>
     );

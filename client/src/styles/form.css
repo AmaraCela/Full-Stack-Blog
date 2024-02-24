@@ -1,7 +1,6 @@
 .login-div {
     box-shadow: 3px 3px 5px rgb(196, 102, 102);
     width: 60%;
-    margin-top: -5%;
 }
 
 .login-blog {
@@ -28,8 +27,11 @@
         width: 60%;
     }
 
+    .form-title{
+        padding-top: 10px;
+    }
+
     .login-blog {
-        width: 100%;
         height: 40%;
         border-bottom-right-radius: 6px;
         border-top-right-radius: 0px;

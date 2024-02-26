@@ -47,6 +47,7 @@ export const signupUser = createAsyncThunk(
 export const editProfile = createAsyncThunk(
     'editProfile',
     async (inputs: {
+        user_id: string;
         username: string;
         email: string;
 
@@ -54,6 +55,7 @@ export const editProfile = createAsyncThunk(
 
         const response = await createAPI('edit', { method: 'POST' })(inputs);
         const data = await response.json();
-        return response.status === 500 ? rejectWithValue(data.message) : data.user;
+        console.log(data);
+        return response.ok ? rejectWithValue(data.message) : data.user;
     }
 );

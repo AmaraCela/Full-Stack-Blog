@@ -64,6 +64,7 @@ const userSlice = createSlice({
             state.loading = true;
             state.editError = null;
         }).addCase(editProfile.fulfilled, (state, action) => {
+            console.log(action.payload);
             state.loading = false;
             state.isLoggedIn = true;
             state.username = action.payload.username;

@@ -1,20 +1,23 @@
-.login-div {
+.main-div {
     box-shadow: 3px 5px 10px rgb(196, 102, 102);
     width: 50%;
     border: 2px solid rgb(220, 75, 75);
 }
 
-.login-blog {
+.form-img {
     width: 50%;
 }
 
 
-.login-form {
+.login-signup-form {
     width: 50%;
 }
+
+
+
 
 @media screen and (max-width:830px) {
-    .login-form {
+    .login-signup-form {
         width: 100%;
         height: 60%;
         @apply p-0;
@@ -22,17 +25,22 @@
         border-bottom-left-radius: 0px;
     }
 
-    .login-div {
+    .main-div {
         flex-direction: column;
         height: 95%;
-        width: 60%;
+        width: 85%;
+    }
+
+    .login-svg {
+        height: 80%;
+        width: 100%;
     }
 
     .form-title {
         padding-top: 10px;
     }
 
-    .login-blog {
+    .form-img {
         height: 40%;
         border-bottom-right-radius: 6px;
         border-top-right-radius: 0px;
@@ -42,13 +50,19 @@
 }
 
 @media screen and (max-width:500px) {
-    .login-div {
+    .main-div {
         width: 85%;
     }
 }
 
-@media only screen and (min-width:830px) and (max-width:900px) {
-    .login-div {
+@media only screen and (min-width:830px) and (max-width:1000px) {
+    .main-div {
         width: 85%;
+    }
+}
+
+@media screen and (min-height:600px) {
+    .login-svg {
+        width: 700px;
     }
 }

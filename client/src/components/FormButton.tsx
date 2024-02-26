@@ -11,7 +11,7 @@ const FormButton = ({ value, handle }: FormButtonType) => {
 
     return (
         <button type="button" onClick={onClick}
-            className="text-xl p-1 input-format cursor-pointer regular-font font-semibold">
+            className="text-xl p-1 input-format cursor-pointer regular-font font-semibold bg-white">
             {value}
         </button>
     );

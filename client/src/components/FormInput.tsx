@@ -17,7 +17,7 @@ const FormInput = ({ value, label, placeholder, inputType = 'text',
     }
 
     return (
-        <div className="flex flex-col">
+        <div className="flex flex-col z-10">
             <label className="regular-font font-semibold">{label}</label>
             <input type={inputType} value={value} required placeholder={placeholder} name={name} className="input-format"
                 onChange={(event) => onChange(event.target.value)} />

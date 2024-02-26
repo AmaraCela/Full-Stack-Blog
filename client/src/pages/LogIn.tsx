@@ -69,8 +69,7 @@ const LogIn = () => {
                 </div>
                 <img src={login} alt="" className="login-blog rounded-r-md" />
             </div>
-            {/* {isLoading && <Loading />} */}
-            <Loading />
+            {isLoading && <Loading />}
         </div>
     );
 }

@@ -11,6 +11,7 @@ import usePasswordValidation from "../hooks/usePasswordValidation";
 import useVerifyPasswordValidation from "../hooks/useVerifyPasswordValidation";
 import { signupUser } from "../store/auth/authThunks";
 import { RootState } from "../store/store";
+import Loading from "../components/Loading";
 
 const SignUp = () => {
     const navigate = useNavigate();
@@ -18,7 +19,8 @@ const SignUp = () => {
 
     const [validForm, setValidForm] = useState(false);
     const isLoggedIn = useSelector((state: RootState) => state.user.isLoggedIn);
-    const error = useSelector((state: RootState) => state.user.signupError)
+    const error = useSelector((state: RootState) => state.user.signupError);
+    const isLoading = useSelector((state: RootState) => state.user.loading);
 
     const [buttonPressed, setButtonPressed] = useState(false);
 
@@ -113,6 +115,7 @@ const SignUp = () => {
                 </div>
                 <img src={ signup } alt="" className="login-blog rounded-r-md" />
             </div>
+            {isLoading && <Loading />}
         </div>
     );
 }

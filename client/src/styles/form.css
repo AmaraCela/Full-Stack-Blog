@@ -1,16 +1,16 @@
 .login-div {
-    box-shadow: 3px 3px 5px rgb(196, 102, 102);
-    width: 60%;
+    box-shadow: 3px 5px 10px rgb(196, 102, 102);
+    width: 50%;
     border: 2px solid rgb(220, 75, 75);
 }
 
 .login-blog {
-    width: 60%;
+    width: 50%;
 }
 
 
 .login-form {
-    width: 40%;
+    width: 50%;
 }
 
 @media screen and (max-width:830px) {

@@ -8,12 +8,14 @@ import FormLink from "../components/FormLink";
 import FormButton from "../components/FormButton";
 import { AppDispatch, RootState } from "../store/store";
 import { useNavigate } from "react-router-dom";
+import Loading from "../components/Loading";
 
 const LogIn = () => {
     const dispatch = useDispatch<AppDispatch>();
     const navigate = useNavigate();
-    const isLoggedIn = useSelector((state: RootState) => state.user.isLoggedIn)
-    const error = useSelector((state: RootState) => state.user.loginError)
+    const isLoggedIn = useSelector((state: RootState) => state.user.isLoggedIn);
+    const error = useSelector((state: RootState) => state.user.loginError);
+    const isLoading = useSelector((state: RootState) => state.user.loading);
 
     const [inputs, setInputs] = useState({
         username: "",
@@ -29,7 +31,8 @@ const LogIn = () => {
         if (isLoggedIn) {
             navigate('/');
         }
-    }, [isLoggedIn])
+    }, [isLoggedIn]);
+
 
     useEffect(() => {
         if (error) {
@@ -49,6 +52,7 @@ const LogIn = () => {
     return (
         <div className="flex justify-center h-4/5 items-center">
             <div className="h-4/5 login-div flex rounded-md bg-white">
+
                 <div className="bg-[#ffffff] grid justify-evenly p-4 items-center rounded-l-md login-form">
                     <h1 className="regular-font text-3xl font-bold form-title">Login</h1>
 
@@ -65,6 +69,8 @@ const LogIn = () => {
                 </div>
                 <img src={login} alt="" className="login-blog rounded-r-md" />
             </div>
+            {/* {isLoading && <Loading />} */}
+            <Loading />
         </div>
     );
 }

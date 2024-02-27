@@ -27,7 +27,6 @@ export function editProfile(req: Request, res: Response) {
         }
 
     }
-
     );
     dbconnection.closeConnection();
 }

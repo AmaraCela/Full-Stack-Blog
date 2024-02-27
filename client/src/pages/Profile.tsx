@@ -3,7 +3,6 @@ import profileImg from "../assets/profileImg.png";
 import "../styles/profile.css";
 import profile from "../assets/profile.png";
 import laptop from '../assets/laptop.jpg';
-import Pagination from "../components/Pagination";
 import { useDispatch, useSelector } from "react-redux";
 import { AppDispatch, RootState } from "../store/store";
 import { Link, useParams } from "react-router-dom";
@@ -54,38 +53,46 @@ const Profile = () => {
 
                 <div className="flex flex-col items-center flex-wrap w-3/5 px-8">
                     <img src={profileImg} alt="" className="w-32" />
-                    <p className="regular-font pt-4 text-base font-semibold">Bio</p>
+                    <p className="regular-font pt-4 text-lg font-semibold">Bio</p>
                     <p className="regular-font text-sm">Short description lorem ipsum that goes on like this.</p>
                 </div>
 
-                <div className="flex justify-evenly w-full border-l-4 border-black relative items-center">
-
-                    <div className="relative rounded-full p-7">
-                        <div className="bg-white h-36 w-full absolute z-0 rounded-full rotate-45 top-0 left-0"></div>
-                        <div className="flex items-baseline border-b-2 border-black z-20 relative">
-                            <img src={username} alt="" className="w-8" />
-                            <h1 className="regular-font pl-2">Username</h1>
+                <div className="flex justify-evenly w-full relative items-center bg-white rounded-md mx-2 my-4 border-black border-2">
+                    <div className="flex justify-evenly w-full items-center">
+                        <div className="rounded-full p-7 text-lg">
+                            <div className="flex items-baseline border-b-2 border-black">
+                                <img src={username} alt="" className="w-5" />
+                                <h1 className="regular-font pl-2">Username</h1>
+                            </div>
+                            <p className="regular-font pt-4">{user?.username}</p>
                         </div>
-                        <p className="z-20 relative regular-font pt-4">{user?.username}</p>
-                    </div>
 
-                    <div className="relative rounded-full p-7">
-                        <div className="bg-white h-32 w-full absolute z-0 rounded-full rotate-45 top-0 left-0"></div>
-                        <div className="flex items-baseline border-b-2 border-black relative z-20">
-                            <img src={email} alt="" className="w-8" />
-                            <h1 className="regular-font pl-2">Email</h1>
+                        <div className="rounded-full p-7 text-lg">
+                            <div className="flex items-baseline border-b-2 border-black">
+                                <img src={email} alt="" className="w-8" />
+                                <h1 className="regular-font pl-2">Email</h1>
+                            </div>
+                            <p className="regular-font pt-4">{user?.email}</p>
                         </div>
-                        <p className="z-20 relative regular-font pt-4">{user?.email}</p>
                     </div>
+                    <div>
+                        {loggedInUserId === user?.user_id ?
+                            <Link to={`/editprofile/${user?.user_id}`} title="Edit profile"><img src={edit} alt="" className="w-8 h-8 absolute top-0 right-12 mt-1" /></Link> : ""}
+                        {loggedInUserId === user?.user_id ?
+                            <Link to={`/settings`} title="Profile settings"><img src={settings} alt="" className="w-8 h-8 absolute top-0 right-3 mt-1" /></Link> : ""}
 
-                    {loggedInUserId === user?.user_id ?
-                        <Link to={`/editprofile/${user?.user_id}`} title="Edit profile"><img src={edit} alt="" className="w-8 h-8 absolute top-0 right-12" /></Link> : ""}
-                    {loggedInUserId === user?.user_id ?
-                        <Link to={`/settings`} title="Profile settings"><img src={settings} alt="" className="w-8 h-8 absolute top-0 right-3" /></Link> : ""}
-
+                    </div>
                 </div>
+
             </div>
 
+            <p className="regular-font text-2xl mt-8">amara's posts</p>
+            <hr className="border-black w-5/6 mx-8 border-2" />
+
+            <div className="flex">
+                <BlogDisplay blogs={blogs} />
+                <Sidebar />
+            </div>
         </div>
     );
 }

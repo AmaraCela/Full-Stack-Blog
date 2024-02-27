@@ -6,7 +6,6 @@ export async function validateCurrentPassword(currentId: string, currentPassword
 
         try {
             const response = await createAPI('password', { method: 'POST' })(passwordData);
-
             return !response.ok ? 'Wrong password.' : '';
         } catch (error) {
             return 'Wrong password';

@@ -1,4 +1,4 @@
-import BlogDisplayComponent from "../components/BlogDisplay";
+import BlogDisplay from "../components/BlogDisplay";
 import profileImg from "../assets/profileImg.png";
 import "../styles/profile.css";
 import profile from "../assets/profile.png";
@@ -10,6 +10,10 @@ import { Link, useParams } from "react-router-dom";
 import edit from '../assets/edit-246.png';
 import { useEffect } from "react";
 import { populateProfile } from "../store/profile/profileThunks";
+import username from "../assets/username.png";
+import email from "../assets/email-removebg-preview.png";
+import settings from "../assets/settings.png";
+import Sidebar from "../components/Sidebar";
 
 const Profile = () => {
     const dispatch = useDispatch<AppDispatch>();
@@ -17,7 +21,7 @@ const Profile = () => {
 
     const loggedInUserId = useSelector((state: RootState) => state.user.id);
     const user = useSelector((state: RootState) => state.profile.user);
-    
+
     useEffect(() => {
         dispatch(populateProfile(id ?? ''));
     }, [])
@@ -44,43 +48,45 @@ const Profile = () => {
     ];
 
     return (
-        <>
-            <div className="flex w-full flex-row justify-between mt-8 profile-content">
-                <div className="w-full flex justify-center">
-                    <div className="profile-card flex flex-col w-full ml-16 mt-8 -mr-8 h-fit items-center rounded-md sticky top-2 justify-between p-5 border-black border-double border-4">
-                        <img src={profileImg} alt="" className="size-32 profile-img" />
-                        <div className="flex flex-col justify-evenly w-full mt-4 profile-info">
+        <div className="flex items-center flex-col">
 
-                            <div className="flex justify-between">
-                                <h1 className="regular-font font-bold text-xl profile">Profile</h1>
-                                <Link to={`/editprofile/${user?.user_id}`}> {user?.user_id === loggedInUserId ? <img src={edit} alt="" className="w-8" /> : ""} </Link>
-                            </div>
+            <div className="w-3/5 bg-[#9CBBF2] rounded-md flex pt-4 pb-4 justify-between mt-4 profile-div">
 
-                            <hr className="border-black border-t-2" />
-
-                            <div className="flex flex-wrap justify-between mt-2">
-                                <h1 className="regular-font text-xl username font-bold">Username:</h1>
-                                <h1 className="regular-font text-xl username">{user?.username}</h1>
-                            </div>
-
-                            <div className="flex flex-wrap justify-between mt-2">
-                                <h1 className="regular-font text-xl username font-bold">Email:</h1>
-                                <h1 className="regular-font text-xl username">{user?.email}</h1>
-                            </div>
-
-                            <div className="flex flex-wrap justify-between mt-2">
-                                <p className="regular-font text-xl nr-posts mt-2 font-semibold">Number of posts</p>
-                                <p className="regular-font text-xl nr-posts mt-2">3</p>
-                            </div>
-
-
-                        </div>
-                    </div>
+                <div className="flex flex-col items-center flex-wrap w-3/5 px-8">
+                    <img src={profileImg} alt="" className="w-32" />
+                    <p className="regular-font pt-4 text-base font-semibold">Bio</p>
+                    <p className="regular-font text-sm">Short description lorem ipsum that goes on like this.</p>
                 </div>
-                <BlogDisplayComponent blogs={blogs} />
+
+                <div className="flex justify-evenly w-full border-l-4 border-black relative items-center">
+
+                    <div className="relative rounded-full p-7">
+                        <div className="bg-white h-36 w-full absolute z-0 rounded-full rotate-45 top-0 left-0"></div>
+                        <div className="flex items-baseline border-b-2 border-black z-20 relative">
+                            <img src={username} alt="" className="w-8" />
+                            <h1 className="regular-font pl-2">Username</h1>
+                        </div>
+                        <p className="z-20 relative regular-font pt-4">{user?.username}</p>
+                    </div>
+
+                    <div className="relative rounded-full p-7">
+                        <div className="bg-white h-32 w-full absolute z-0 rounded-full rotate-45 top-0 left-0"></div>
+                        <div className="flex items-baseline border-b-2 border-black relative z-20">
+                            <img src={email} alt="" className="w-8" />
+                            <h1 className="regular-font pl-2">Email</h1>
+                        </div>
+                        <p className="z-20 relative regular-font pt-4">{user?.email}</p>
+                    </div>
+
+                    {loggedInUserId === user?.user_id ?
+                        <Link to={`/editprofile/${user?.user_id}`} title="Edit profile"><img src={edit} alt="" className="w-8 h-8 absolute top-0 right-12" /></Link> : ""}
+                    {loggedInUserId === user?.user_id ?
+                        <Link to={`/settings`} title="Profile settings"><img src={settings} alt="" className="w-8 h-8 absolute top-0 right-3" /></Link> : ""}
+
+                </div>
             </div>
-            <Pagination />
-        </>
+
+        </div>
     );
 }
 export default Profile;

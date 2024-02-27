@@ -1,0 +1,7 @@
+.setting-bt {
+    transition: background-color 400ms ease-in;
+}
+
+.setting-bt:hover {
+    @apply bg-[#9CBBF2] text-white
+}

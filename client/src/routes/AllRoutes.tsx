@@ -9,6 +9,7 @@ import SignUp from '../pages/SignUp';
 import Footer from '../components/Footer';
 import PrivateRoutes from './PrivateRoutes';
 import EditProfile from '../pages/EditProfile';
+import Settings from '../pages/Settings';
 
 const AllRoutes = () => {
   return (
@@ -16,9 +17,10 @@ const AllRoutes = () => {
       <Navbar />
       <Routes>
         <Route element={<PrivateRoutes />}>
-          <Route path='/create' element={<CreateBlog />}></Route>
-          <Route path='/profile/:id' element={<Profile />}></Route>
-          <Route path='/editprofile/:id' element={<EditProfile />}></Route>
+          <Route path='/create' element={<CreateBlog />} />
+          <Route path='/profile/:id' element={<Profile />} />
+          <Route path='/editprofile/:id' element={<EditProfile />} />
+          <Route path='/settings' element={<Settings />} />
         </Route>
         <Route path='/blogs/:id' element={<Blog />} />
         <Route path='/login' element={<LogIn />} />

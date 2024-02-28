@@ -32,7 +32,7 @@ const SignUp = () => {
     });
 
     const [errors, setErrors] = useState({
-        username: "",
+        username: error ?? "",
         email: "",
         password: "",
         verify: "",
@@ -46,7 +46,7 @@ const SignUp = () => {
     useEffect(() => {
         const valid = usernameError === '' && emailError === '' && passwordError === '' && verifyError === ''
         setValidForm(valid);
-        if (buttonPressed) setErrors({ username: usernameError, email: emailError, password: passwordError, verify: verifyError });
+        if (buttonPressed) setErrors({ username: error ?? usernameError, email: emailError, password: passwordError, verify: verifyError });
     }, [inputs]);
 
     useEffect(() => {
@@ -56,12 +56,12 @@ const SignUp = () => {
     }, [isLoggedIn]);
 
     useEffect(() => {
-        if (error) setErrors({ ...errors, username: error })
+        if (error) setErrors((errors) => ({ ...errors, username: error }))
     }, [error])
 
     const handleSubmit = async (): Promise<void> => {
         setErrors({
-            username: usernameError,
+            username: error ?? usernameError,
             email: emailError,
             password: passwordError,
             verify: verifyError

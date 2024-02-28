@@ -19,6 +19,7 @@ interface Data {
 const EditProfile = () => {
     const dispatch = useDispatch<AppDispatch>();
     const navigate = useNavigate();
+
     const currentId = useSelector((state: RootState) => state.user.id) ?? '';
     const currentUsername = useSelector((state: RootState) => state.user.username);
     const currentEmail = useSelector((state: RootState) => state.user.email);
@@ -87,7 +88,7 @@ const EditProfile = () => {
                     <FormInput label="Email" inputType="email" value={inputs.email ? inputs.email : ''} placeholder="Enter Email..."
                         errorMessage={errors.email} updateValue={(value) => setInputs({ ...inputs, email: value })} />
 
-                    <div className="flex flex-col items-baseline">
+                    <div className="flex flex-col items-baseline relative z-10">
                         <FormButton value="Save" handle={handleSubmit} />
                     </div>
                 </div>

@@ -76,7 +76,7 @@ class User {
         });
     }
 
-    static async updateUser(username: string, email: string, user_id: string) {
+    static async updateUsernameAndEmail(username: string, email: string, user_id: string) {
         const dbconnection = new DatabaseConnection();
         const connection = dbconnection.getConnection();
         const query = 'UPDATE users SET username = ?, email = ? WHERE user_id = ?';

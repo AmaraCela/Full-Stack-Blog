@@ -54,6 +54,6 @@ export const editProfile = createAsyncThunk(
 
         const response = await createAPI('edit', { method: 'POST' })(inputs);
         const data = await response.json();
-        return response.ok ? rejectWithValue(data.message) : data.user;
+        return !response.ok ? rejectWithValue(data.message) : data.user;
     }
 );

@@ -1,29 +1,17 @@
-import DatabaseConnection from "../database/DatabaseConnection";
 import { Request, Response } from "express";
+import User from "../models/User";
 
-export function login(req: Request, res: Response): void {
-    const dbconnection = new DatabaseConnection();
-    const connection = dbconnection.getConnection();
+export async function login(req: Request, res: Response) {
 
     const { username, password } = req.body;
 
-    const query = 'SELECT user_id, username, email FROM users WHERE username = ? AND password = ?'
+    try {
 
-    connection.query(query, [username, password], (err, result) => {
-        if (err) {
-            console.log("There was an error retireving the user: ", err);
-            res.status(500).json({ message: "There was an error retrieving the user." });
-        }
-        else {
-            if (result.length === 0) {
-                res.status(401).json({ message: "Invalid username or password." });
-            }
-            else {
-                res.status(200).json({ user: result });
-            }
-            console.log(result);
+        const result = await User.getUserByUsernameAndPassword(username, password);
+        typeof (result) === 'object' ? res.status(200).json({ user: result }) : res.status(401).json({ message: result })
 
-        }
-    })
-    dbconnection.closeConnection();
+    }
+    catch (error) {
+        res.status(500).json({ message: "There was an error retrieving the user." });
+    }
 }

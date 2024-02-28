@@ -6,7 +6,6 @@ export function profile(req: Request, res: Response): void {
     const connection = dbconnection.getConnection();
 
     const  user_id  = req.query.user_id;
-    console.log(user_id);
 
     if (!user_id) {
         res.status(400).json({ message: 'User ID is required in the query parameters.' });

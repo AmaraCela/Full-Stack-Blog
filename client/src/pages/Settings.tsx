@@ -73,7 +73,7 @@ const Settings = () => {
 
             <div className="mt-8">
                 <div className={`mt-4 ${divVisibility.changePassword}`}>
-                    <p className="regular-font text-red-700 text-lg">This action will permanently change your password. <br />Enter the current password to proceed.</p>
+                    <p className="regular-font text-red-700 text-lg">This action will permanently change your password.</p>
 
                     <div className="mt-4">
                         <FormInput label="Current password" value={inputs.currentPassword} placeholder="Enter current password..." inputType="password"
@@ -101,7 +101,7 @@ const Settings = () => {
                 </div>
 
                 <div className={`mt-4 ${divVisibility.deleteProfile}`}>
-                    <p className="regular-font text-red-700 text-lg">This action will delete your account permanently. <br />Enter the current password to proceed.</p>
+                    <p className="regular-font text-red-700 text-lg">This action will delete your account permanently.</p>
 
                     <div className="mt-4">
                         <FormInput label="Current password" value={inputs.currentPassword} placeholder="Enter current password..." inputType="password"

@@ -1,4 +1,3 @@
-
 import DatabaseConnection from "../database/DatabaseConnection";
 import { Request, Response } from "express";
 

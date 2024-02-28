@@ -9,8 +9,7 @@ export const store = configureStore({
         profile: profileReducer,
         createBlog: createBlogReducer,
     },
-})
+});
 
-console.log(store.getState());
 export type RootState = ReturnType<typeof store.getState>
 export type AppDispatch = typeof store.dispatch

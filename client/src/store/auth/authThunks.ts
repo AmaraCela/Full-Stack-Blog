@@ -10,8 +10,7 @@ export const loginUser = createAsyncThunk(
         try {
             const response = await createAPI('login', { method: 'POST' })(inputs);
             const data = await response.json();
-
-            return !response.ok ? rejectWithValue(data.message) : data.user[0];
+            return !response.ok ? rejectWithValue(data.message) : data.user;
         }
         catch (error) {
             return rejectWithValue(error);
@@ -55,7 +54,6 @@ export const editProfile = createAsyncThunk(
 
         const response = await createAPI('edit', { method: 'POST' })(inputs);
         const data = await response.json();
-        console.log(data);
         return response.ok ? rejectWithValue(data.message) : data.user;
     }
 );

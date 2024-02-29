@@ -5,8 +5,8 @@ import FormButton from "../components/FormButton";
 import useCurrentPasswordValidate from "../hooks/useCurrentPasswordValidate";
 import { useSelector } from "react-redux";
 import { RootState } from "../store/store";
-import usePasswordValidation from "../hooks/usePasswordValidation";
-import useVerifyPasswordValidation from "../hooks/useVerifyPasswordValidation";
+// import usePasswordValidation from "../hooks/usePasswordValidation";
+// import useVerifyPasswordValidation from "../hooks/useVerifyPasswordValidation";
 
 const Settings = () => {
 
@@ -34,12 +34,12 @@ const Settings = () => {
     const [validForm, setValidForm] = useState(false);
 
     const currentPasswordError = useCurrentPasswordValidate(user_id ?? '', inputs.currentPassword);
-    const newPasswordError = usePasswordValidation(inputs.currentPassword);
-    const verifyNewPasswordError = useVerifyPasswordValidation(inputs.newPassword, inputs.verifyNewPassword);
+    // const newPasswordError = usePasswordValidation(inputs.currentPassword);
+    // const verifyNewPasswordError = useVerifyPasswordValidation(inputs.newPassword, inputs.verifyNewPassword);
 
     useEffect(() => {
-        const valid = newPasswordError === '' && verifyNewPasswordError === '';
-        setValidForm(valid);
+        // const valid = newPasswordError === '' && verifyNewPasswordError === '';
+        // setValidForm(valid);
     }, [inputs]);
 
     const handleClick = (button: number) => {

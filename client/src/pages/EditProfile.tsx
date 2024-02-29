@@ -6,15 +6,8 @@ import { useNavigate } from "react-router-dom";
 import edit from "../assets/pencilGirl-transformed-removebg-preview.png";
 import FormButton from "../components/FormButton";
 import FormInput from "../components/FormInput";
-import useUsernameValidation from "../hooks/useUsernameValidation";
-import useEmailValidation from "../hooks/useEmailValidation";
 import "../styles/editProfile.css";
-
-
-interface Data {
-    username: string;
-    email: string;
-}
+import { EditProfileBodyType, useEditProfileForm } from "../hooks/useEditProfileForm";
 
 const EditProfile = () => {
     const dispatch = useDispatch<AppDispatch>();
@@ -24,27 +17,18 @@ const EditProfile = () => {
     const currentUsername = useSelector((state: RootState) => state.user.username);
     const currentEmail = useSelector((state: RootState) => state.user.email);
 
-    const [validForm, setValidForm] = useState(false);
+    const [isButtonPressed, setIsButtonPressed] = useState(false);
 
-    const [inputs, setInputs] = useState<Data>(
+    const { hasErrors, errors, validateForm } = useEditProfileForm();
+    const [inputs, setInputs] = useState<EditProfileBodyType>(
         {
             username: currentUsername ?? '',
             email: currentEmail ?? '',
         }
     );
 
-    const [errors, setErrors] = useState<Data>(
-        {
-            username: '',
-            email: '',
-        }
-    );
-
-    const usernameError = useUsernameValidation(inputs.username);
-    const emailError = useEmailValidation(inputs.email);
-
     useEffect(() => {
-        if (validForm) {
+        if (!hasErrors) {
             const newData =
             {
                 username: inputs.username,
@@ -53,17 +37,15 @@ const EditProfile = () => {
             dispatch(editProfile({ ...newData, user_id: currentId }));
             navigate(`/profile/${currentId}`);
         }
-    }, [validForm]);
+    }, [hasErrors]);
 
+    useEffect(() => {
+        isButtonPressed && validateForm(inputs);
+    }, [inputs])
 
-    const handleSubmit = async (): Promise<void> => {
-        setErrors({
-            username: usernameError,
-            email: emailError,
-        });
-
-        const valid = usernameError === '' && emailError === '';
-        setValidForm(valid);
+    const handleSubmit =  (): void => {
+        validateForm(inputs);
+        setIsButtonPressed(true);
     }
 
     return (

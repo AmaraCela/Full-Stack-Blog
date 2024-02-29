@@ -24,7 +24,7 @@
     padding-top: 4px;
     padding-left: 4px;
     padding-right: 4px;
-    @apply rounded-md h-9;
+    @apply rounded-md text-2xl;
     box-shadow: 2px 2px 2px;
 
 }

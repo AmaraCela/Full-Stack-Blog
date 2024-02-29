@@ -117,6 +117,7 @@ class User {
                     reject(err);
                 }
                 else {
+                    console.log(result.changedRows);
                     result.changedRows === 0 ? resolve(false) : resolve(true);
                 }
 

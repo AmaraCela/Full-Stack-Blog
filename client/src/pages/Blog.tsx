@@ -64,7 +64,7 @@ const Blog = () => {
     }
 
     return (
-        <div className="blog-details px-16">
+        <div className="blog-details px-16 container xl mx-auto">
             <div className="carousel w-full flex justify-center items-center p-5">
 
                 <button className="p-4 cursor-pointer mr-1 prev" onClick={() => handleNavigation("left")}>
@@ -73,7 +73,7 @@ const Blog = () => {
 
                 {blog.images.map((image, index) => (
                     <div className={`carousel-img ${index !== 0 ? 'hidden' : ''}`} key={image}>
-                        <img src={image} alt="" className="w-full" />
+                        <img src={image} alt="" className="w-full h-full" />
                     </div>
                 ))}
 

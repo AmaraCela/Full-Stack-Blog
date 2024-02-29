@@ -5,24 +5,21 @@ import FormButton from "../components/FormButton";
 import FormInput from "../components/FormInput";
 import FormLink from "../components/FormLink";
 import { useDispatch, useSelector } from "react-redux";
-import useUsernameValidation from "../hooks/useUsernameValidation";
-import useEmailValidation from "../hooks/useEmailValidation";
-import usePasswordValidation from "../hooks/usePasswordValidation";
-import useVerifyPasswordValidation from "../hooks/useVerifyPasswordValidation";
 import { signupUser } from "../store/auth/authThunks";
 import { RootState } from "../store/store";
 import Loading from "../components/Loading";
+import { useSignupForm } from "../hooks/useSignupForm";
 
 const SignUp = () => {
     const navigate = useNavigate();
     const dispatch = useDispatch();
 
-    const [validForm, setValidForm] = useState(false);
     const isLoggedIn = useSelector((state: RootState) => state.user.isLoggedIn);
     const error = useSelector((state: RootState) => state.user.signupError);
     const isLoading = useSelector((state: RootState) => state.user.loading);
 
-    const [buttonPressed, setButtonPressed] = useState(false);
+    const { hasErrors, errors, validateForm } = useSignupForm();
+    const [isButtonPressed, setIsButtonPressed] = useState(false);
 
     const [inputs, setInputs] = useState({
         username: "",
@@ -31,22 +28,8 @@ const SignUp = () => {
         verify: "",
     });
 
-    const [errors, setErrors] = useState({
-        username: error ?? "",
-        email: "",
-        password: "",
-        verify: "",
-    });
-
-    const usernameError = useUsernameValidation(inputs.username);
-    const emailError = useEmailValidation(inputs.email);
-    const passwordError = usePasswordValidation(inputs.password);
-    const verifyError = useVerifyPasswordValidation(inputs.password, inputs.verify);
-
     useEffect(() => {
-        const valid = usernameError === '' && emailError === '' && passwordError === '' && verifyError === ''
-        setValidForm(valid);
-        if (buttonPressed) setErrors({ username: error ?? usernameError, email: emailError, password: passwordError, verify: verifyError });
+       isButtonPressed && validateForm(inputs);
     }, [inputs]);
 
     useEffect(() => {
@@ -55,22 +38,12 @@ const SignUp = () => {
         }
     }, [isLoggedIn]);
 
-    useEffect(() => {
-        if (error) setErrors((errors) => ({ ...errors, username: error }))
-    }, [error])
+    const handleSubmit = (): void => {
+        validateForm (inputs);
+        setIsButtonPressed(true);
 
-    const handleSubmit = async (): Promise<void> => {
-        setErrors({
-            username: error ?? usernameError,
-            email: emailError,
-            password: passwordError,
-            verify: verifyError
-        });
-
-        setButtonPressed(true);
-
-        if (validForm) {
-            await dispatch(signupUser({
+        if (!hasErrors) {
+            dispatch(signupUser({
                 username: inputs.username,
                 email: inputs.email,
                 password: inputs.password
@@ -99,7 +72,7 @@ const SignUp = () => {
                     <h1 className="regular-font text-3xl font-bold form-title">Signup</h1>
 
                     <FormInput label="Username" value={inputs.username} placeholder="Enter Username..." name="username"
-                        errorMessage={errors.username}
+                        errorMessage={error ? error : errors.username}
                         updateValue={(value) => setInputs({ ...inputs, username: value })}
                     />
 

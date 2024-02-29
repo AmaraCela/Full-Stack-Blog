@@ -40,9 +40,9 @@ const LogIn = () => {
         }
     }, [error]);
 
-    const handleSubmit = async (): Promise<void> => {
+    const handleSubmit = () => {
         try {
-            await (dispatch(loginUser(inputs)));
+            (dispatch(loginUser(inputs)));
         }
         catch (error) {
             setInputsError({ ...inputsError, password: 'Check username and password.' });

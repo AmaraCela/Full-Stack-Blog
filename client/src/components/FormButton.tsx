@@ -1,12 +1,12 @@
 type FormButtonType = {
     value: string;
-    handle: () => Promise<void>;
+    handle: () => void;
 }
 
 const FormButton = ({ value, handle }: FormButtonType) => {
     
-    const onClick = async (): Promise<void> => {
-        await handle();
+    const onClick = (): void => {
+        handle();
     }
 
     return (

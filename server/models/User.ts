@@ -52,7 +52,7 @@ class User {
         });
     }
 
-    static async getUserByUsernameAndPassword(username: string, password: string) {
+    static async getUserByUsername(username: string, password: string) {
         const dbconnection = new DatabaseConnection();
         const connection = dbconnection.getConnection();
 
@@ -67,6 +67,7 @@ class User {
                     resolve("Invalid username.");
                 }
                 else {
+
                     const isValid = await bcryptjs.compare(password.toString(), result[0].password);
                     isValid ? resolve({ user_id: result[0].user_id, username: username, email: result[0].email }) : resolve("Invalid password.")
                 }
@@ -75,6 +76,7 @@ class User {
             dbconnection.closeConnection();
         });
     }
+
 
     static async updateUsernameAndEmail(username: string, email: string, user_id: string) {
         const dbconnection = new DatabaseConnection();
@@ -86,7 +88,7 @@ class User {
                 if (error) {
                     reject(error)
                 }
-                else if (result.changedRows === 1) {
+                else if (result.changedRows === 0) {
                     resolve("No information has changed.");
                 }
                 else {
@@ -96,6 +98,28 @@ class User {
                         email: email
                     });
                 }
+            });
+
+            dbconnection.closeConnection();
+        });
+    }
+
+
+    static async changePassword(username: string, password: string) {
+        const dbconnection = new DatabaseConnection();
+        const connection = dbconnection.getConnection();
+        const query = 'UPDATE users SET password = ? WHERE username = ?';
+        const hashedPassword = await bcryptjs.hash(password.toString(), 10);
+
+        return new Promise((resolve, reject) => {
+            connection.query(query, [hashedPassword, username], (err, result) => {
+                if (err) {
+                    reject(err);
+                }
+                else {
+                    result.changedRows === 0 ? resolve(false) : resolve(true);
+                }
+
             });
 
             dbconnection.closeConnection();

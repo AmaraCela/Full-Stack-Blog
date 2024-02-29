@@ -8,7 +8,7 @@ const postsController = require("./controllers/getPostsController");
 const signupController = require("./controllers/signupController");
 const loginController = require("./controllers/loginController");
 const editProfileController = require("./controllers/editProfileController");
-const passwordController = require("./controllers/passwordController");
+const passwordController = require("./controllers/changePasswordController");
 const profileController = require("./controllers/profileController");
 const bodyParser = require('body-parser');
 const postController = require('./controllers/postController');
@@ -30,7 +30,7 @@ app.post('/api/login', loginController.login);
 
 app.post('/api/edit', editProfileController.editProfile);
 
-app.post('/api/password', passwordController.validateOldPassword);
+app.post('/api/changepassword', passwordController.changePassword);
 
 app.get('/api/profile/', profileController.profile);
 

@@ -39,7 +39,8 @@
 
 @media screen and (min-height:600px) {
   .wave {
-    height: 1500px;
+    height: 1635px;
+    width: 825px;
   }
 
 }

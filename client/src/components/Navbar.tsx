@@ -21,7 +21,7 @@ const Navbar = () => {
                     <div className="relative">
                         <div className="flex items-end profile-link cursor-pointer">
                             <img src={profileImg} alt="profile-img" className="w-12 h-12" />
-                            <p className="regular-font text-2xl pl-1">{username}</p>
+                            <p className="regular-font text-2xl pl-1 hidden sm:block">{username}</p>
                         </div>
                         <Dropdown />
                     </div> :

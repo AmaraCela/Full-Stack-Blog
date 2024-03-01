@@ -1,6 +1,6 @@
 import "../styles/home.css"
 import BlogDisplay from "../components/BlogDisplay";
-import TagsComponent from "../components/Wave";
+import Wave from "../components/Wave";
 import Sidebar from "../components/Sidebar";
 import profile from "../assets/profile.png";
 import laptop from '../assets/laptop.jpg';
@@ -31,8 +31,8 @@ const blogs = [
 
 const Home = () => {
     return (
-        <><TagsComponent/>
-            <div className="home flex items-center flex-col relative">
+        <><Wave/>
+            <div className="home flex items-center flex-col relative mx-16 2xl:container 2xl:mx-auto">
                 <div className="flex flex-row w-full home-main">
                     <BlogDisplay blogs={blogs} />
                     <Sidebar />

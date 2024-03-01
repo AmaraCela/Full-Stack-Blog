@@ -64,20 +64,20 @@ const Blog = () => {
     }
 
     return (
-        <div className="blog-details px-16 container xl mx-auto">
-            <div className="carousel w-full flex justify-center items-center p-5">
+        <div className="blog-details md:px-16 px-8 2xl:container 2xl:mx-auto">
+            <div className="carousel w-full flex justify-center items-center relative md:static md:p-6">
 
-                <button className="p-4 cursor-pointer mr-1 prev" onClick={() => handleNavigation("left")}>
+                <button className="p-4 cursor-pointer mr-1 prev md:static md:text-black absolute z-20 left-1 text-white" onClick={() => handleNavigation("left")}>
                     <p>&#10094;</p>
                 </button>
 
                 {blog.images.map((image, index) => (
-                    <div className={`carousel-img ${index !== 0 ? 'hidden' : ''}`} key={image}>
+                    <div className={`carousel-img relative ${index !== 0 ? 'hidden' : ''}`} key={image}>
                         <img src={image} alt="" className="w-full h-full" />
                     </div>
                 ))}
 
-                <button className="p-4 cursor-pointer ml-1 next" onClick={() => handleNavigation("right")}>
+                <button className="p-4 cursor-pointer ml-1 next md:static md:text-black absolute z-20 right-1 text-white" onClick={() => handleNavigation("right")}>
                     <p>&#10095;</p>
                 </button>
 

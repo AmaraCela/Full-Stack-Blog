@@ -14,7 +14,7 @@ const Navbar = () => {
     const isRootPath = location.pathname === '/';
 
     return (
-        <nav className="flex justify-between items-center nav flex-col mx-16 lg:container lg:mx-auto">
+        <nav className="flex justify-between items-center nav flex-col mx-16 2xl:container 2xl:mx-auto">
             <div className="flex justify-between w-full items-center">
                 <Link to="/"><h1 className="title">Chronicles</h1></Link>
                 {isAuthenticated ?

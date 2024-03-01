@@ -1,8 +1,7 @@
-@media screen and (max-width:860px) {
+@media screen and (max-width:980px) {
     .home-main {
         @apply flex-col-reverse;
     }
-
 }
 
 .home {

@@ -50,7 +50,7 @@ const LogIn = () => {
     };
 
     return (
-        <div className="flex justify-center h-4/5 items-center">
+        <div className="flex justify-center h-4/5 items-center mt-2">
             <div className="h-4/5 main-div flex rounded-md bg-white relative">
 
                 <svg id="sw-js-blob-svg" className="absolute z-0 login-svg h-full" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">

@@ -37,14 +37,14 @@
     .blog-description {
         @apply text-base;
     }
+    
+    .carousel-img {
+        height: auto!important;
+    }
 }
 
 @media screen and (max-height:700px) {
     .carousel-img {
         height: 400px;
-    }
-    
-    .blog-details {
-        @apply px-32
     }
 }

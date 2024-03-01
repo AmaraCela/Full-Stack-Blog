@@ -5,3 +5,31 @@
 .setting-bt:hover {
     @apply bg-[#9CBBF2] text-white
 }
+
+@media screen and (max-width: 640px) {
+    .setting-bt {
+        @apply text-xl;
+    }
+}
+
+@media screen and (max-width: 520px) {
+    .setting-bt { 
+        @apply text-base;
+    }
+
+    .setting-options {
+        @apply w-3/4;
+    }
+
+    .setting-hr {
+        @apply w-3/4;
+    }
+    
+    .setting-info {
+        @apply mx-8;
+    }
+
+    .warning-text {
+        @apply text-base;
+    }
+}

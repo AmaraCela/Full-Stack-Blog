@@ -1,9 +1,43 @@
 .profile-div {
     box-shadow: 4px 4px 5px #7CA3E7;
+    max-width: 800px;
 }
 
-@media screen and (max-width:930px) {
+@media screen and (max-width: 980px) {
+    .profile-blogs {
+        @apply flex-col-reverse mt-4 mx-4;
+    }
+
+}
+
+@media screen and (max-width: 930px) {
     .profile-div {
         @apply w-4/5;
     }
+}
+
+@media screen and (max-width: 680px) {
+    .profile-div {
+        @apply flex-col items-center;
+    }
+
+    .profile-info-div {
+        width: 90%;
+    }
+
+    .image-bio {
+        width: 90%;
+        text-align: center;
+    }
+}
+
+@media screen and (max-width: 500px) {
+    .profile-info {
+        @apply flex-col items-center;
+    }
+
+    .info-field {
+        @apply flex flex-col items-center;
+    }
+
 }

@@ -49,10 +49,10 @@ const EditProfile = () => {
     }
 
     return (
-        <div className="flex justify-center h-full items-center">
-            <div className="h-2/3 edit-div flex rounded-md bg-white w-1/2">
-                <div className="grid justify-evenly p-4 items-center rounded-l-md relative w-1/2">
-                    <svg id="sw-js-blob-svg" className="absolute z-0 login-svg h-full" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+        <div className="flex justify-center h-4/5 items-center">
+            <div className="h-4/5 edit-div flex rounded-md bg-white w-1/2">
+                <div className="grid justify-evenly p-4 items-center rounded-l-md relative w-1/2 edit-form">
+                    <svg id="sw-js-blob-svg" className="absolute z-0 edit-svg h-full w-full" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
                         <defs>
                             <linearGradient id="sw-gradient" x1="2" x2="1" y1="1" y2="0">
                                 <stop id="stop1" stopColor="rgba(156, 187, 242, 1)" offset="0%" />
@@ -74,7 +74,7 @@ const EditProfile = () => {
                         <FormButton value="Save" handle={handleSubmit} />
                     </div>
                 </div>
-                <img src={edit} alt="" className="login-blog rounded-r-md p-12" />
+                <img src={edit} alt="" className="edit-blog rounded-r-md p-12 w-1/2" />
             </div>
         </div>
     );

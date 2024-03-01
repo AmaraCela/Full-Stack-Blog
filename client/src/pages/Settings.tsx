@@ -64,16 +64,16 @@ const Settings = () => {
 
     return (
         <div className="flex mt-8 items-center flex-col">
-            <div className="flex w-2/3 justify-evenly">
+            <div className="flex w-2/3 justify-evenly setting-options">
                 <button className={`regular-font pt-4 setting-bt rounded-md text-2xl w-1/2 ${activeButton === 0 ? 'bg-[#acc1e6] text-white' : ''}`} onClick={() => handleClick(0)}>Change password</button>
                 <button className={`regular-font pt-4 setting-bt rounded-md text-2xl w-1/2 ${activeButton === 1 ? 'bg-[#acc1e6] text-white' : ''}`} onClick={() => handleClick(1)}>Delete profile</button>
             </div>
 
-            <hr className="border-black w-2/3" />
+            <hr className="border-black w-2/3 setting-hr" />
 
-            <div className="mt-8">
+            <div className="mt-8 setting-info">
                 <div className={`mt-4 ${divVisibility.changePassword}`}>
-                    <p className="regular-font text-red-700 text-lg">This action will permanently change your password.</p>
+                    <p className="regular-font text-red-700 text-lg warning-text">This action will permanently change your password.</p>
 
                     <div className="mt-4">
                         <FormInput label="Current password" value={inputs.currentPassword} placeholder="Enter current password..." inputType="password"

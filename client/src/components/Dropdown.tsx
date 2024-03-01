@@ -15,9 +15,9 @@ const Dropdown = () => {
     }
 
     return (
-        <div className="absolute z-10 flex flex-col dropdown bg-white p-3 rounded-md">
-            <Link to={`/profile/${userId}`} className="regular-font link">Profile</Link>
-            <button className="regular-font mt-2 link" onClick={handleClick}>Logout</button>
+        <div className="absolute z-10 flex flex-col dropdown w-full items-center bg-white mt-3 p-3 rounded-md">
+            <Link to={`/profile/${userId}`} className="regular-font link text-lg">Profile</Link>
+            <button className="regular-font mt-2 link text-lg" onClick={handleClick}>Logout</button>
         </div>
     );
 }

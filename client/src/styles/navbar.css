@@ -6,7 +6,7 @@
 }
 
 .nav {
-    padding-top: 10px;
+    padding-top: 20px;
 }
 
 .search-input {
@@ -26,11 +26,22 @@
     padding-right: 4px;
     @apply rounded-md text-2xl;
     box-shadow: 2px 2px 2px;
+    width: 100%;
 
 }
 
 @media screen and (max-width:500px) {
-    .search-bar {
-        display: none;
+    .search-input {
+        @apply w-full;
     }
+
+    .nav{
+        @apply mx-12;
+    }
+
+    .title {
+        font-size: 40px;
+    }
+
+
 }

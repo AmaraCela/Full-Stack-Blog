@@ -6,7 +6,6 @@
 .dropdown {
     border: 2px solid black;
     transition: opacity 0.4s ease-in;
-    right: 3.5%;
     opacity: 0;
 }
 
@@ -23,3 +22,4 @@
 .link:hover::after {
     width: 100%;
 }
+

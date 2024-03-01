@@ -1,6 +1,6 @@
 .profile-div {
     box-shadow: 4px 4px 5px #7CA3E7;
-    max-width: 800px;
+    /* max-width: 800px; */
 }
 
 @media screen and (max-width: 980px) {

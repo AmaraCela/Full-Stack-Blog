@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { AppDispatch, RootState } from "../store/store";
 import { editProfile } from "../store/auth/authThunks";
 import { useNavigate } from "react-router-dom";
-import edit from "../assets/pencilGirl-transformed-removebg-preview.png";
+import edit from "../assets/girl-sitting-bean-bag-chair-working-laptop_129422-107-transformed-removebg-preview.png";
 import FormButton from "../components/FormButton";
 import FormInput from "../components/FormInput";
 import "../styles/editProfile.css";
@@ -74,7 +74,7 @@ const EditProfile = () => {
                         <FormButton value="Save" handle={handleSubmit} />
                     </div>
                 </div>
-                <img src={edit} alt="" className="edit-blog rounded-r-md p-12 w-1/2" />
+                <img src={edit} alt="" className="edit-blog rounded-r-md w-1/2" />
             </div>
         </div>
     );

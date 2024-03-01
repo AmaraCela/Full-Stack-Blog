@@ -49,7 +49,7 @@ const Profile = () => {
     return (
         <div className="flex items-center flex-col">
 
-            <div className="w-3/5 bg-[#9CBBF2] rounded-md flex pt-4 pb-4 justify-between mt-4 profile-div">
+            {/* <div className="w-3/5 bg-[#9CBBF2] rounded-md flex pt-4 pb-4 justify-between mt-4 profile-div">
 
                 <div className="flex flex-col items-center flex-wrap w-3/5 px-8 image-bio">
                     <img src={profileImg} alt="" className="w-32" />
@@ -84,7 +84,25 @@ const Profile = () => {
                     </div>
                 </div>
 
+            </div> */}
+
+            <div className="bg-white flex flex-col items-end w-1/2 profile-div rounded-md p-4">
+                <div className="flex">
+                    {loggedInUserId === user?.user_id ?
+                        <Link to={`/editprofile/${user?.user_id}`} title="Edit profile"><img src={edit} alt="" className="w-8 h-8 mt-1" /></Link> : ""}
+                    {loggedInUserId === user?.user_id ?
+                        <Link to={`/settings`} title="Profile settings"><img src={settings} alt="" className="w-8 h-8 mt-1" /></Link> : ""}
+                </div>
+                <div className="w-full flex flex-col">
+                    <div className="flex relative items-center">
+                        <img className="w-32 z-30" src={profileImg} alt="" />
+                        <div className="bg-[#9CBBF2] absolute left-24 h-3/4 flex items-center pl-12">
+                            <p>Short description lorem ipsum that goes like this.</p>
+                        </div>
+                    </div>
+                </div>
             </div>
+
 
             <p className="regular-font text-2xl mt-8">amara's posts</p>
             <hr className="border-black w-5/6 mx-8 border-2" />

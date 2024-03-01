@@ -73,7 +73,7 @@ const Blog = () => {
 
                 {blog.images.map((image, index) => (
                     <div className={`carousel-img relative ${index !== 0 ? 'hidden' : ''}`} key={image}>
-                        <img src={image} alt="" className="w-full h-full" />
+                        <img src={image} alt="" className="w-full h-full object-cover" />
                     </div>
                 ))}
 

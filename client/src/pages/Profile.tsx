@@ -86,20 +86,46 @@ const Profile = () => {
 
             </div> */}
 
-            <div className="bg-white flex flex-col items-end w-1/2 profile-div rounded-md p-4">
+            <div className="bg-[#9CBBF2] flex flex-col items-end w-2/5 profile-div rounded-md p-4">
+
                 <div className="flex">
                     {loggedInUserId === user?.user_id ?
                         <Link to={`/editprofile/${user?.user_id}`} title="Edit profile"><img src={edit} alt="" className="w-8 h-8 mt-1" /></Link> : ""}
                     {loggedInUserId === user?.user_id ?
                         <Link to={`/settings`} title="Profile settings"><img src={settings} alt="" className="w-8 h-8 mt-1" /></Link> : ""}
                 </div>
-                <div className="w-full flex flex-col">
-                    <div className="flex relative items-center">
+
+                <div className="w-full flex flex-col justify-center items-center">
+
+                    <div className="flex relative items-center w-full">
                         <img className="w-32 z-30" src={profileImg} alt="" />
-                        <div className="bg-[#9CBBF2] absolute left-24 h-3/4 flex items-center pl-12">
-                            <p>Short description lorem ipsum that goes like this.</p>
+                        <div className="bg-white absolute left-24 h-3/4 flex items-center pl-12 pr-2 rounded-md w-3/4">
+                            <p className="regular-font text-lg">Short description lorem ipsum that goes like this.</p>
                         </div>
                     </div>
+
+                    <div className="flex relative items-center justify-end w-full">
+                        <div className="bg-white absolute right-24 h-3/4 w-3/4 flex items-center pr-12 pl-2 rounded-md">
+
+                            <p className="regular-font text-lg font-bold">Username: </p>
+                            <p className="regular-font text-lg pl-2">{user?.username}</p>
+
+                        </div>
+                        <div className="bg-white w-32 rounded-full z-30 border-black border-4">
+                            <img className="p-5" src={username} alt="" />
+                        </div>
+                    </div>
+
+                    <div className="flex relative items-center w-full">
+                        <div className="bg-white w-32 h-32 rounded-full z-30 border-black border-4 flex items-center">
+                            <img className="p-5" src={email} alt="" />
+                        </div>
+                        <div className="bg-white absolute left-24 h-3/4 w-3/4 flex items-center pl-12 rounded-md">
+                            <p className="regular-font text-lg font-bold">Email:</p>
+                            <p className="regular-font text-lg pl-2">{user?.email}</p>
+                        </div>
+                    </div>
+
                 </div>
             </div>
 

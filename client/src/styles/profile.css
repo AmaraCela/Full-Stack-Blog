@@ -1,7 +1,15 @@
 .profile-div {
     box-shadow: 4px 4px 5px #7CA3E7;
-    /* max-width: 800px; */
 }
+
+.profile-link {
+    transition: background-color 300ms ease-in;
+}
+
+.profile-link:hover {
+    background-color: white;
+}
+
 
 @media screen and (max-width: 980px) {
     .profile-blogs {

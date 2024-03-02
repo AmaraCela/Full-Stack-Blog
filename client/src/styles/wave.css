@@ -1,19 +1,8 @@
-.tags {
-  width: 100%
-}
-
-.tag {
-  @apply bg-[#fdfd96be] text-center m-1 h-12 text-3xl rounded-lg flex items-center justify-center cursor-pointer;
-  width: 100px;
-  box-shadow: 3px 3px 3px black;
-}
-
-
 .wrapper {
   height: 125vh;
   top: 197px;
   transform: translate(-50%, -50%);
-  background-image: linear-gradient(to top, rgb(240 191 191), color(srgb 0.94 0.75 0.75)100%);
+  background-image: linear-gradient(to top, #f0bfbf, color(srgb 0.94 0.75 0.75)100%);
 }
 
 .wave {

@@ -13,6 +13,8 @@ import username from "../assets/username.png";
 import email from "../assets/email-removebg-preview.png";
 import settings from "../assets/settings.png";
 import Sidebar from "../components/Sidebar";
+import blog from "../assets/blog.png";
+import resume from "../assets/resume.png";
 
 const Profile = () => {
     const dispatch = useDispatch<AppDispatch>();
@@ -49,12 +51,12 @@ const Profile = () => {
     return (
         <div className="flex items-center flex-col">
 
-            {/* <div className="w-3/5 bg-[#9CBBF2] rounded-md flex pt-4 pb-4 justify-between mt-4 profile-div">
+            <div className="w-3/5 bg-[#9CBBF2] rounded-md flex pt-4 pb-4 justify-between mt-4 profile-div" id="profile">
 
                 <div className="flex flex-col items-center flex-wrap w-3/5 px-8 image-bio">
                     <img src={profileImg} alt="" className="w-32" />
                     <p className="regular-font pt-4 text-lg font-semibold">Bio</p>
-                    <p className="regular-font text-sm">Short description lorem ipsum that goes on like this.</p>
+                    <p className="regular-font text-sm text-center">Short description lorem ipsum that goes on like this.</p>
                 </div>
 
                 <div className="flex justify-evenly w-full relative items-center bg-white rounded-md mx-2 my-4 border-black border-2 profile-info-div">
@@ -84,9 +86,9 @@ const Profile = () => {
                     </div>
                 </div>
 
-            </div> */}
+            </div>
 
-            <div className="bg-[#9CBBF2] flex flex-col items-end w-2/5 profile-div rounded-md p-4">
+            {/* <div className="bg-[#9CBBF2] flex flex-col items-end w-2/5 profile-div rounded-md p-4">
 
                 <div className="flex">
                     {loggedInUserId === user?.user_id ?
@@ -127,13 +129,24 @@ const Profile = () => {
                     </div>
 
                 </div>
+            </div> */}
+
+            <div className="bg-[#9cbbf2] w-full mt-8 sticky top-1 z-40 flex items-center justify-evenly py-4">
+
+                <a href="#profile-blogs"><div className="flex flex-col items-center profile-link p-2 rounded-md">
+                    <img className="w-12" src={blog} alt="" />
+                    <p className="text-center regular-font text-2xl pt-1">Posts</p>
+                </div>
+                </a>
+
+                <a href="#profile"><div className="flex flex-col items-center ml-4 profile-link p-2 rounded-md">
+                    <img className="w-12" src={resume} alt="" />
+                    <p className="text-center regular-font text-2xl pt-1">Profile</p>
+                </div>
+                </a>
             </div>
 
-
-            <p className="regular-font text-2xl mt-8">amara's posts</p>
-            <hr className="border-black w-5/6 mx-8 border-2" />
-
-            <div className="flex mx-16 2xl:container 2xl:mx-auto profile-blogs">
+            <div className="flex mx-16 2xl:container 2xl:mx-auto profile-blogs" id="profile-blogs">
                 <BlogDisplay blogs={blogs} />
                 <Sidebar />
             </div>

@@ -39,15 +39,19 @@ const CreateBlog = () => {
                     <FormInput label="Title for new blog:" value={inputs.title} placeholder="Enter title..."
                         updateValue={(value) => setInputs({ ...inputs, title: value })} errorMessage={errors.title} />
 
-                    <label htmlFor="description" className="label regular-font">Description:</label>
-                    <textarea name="description" id="description" cols={30} rows={10} className="input-format" placeholder="Enter description..."
-                        onChange={(event) => setInputs({ ...inputs, description: event.target.value })} />
+                    <div className="flex flex-col">
+                        <label htmlFor="description" className="label regular-font">Description:</label>
+                        <textarea name="description" id="description" cols={30} rows={10} className="input-format" placeholder="Enter description..."
+                            onChange={(event) => setInputs({ ...inputs, description: event.target.value })} />
+                    </div>
 
-                    <label htmlFor="tags-dropdown" className="label regular-font">Select tags:</label>
-                    <select name="tag" id="tags-dropdown" className="input-format regular-font" multiple onChange={(event) => setInputs({ ...inputs, tags: [...inputs.tags, event.target.value] })}>
-                        <option value="tag1">tag1</option>
-                        <option value="tag2">tag2</option>
-                    </select>
+                    <div className="flex flex-col">
+                        <label htmlFor="tags-dropdown" className="label regular-font">Select tags:</label>
+                        <select name="tag" id="tags-dropdown" className="input-format regular-font" multiple onChange={(event) => setInputs({ ...inputs, tags: [...inputs.tags, event.target.value] })}>
+                            <option value="tag1">tag1</option>
+                            <option value="tag2">tag2</option>
+                        </select>
+                    </div>
 
                     <input type="file" className="pt-4 regular-font label w-1/3 flex items-center file-input" multiple />
                     <input type="submit" value="Submit" className="submit-bt-blog flex items-center justify-center regular-font font-semibold rounded-md text-xl border-solid border-black border-2 w-fit h-fit mb-4 cursor-pointer p-1" />

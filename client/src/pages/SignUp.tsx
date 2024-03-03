@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import signup from "../assets/signup-transformed.jpeg";
 import { useNavigate } from "react-router-dom";
 import FormButton from "../components/FormButton";
@@ -19,7 +19,7 @@ const SignUp = () => {
     const isLoading = useSelector((state: RootState) => state.user.loading);
 
     const { hasErrors, errors, validateForm } = useSignupForm();
-    const [isButtonPressed, setIsButtonPressed] = useState(false);
+    const isButtonPressed = useRef(false);
 
     const [inputs, setInputs] = useState({
         username: "",
@@ -40,7 +40,7 @@ const SignUp = () => {
 
     const handleSubmit = (): void => {
         validateForm (inputs);
-        setIsButtonPressed(true);
+        isButtonPressed.current = false;
 
         if (!hasErrors) {
             dispatch(signupUser({

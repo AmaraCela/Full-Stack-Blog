@@ -1,17 +1,17 @@
 import { useEffect, useState } from "react";
 import login from "../assets/login-transformed.jpeg";
 import '../styles/form.css';
-import { useDispatch, useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 import { loginUser } from "../store/auth/authThunks";
 import FormInput from "../components/FormInput";
 import FormLink from "../components/FormLink";
 import FormButton from "../components/FormButton";
-import { AppDispatch, RootState } from "../store/store";
+import { RootState, useAppDispatch } from "../store/store";
 import { useNavigate } from "react-router-dom";
 import Loading from "../components/Loading";
 
 const LogIn = () => {
-    const dispatch = useDispatch<AppDispatch>();
+    const dispatch = useAppDispatch();
     const navigate = useNavigate();
     const isLoggedIn = useSelector((state: RootState) => state.user.isLoggedIn);
     const error = useSelector((state: RootState) => state.user.loginError);

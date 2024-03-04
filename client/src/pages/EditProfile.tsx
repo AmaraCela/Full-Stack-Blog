@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { AppDispatch, RootState } from "../store/store";
+import { useSelector } from "react-redux";
+import { RootState, useAppDispatch } from "../store/store";
 import { editProfile } from "../store/auth/authThunks";
 import { useNavigate } from "react-router-dom";
 import edit from "../assets/girl-sitting-bean-bag-chair-working-laptop_129422-107-transformed-removebg-preview.png";
@@ -10,7 +10,7 @@ import "../styles/editProfile.css";
 import { EditProfileBodyType, useEditProfileForm } from "../hooks/useEditProfileForm";
 
 const EditProfile = () => {
-    const dispatch = useDispatch<AppDispatch>();
+    const dispatch = useAppDispatch();
     const navigate = useNavigate();
 
     const currentId = useSelector((state: RootState) => state.user.id) ?? '';

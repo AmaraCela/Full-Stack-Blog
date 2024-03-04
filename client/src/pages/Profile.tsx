@@ -3,8 +3,8 @@ import profileImg from "../assets/profileImg.png";
 import "../styles/profile.css";
 import profile from "../assets/profile.png";
 import laptop from '../assets/laptop.jpg';
-import { useDispatch, useSelector } from "react-redux";
-import { AppDispatch, RootState } from "../store/store";
+import { useSelector } from "react-redux";
+import { RootState, useAppDispatch } from "../store/store";
 import { Link, useParams } from "react-router-dom";
 import edit from '../assets/edit-246.png';
 import { useEffect } from "react";
@@ -17,7 +17,7 @@ import blog from "../assets/blog.png";
 import resume from "../assets/resume.png";
 
 const Profile = () => {
-    const dispatch = useDispatch<AppDispatch>();
+    const dispatch = useAppDispatch();
     const { id } = useParams();
 
     const loggedInUserId = useSelector((state: RootState) => state.user.id);

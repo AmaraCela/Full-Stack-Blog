@@ -4,15 +4,15 @@ import { useNavigate } from "react-router-dom";
 import FormButton from "../components/FormButton";
 import FormInput from "../components/FormInput";
 import FormLink from "../components/FormLink";
-import { useDispatch, useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 import { signupUser } from "../store/auth/authThunks";
-import { RootState } from "../store/store";
+import { RootState, useAppDispatch } from "../store/store";
 import Loading from "../components/Loading";
 import { useSignupForm } from "../hooks/useSignupForm";
 
 const SignUp = () => {
     const navigate = useNavigate();
-    const dispatch = useDispatch();
+    const dispatch = useAppDispatch();
 
     const isLoggedIn = useSelector((state: RootState) => state.user.isLoggedIn);
     const error = useSelector((state: RootState) => state.user.signupError);

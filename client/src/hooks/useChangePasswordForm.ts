@@ -29,7 +29,7 @@ export const useChangePasswordForm = () => {
             verifyNewPassword: verifyNewPasswordError,
         });
 
-        setHasErrors(!!(newPasswordError && verifyNewPasswordError));
+        setHasErrors(Boolean(newPasswordError || verifyNewPasswordError));
     }
 
     return {

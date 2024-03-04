@@ -67,7 +67,7 @@ const Settings = () => {
 
                     <div className="mt-4">
                         <FormInput label="Current password" value={inputs.currentPassword} placeholder="Enter current password..." inputType="password"
-                            errorMessage={error ?? errors.currentPassword}
+                            errorMessage={success || error || errors.currentPassword}
                             updateValue={(value) => setInputs({ ...inputs, currentPassword: value })} />
 
                         <div className="mt-4">

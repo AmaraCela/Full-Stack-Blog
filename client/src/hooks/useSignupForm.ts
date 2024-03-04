@@ -34,7 +34,7 @@ export const useSignupForm = () => {
             verify: verifyPasswordError
         });
 
-        setHasErrors(!!(usernameError || emailError || passwordError || verifyPasswordError));
+        setHasErrors(Boolean(usernameError || emailError || passwordError || verifyPasswordError));
 
     }
 

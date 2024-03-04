@@ -8,13 +8,9 @@ export const changePassword = createAsyncThunk(
         currentPassword: string,
         newPassword: string,
     }, { rejectWithValue }) => {
-        console.log('hereeeeeeeeeeeee');
         const response = await createAPI("changePassword", {method:'POST'})(inputs);
-        console.log('object');
-        console.log(response);
         const data = await response.json();
 
-        console.log(data);
         if (response.status === 200) {
             return data.succesfulMesage;
         }

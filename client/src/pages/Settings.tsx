@@ -1,20 +1,25 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import FormInput from "../components/FormInput";
 import "../styles/settings.css";
 import FormButton from "../components/FormButton";
 import { useSelector } from "react-redux";
-import { RootState } from "../store/store";
+import { RootState, useAppDispatch } from "../store/store";
 import { ChangePasswordBodyType, useChangePasswordForm } from "../hooks/useChangePasswordForm";
+import { changePassword } from "../store/password/passwordThunks";
 
 const Settings = () => {
 
-    const user_id = useSelector((state: RootState) => state.user.id);
+    const username = useSelector((state: RootState) => state.user.username);
     const [activeButton, setActiveButton] = useState<number>(0);
-
     const { hasErrors, errors, validateForm } = useChangePasswordForm();
+    const dispatch = useAppDispatch();
+    const isButtonPressed = useRef(false);
+
+    const error = useSelector((state: RootState) => state.password.error);
+    const success = useSelector((state: RootState) => state.password.success);
 
     const [inputs, setInputs] = useState<ChangePasswordBodyType>({
-        currentId: user_id ?? '',
+        currentUsername: username ?? '',
         currentPassword: '',
         newPassword: '',
         verifyNewPassword: '',
@@ -37,13 +42,13 @@ const Settings = () => {
     }
 
     useEffect(() => {
-        if(!hasErrors) {
-            
-        }
-    }, [hasErrors]);
+        isButtonPressed.current && validateForm(inputs);
+    }, [inputs]);
 
     const handleSubmit = () => {
         validateForm(inputs);
+        isButtonPressed.current = true;
+        !hasErrors && dispatch(changePassword(inputs));
     }
 
 
@@ -62,7 +67,7 @@ const Settings = () => {
 
                     <div className="mt-4">
                         <FormInput label="Current password" value={inputs.currentPassword} placeholder="Enter current password..." inputType="password"
-                            errorMessage={errors.currentPassword}
+                            errorMessage={error ?? errors.currentPassword}
                             updateValue={(value) => setInputs({ ...inputs, currentPassword: value })} />
 
                         <div className="mt-4">
@@ -79,9 +84,7 @@ const Settings = () => {
                     </div>
 
                     <div className="mt-4">
-                        <FormButton value="Change" handle={function (): Promise<void> {
-                            throw new Error("Function not implemented.");
-                        }} />
+                        <FormButton value="Change" handle={handleSubmit} />
                     </div>
                 </div>
 

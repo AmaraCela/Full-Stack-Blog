@@ -2,6 +2,7 @@ import { configureStore } from "@reduxjs/toolkit";
 import userReducer from "./auth/userSlice";
 import profileReducer from "./profile/profileSlice";
 import createBlogReducer from "./blog/blogSlice";
+import passwordReducer from "./password/passwordSlice";
 import { useDispatch } from "react-redux";
 
 export const store = configureStore({
@@ -9,6 +10,7 @@ export const store = configureStore({
         user: userReducer,
         profile: profileReducer,
         createBlog: createBlogReducer,
+        password: passwordReducer,
     },
 });
 

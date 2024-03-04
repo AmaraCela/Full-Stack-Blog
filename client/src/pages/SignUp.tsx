@@ -29,7 +29,7 @@ const SignUp = () => {
     });
 
     useEffect(() => {
-       isButtonPressed && validateForm(inputs);
+       isButtonPressed.current && validateForm(inputs);
     }, [inputs]);
 
     useEffect(() => {
@@ -40,7 +40,7 @@ const SignUp = () => {
 
     const handleSubmit = (): void => {
         validateForm (inputs);
-        isButtonPressed.current = false;
+        isButtonPressed.current = true;
 
         if (!hasErrors) {
             dispatch(signupUser({
@@ -72,7 +72,7 @@ const SignUp = () => {
                     <h1 className="regular-font text-3xl font-bold form-title">Signup</h1>
 
                     <FormInput label="Username" value={inputs.username} placeholder="Enter Username..." name="username"
-                        errorMessage={error ? error : errors.username}
+                        errorMessage={error ?? errors.username}
                         updateValue={(value) => setInputs({ ...inputs, username: value })}
                     />
 

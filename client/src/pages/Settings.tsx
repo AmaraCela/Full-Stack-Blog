@@ -2,45 +2,29 @@ import { useEffect, useState } from "react";
 import FormInput from "../components/FormInput";
 import "../styles/settings.css";
 import FormButton from "../components/FormButton";
-import useCurrentPasswordValidate from "../hooks/useCurrentPasswordValidate";
 import { useSelector } from "react-redux";
 import { RootState } from "../store/store";
-// import usePasswordValidation from "../hooks/usePasswordValidation";
-// import useVerifyPasswordValidation from "../hooks/useVerifyPasswordValidation";
+import { ChangePasswordBodyType, useChangePasswordForm } from "../hooks/useChangePasswordForm";
 
 const Settings = () => {
 
     const user_id = useSelector((state: RootState) => state.user.id);
+    const [activeButton, setActiveButton] = useState<number>(0);
 
-    const [inputs, setInputs] = useState({
+    const { hasErrors, errors, validateForm } = useChangePasswordForm();
+
+    const [inputs, setInputs] = useState<ChangePasswordBodyType>({
+        currentId: user_id ?? '',
         currentPassword: '',
         newPassword: '',
         verifyNewPassword: '',
     });
 
-    const [errors, setErrors] = useState({
-        currentPasswordError: '',
-        newPasswordError: '',
-        verifyNewPasswordError: ''
-    });
 
     const [divVisibility, setDivVisibility] = useState({
         changePassword: '',
         deleteProfile: 'hidden',
     });
-
-    const [activeButton, setActiveButton] = useState<number>(0);
-
-    const [validForm, setValidForm] = useState(false);
-
-    const currentPasswordError = useCurrentPasswordValidate(user_id ?? '', inputs.currentPassword);
-    // const newPasswordError = usePasswordValidation(inputs.currentPassword);
-    // const verifyNewPasswordError = useVerifyPasswordValidation(inputs.newPassword, inputs.verifyNewPassword);
-
-    useEffect(() => {
-        // const valid = newPasswordError === '' && verifyNewPasswordError === '';
-        // setValidForm(valid);
-    }, [inputs]);
 
     const handleClick = (button: number) => {
 
@@ -52,15 +36,16 @@ const Settings = () => {
         setActiveButton(button);
     }
 
-
-
-    const handleChangePassword = () => {
-
-        if(validForm)
-        {
+    useEffect(() => {
+        if(!hasErrors) {
             
         }
+    }, [hasErrors]);
+
+    const handleSubmit = () => {
+        validateForm(inputs);
     }
+
 
     return (
         <div className="flex mt-8 items-center flex-col">
@@ -77,18 +62,18 @@ const Settings = () => {
 
                     <div className="mt-4">
                         <FormInput label="Current password" value={inputs.currentPassword} placeholder="Enter current password..." inputType="password"
-                            errorMessage={errors.currentPasswordError}
+                            errorMessage={errors.currentPassword}
                             updateValue={(value) => setInputs({ ...inputs, currentPassword: value })} />
 
                         <div className="mt-4">
                             <FormInput label="New password" value={inputs.newPassword} placeholder="Enter new password..." inputType="password"
-                                errorMessage={errors.newPasswordError}
+                                errorMessage={errors.newPassword}
                                 updateValue={(value) => setInputs({ ...inputs, newPassword: value })} />
                         </div>
 
                         <div className="mt-4">
                             <FormInput label="Verify new password" value={inputs.verifyNewPassword} placeholder="Retype password..." inputType="password"
-                                errorMessage={errors.verifyNewPasswordError}
+                                errorMessage={errors.verifyNewPassword}
                                 updateValue={(value) => setInputs({ ...inputs, verifyNewPassword: value })} />
                         </div>
                     </div>
@@ -109,9 +94,7 @@ const Settings = () => {
                     </div>
 
                     <div className="mt-4">
-                        <FormButton value="Delete" handle={function (): Promise<void> {
-                            throw new Error("Function not implemented.");
-                        }} />
+                        <FormButton value="Delete" handle={handleSubmit} />
                     </div>
                 </div>
             </div>

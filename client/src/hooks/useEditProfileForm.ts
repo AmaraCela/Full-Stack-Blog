@@ -6,6 +6,7 @@ export type EditProfileBodyType = {
     username: string;
     email: string;
 }
+
 export const useEditProfileForm = () => {
     const [hasErrors, setHasErrors] = useState<boolean>(true);
 
@@ -23,7 +24,7 @@ export const useEditProfileForm = () => {
             email: emailError
         });
 
-        setHasErrors(usernameError || emailError ? true : false);
+        setHasErrors(!!(usernameError || emailError));
     }
 
     return {

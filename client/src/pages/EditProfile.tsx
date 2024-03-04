@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useSelector } from "react-redux";
 import { RootState, useAppDispatch } from "../store/store";
 import { editProfile } from "../store/auth/authThunks";
@@ -17,7 +17,7 @@ const EditProfile = () => {
     const currentUsername = useSelector((state: RootState) => state.user.username);
     const currentEmail = useSelector((state: RootState) => state.user.email);
 
-    const [isButtonPressed, setIsButtonPressed] = useState(false);
+    const isButtonPressed = useRef(false);
 
     const { hasErrors, errors, validateForm } = useEditProfileForm();
     const [inputs, setInputs] = useState<EditProfileBodyType>(
@@ -40,12 +40,12 @@ const EditProfile = () => {
     }, [hasErrors]);
 
     useEffect(() => {
-        isButtonPressed && validateForm(inputs);
+        isButtonPressed.current && validateForm(inputs);
     }, [inputs])
 
     const handleSubmit =  (): void => {
         validateForm(inputs);
-        setIsButtonPressed(true);
+        isButtonPressed.current = true;
     }
 
     return (

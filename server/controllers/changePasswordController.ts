@@ -8,7 +8,6 @@ export async function changePassword(req: Request, res: Response) {
         if (typeof (result) === 'object') {
             try {
                 const changed = await User.changePassword(currentUsername, newPassword);
-                console.log(changed);
                 changed ? res.status(200).json({succesfulMesage: 'Password changed successfully.' }) : res.status(401).json({errorMessage: 'New password can not be the same as the current password.'});
             }
             catch (error) {

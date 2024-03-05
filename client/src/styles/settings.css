@@ -6,6 +6,10 @@
     @apply bg-[#9CBBF2] text-white
 }
 
+.info-box {
+    box-shadow: 3px 5px 10px rgb(196, 102, 102);
+}
+
 @media screen and (max-width: 640px) {
     .setting-bt {
         @apply text-xl;

@@ -133,13 +133,13 @@ const Profile = () => {
 
             <div className="bg-[#9cbbf2] w-full mt-8 sticky top-1 z-40 flex items-center justify-evenly py-4">
 
-                <a href="#profile-blogs"><div className="flex flex-col items-center profile-link p-2 rounded-md">
+                <a href="#profile-blogs"><div className="flex flex-col items-center profile-links p-2 rounded-md">
                     <img className="w-12" src={blog} alt="" />
                     <p className="text-center regular-font text-2xl pt-1">Posts</p>
                 </div>
                 </a>
 
-                <a href="#profile"><div className="flex flex-col items-center ml-4 profile-link p-2 rounded-md">
+                <a href="#profile"><div className="flex flex-col items-center ml-4 profile-links p-2 rounded-md">
                     <img className="w-12" src={resume} alt="" />
                     <p className="text-center regular-font text-2xl pt-1">Profile</p>
                 </div>

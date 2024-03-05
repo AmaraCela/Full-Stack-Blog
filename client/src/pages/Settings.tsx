@@ -7,14 +7,19 @@ import { RootState, useAppDispatch } from "../store/store";
 import { ChangePasswordBodyType, useChangePasswordForm } from "../hooks/useChangePasswordForm";
 import { changePassword } from "../store/password/passwordThunks";
 import { deleteUser } from "../store/auth/authThunks";
+import { useNavigate } from "react-router-dom";
+import { resetPasswordState } from "../store/password/passwordSlice";
 
 const Settings = () => {
 
+    const dispatch = useAppDispatch();
+    const navigate = useNavigate();
     const username = useSelector((state: RootState) => state.user.username);
+    const user_id = useSelector((state: RootState) => state.user.id);
     const [activeButton, setActiveButton] = useState<number>(0);
     const { hasErrors, errors, validateForm } = useChangePasswordForm();
-    const dispatch = useAppDispatch();
     const isButtonPressed = useRef(false);
+    const [successfulDisplay, setSuccessfulDisplay] = useState("hidden");
 
     const changePasswordError = useSelector((state: RootState) => state.password.error);
     const changePasswordSuccess = useSelector((state: RootState) => state.password.success);
@@ -27,11 +32,10 @@ const Settings = () => {
         verifyNewPassword: '',
     });
 
-    const [deleteUserInputs, setDeleteUserInputs] = useState ({
+    const [deleteUserInputs, setDeleteUserInputs] = useState({
         username: username ?? '',
         currentPassword: ""
     });
-
 
     const [divVisibility, setDivVisibility] = useState({
         changePassword: '',
@@ -51,6 +55,11 @@ const Settings = () => {
     useEffect(() => {
         isButtonPressed.current && validateForm(changePasswordInputs);
     }, [changePasswordInputs]);
+
+    useEffect(() => {
+        console.log(changePasswordSuccess);
+        changePasswordSuccess && setSuccessfulDisplay('flex');
+    }, [changePasswordSuccess])
 
     const handleChangePasswordSubmit = () => {
         validateForm(changePasswordInputs);
@@ -110,6 +119,16 @@ const Settings = () => {
                     <div className="mt-4">
                         <FormButton value="Delete" handle={handleDeleteUserSubmit} />
                     </div>
+                </div>
+            </div>
+
+            <div className={`w-full h-full absolute justify-center items-center ${successfulDisplay}`}>
+                <div className="bg-white w-1/3 h-1/3 flex items-center justify-center flex-col rounded-md info-box">
+                    <p>{changePasswordSuccess}</p>
+                    <FormButton value="Okay" handle={function (): void {
+                        dispatch(resetPasswordState());
+                        navigate(`/profile/${user_id}`);
+                    }} />
                 </div>
             </div>
         </div>

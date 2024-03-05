@@ -17,19 +17,20 @@ const passwordSlice = createSlice({
     name: 'password',
     initialState,
     reducers: {
-
+        resetPasswordState: (state) => {
+            state.loading = false;
+            state.error = '';
+            state.success = '';
+        }
     },
     extraReducers: builder => {
         builder.addCase(changePassword.pending, (state) => {
             state.loading = true;
         }).addCase(changePassword.fulfilled, (state, action) => {
-            console.log('heyy');
             state.loading = false;
-            state.success = action.payload.succesfulMesage;
+            state.success = action.payload;
             state.error = "";
         }).addCase(changePassword.rejected, (state, action) => {
-            console.log('rejected');
-            console.log(action.payload);
             state.loading = false;
             state.error = action.payload as string;
             state.success = "";
@@ -37,4 +38,5 @@ const passwordSlice = createSlice({
     }
 });
 
+export const { resetPasswordState } = passwordSlice.actions;
 export default passwordSlice.reducer;

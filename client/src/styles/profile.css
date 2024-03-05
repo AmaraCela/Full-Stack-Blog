@@ -2,11 +2,11 @@
     box-shadow: 4px 4px 5px #7CA3E7;
 }
 
-.profile-link {
+.profile-links {
     transition: background-color 300ms ease-in;
 }
 
-.profile-link:hover {
+.profile-links:hover {
     background-color: white;
 }
 

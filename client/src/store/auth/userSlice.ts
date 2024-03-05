@@ -38,43 +38,58 @@ const userSlice = createSlice({
         }
     },
     extraReducers: builder => {
-        builder.addCase(loginUser.pending, (state) => {
-            state.isLoggedIn = false;
-            state.loading = true;
-        }).addCase(loginUser.fulfilled, (state, action) => {
-            state.loading = false;
-            state.isLoggedIn = true;
-            state.username = action.payload.username;
-            state.email = action.payload.email;
-            state.id = action.payload.user_id;
-            state.loginError = null;
-        }).addCase(loginUser.rejected, (state, action) => {
-            state.loading = false;
-            state.isLoggedIn = false;
-            state.username = null;
-            state.email = null;
-            state.id = null;
-            state.loginError = action.payload as string;
-        }).addCase(signupUser.pending, (state) => {
-            state.loading = true;
-        }).addCase(signupUser.rejected, (state, action) => {
-            state.signupError = action.payload as string;
-            state.loading = false;
-        }).addCase(editProfile.pending, (state) => {
-            state.loading = true;
-            state.editError = null;
-        }).addCase(editProfile.fulfilled, (state, action) => {
-            state.loading = false;
-            state.isLoggedIn = true;
-            state.username = action.payload.username;
-            state.id = action.payload.user_id;
-            state.email = action.payload.email;
-        }).addCase(editProfile.rejected, (state, action) => {
-            state.loading = false;
-            state.editError = action.payload as string;
-        });
+        loginUserBuilder(builder);
+        signupUserBuilder(builder);
+        editProfileBuilder(builder);
     }
 });
+
+
+const loginUserBuilder = (builder: any) => {
+    builder.addCase(loginUser.pending, (state: UserState) => {
+        state.isLoggedIn = false;
+        state.loading = true;
+    }).addCase(loginUser.fulfilled, (state: UserState, action: any) => {
+        state.loading = false;
+        state.isLoggedIn = true;
+        state.username = action.payload.username;
+        state.email = action.payload.email;
+        state.id = action.payload.user_id;
+        state.loginError = null;
+    }).addCase(loginUser.rejected, (state: UserState, action: any) => {
+        state.loading = false;
+        state.isLoggedIn = false;
+        state.username = null;
+        state.email = null;
+        state.id = null;
+        state.loginError = action.payload as string;
+    });
+}
+
+const signupUserBuilder = (builder: any) => {
+    builder.addCase(signupUser.pending, (state: UserState) => {
+        state.loading = true;
+    }).addCase(signupUser.rejected, (state: UserState, action: any) => {
+        state.signupError = action.payload as string;
+        state.loading = false;
+    });
+}
+
+const editProfileBuilder = (builder: any) => {
+    builder.addCase(editProfile.pending, (state: UserState) => {
+        state.loading = true;
+        state.editError = null;
+    }).addCase(editProfile.fulfilled, (state: UserState, action: any) => {
+        state.loading = false;
+        state.isLoggedIn = true;
+        state.username = action.payload.username;
+        state.id = action.payload.user_id;
+        state.email = action.payload.email;
+    }).addCase(editProfile.rejected, (state: UserState, action: any) => {
+        state.loading = false;
+        state.editError = action.payload as string;
+    });
+}
 
 export const { logoutUser } = userSlice.actions;
 export default userSlice.reducer;

@@ -1,5 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { loginUser, signupUser, editProfile } from "./authThunks";
+import { loginUser, signupUser, editProfile, deleteUser } from "./authThunks";
 
 interface UserState {
     isLoggedIn: boolean;
@@ -11,6 +11,7 @@ interface UserState {
     loginError: string | null;
     signupError: string | null;
     editError: string | null;
+    deleteError: string | null;
 }
 
 const initialState: UserState = {
@@ -23,6 +24,7 @@ const initialState: UserState = {
     loginError: null,
     signupError: null,
     editError: null,
+    deleteError: null,
 }
 
 const userSlice = createSlice({
@@ -41,6 +43,7 @@ const userSlice = createSlice({
         loginUserBuilder(builder);
         signupUserBuilder(builder);
         editProfileBuilder(builder);
+        deleteUserBuilder(builder);
     }
 });
 
@@ -88,6 +91,17 @@ const editProfileBuilder = (builder: any) => {
     }).addCase(editProfile.rejected, (state: UserState, action: any) => {
         state.loading = false;
         state.editError = action.payload as string;
+    });
+}
+
+const deleteUserBuilder = (builder: any) => {
+    builder.addCase(deleteUser.fulfilled, (state: UserState) => {
+        state.isLoggedIn = false;
+        state.email = null;
+        state.username = null;
+        state.id = null;
+    }).addCase(deleteUser.rejected, (state: UserState, action: any) => {
+        state.deleteError = action.payload;
     });
 }
 

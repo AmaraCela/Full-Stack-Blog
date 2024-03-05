@@ -6,6 +6,7 @@ import { useSelector } from "react-redux";
 import { RootState, useAppDispatch } from "../store/store";
 import { ChangePasswordBodyType, useChangePasswordForm } from "../hooks/useChangePasswordForm";
 import { changePassword } from "../store/password/passwordThunks";
+import { deleteUser } from "../store/auth/authThunks";
 
 const Settings = () => {
 
@@ -15,14 +16,20 @@ const Settings = () => {
     const dispatch = useAppDispatch();
     const isButtonPressed = useRef(false);
 
-    const error = useSelector((state: RootState) => state.password.error);
-    const success = useSelector((state: RootState) => state.password.success);
+    const changePasswordError = useSelector((state: RootState) => state.password.error);
+    const changePasswordSuccess = useSelector((state: RootState) => state.password.success);
+    const deleteUserError = useSelector((state: RootState) => state.user.deleteError);
 
-    const [inputs, setInputs] = useState<ChangePasswordBodyType>({
+    const [changePasswordInputs, setChangePasswordInputs] = useState<ChangePasswordBodyType>({
         currentUsername: username ?? '',
         currentPassword: '',
         newPassword: '',
         verifyNewPassword: '',
+    });
+
+    const [deleteUserInputs, setDeleteUserInputs] = useState ({
+        username: username ?? '',
+        currentPassword: ""
     });
 
 
@@ -42,15 +49,18 @@ const Settings = () => {
     }
 
     useEffect(() => {
-        isButtonPressed.current && validateForm(inputs);
-    }, [inputs]);
+        isButtonPressed.current && validateForm(changePasswordInputs);
+    }, [changePasswordInputs]);
 
-    const handleSubmit = () => {
-        validateForm(inputs);
+    const handleChangePasswordSubmit = () => {
+        validateForm(changePasswordInputs);
         isButtonPressed.current = true;
-        !hasErrors && dispatch(changePassword(inputs));
+        !hasErrors && dispatch(changePassword(changePasswordInputs));
     }
 
+    const handleDeleteUserSubmit = () => {
+        dispatch(deleteUser(deleteUserInputs));
+    }
 
     return (
         <div className="flex mt-8 items-center flex-col">
@@ -66,25 +76,25 @@ const Settings = () => {
                     <p className="regular-font text-red-700 text-lg warning-text">This action will permanently change your password.</p>
 
                     <div className="mt-4">
-                        <FormInput label="Current password" value={inputs.currentPassword} placeholder="Enter current password..." inputType="password"
-                            errorMessage={success || error || errors.currentPassword}
-                            updateValue={(value) => setInputs({ ...inputs, currentPassword: value })} />
+                        <FormInput label="Current password" value={changePasswordInputs.currentPassword} placeholder="Enter current password..." inputType="password"
+                            errorMessage={changePasswordSuccess || changePasswordError || errors.currentPassword}
+                            updateValue={(value) => setChangePasswordInputs({ ...changePasswordInputs, currentPassword: value })} />
 
                         <div className="mt-4">
-                            <FormInput label="New password" value={inputs.newPassword} placeholder="Enter new password..." inputType="password"
+                            <FormInput label="New password" value={changePasswordInputs.newPassword} placeholder="Enter new password..." inputType="password"
                                 errorMessage={errors.newPassword}
-                                updateValue={(value) => setInputs({ ...inputs, newPassword: value })} />
+                                updateValue={(value) => setChangePasswordInputs({ ...changePasswordInputs, newPassword: value })} />
                         </div>
 
                         <div className="mt-4">
-                            <FormInput label="Verify new password" value={inputs.verifyNewPassword} placeholder="Retype password..." inputType="password"
+                            <FormInput label="Verify new password" value={changePasswordInputs.verifyNewPassword} placeholder="Retype password..." inputType="password"
                                 errorMessage={errors.verifyNewPassword}
-                                updateValue={(value) => setInputs({ ...inputs, verifyNewPassword: value })} />
+                                updateValue={(value) => setChangePasswordInputs({ ...changePasswordInputs, verifyNewPassword: value })} />
                         </div>
                     </div>
 
                     <div className="mt-4">
-                        <FormButton value="Change" handle={handleSubmit} />
+                        <FormButton value="Change" handle={handleChangePasswordSubmit} />
                     </div>
                 </div>
 
@@ -92,12 +102,13 @@ const Settings = () => {
                     <p className="regular-font text-red-700 text-lg">This action will delete your account permanently.</p>
 
                     <div className="mt-4">
-                        <FormInput label="Current password" value={inputs.currentPassword} placeholder="Enter current password..." inputType="password"
-                            updateValue={(value) => setInputs({ ...inputs, currentPassword: value })} />
+                        <FormInput label="Current password" value={deleteUserInputs.currentPassword} placeholder="Enter current password..." inputType="password"
+                            errorMessage={deleteUserError ?? ''}
+                            updateValue={(value) => setDeleteUserInputs({ ...deleteUserInputs, currentPassword: value })} />
                     </div>
 
                     <div className="mt-4">
-                        <FormButton value="Delete" handle={handleSubmit} />
+                        <FormButton value="Delete" handle={handleDeleteUserSubmit} />
                     </div>
                 </div>
             </div>

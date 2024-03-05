@@ -57,3 +57,15 @@ export const editProfile = createAsyncThunk(
         return !response.ok ? rejectWithValue(data.message) : data.user;
     }
 );
+
+export const deleteUser = createAsyncThunk(
+    'deleteUser',
+    async (inputs: {
+        username: string;
+        currentPassword: string;
+    }, { rejectWithValue }) => {
+        const response = await createAPI('deleteUser', { method: 'POST' })(inputs);
+        const data = await response.json();
+        return response.ok ? data.successfulMessage : rejectWithValue(data.errorMessage);
+    }
+)

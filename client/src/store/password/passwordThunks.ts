@@ -16,6 +16,5 @@ export const changePassword = createAsyncThunk(
         }
 
         return rejectWithValue(data.errorMessage);
-
     }
 )

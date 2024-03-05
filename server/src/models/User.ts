@@ -117,7 +117,6 @@ class User {
                     reject(err);
                 }
                 else {
-                    console.log(result.changedRows);
                     result.changedRows === 0 ? resolve(false) : resolve(true);
                 }
 
@@ -125,6 +124,34 @@ class User {
 
             dbconnection.closeConnection();
         });
+    }
+
+    static async deleteUser(username: string, password: string) {
+        try {
+            const result = await User.getUserByUsername(username, password);
+            return new Promise((resolve, reject) => {
+                if (typeof (result) === 'object') {
+                    const dbconnection = new DatabaseConnection();
+                    const connection = dbconnection.getConnection();
+                    const query = 'DELETE FROM users WHERE username = ?';
+                    connection.query(query, [username], (err, result) => {
+                        if (err) {
+                            reject(err);
+                        }
+                        else {
+                            resolve(true);
+                        }
+                    });
+                }
+                else {
+                    resolve(false);
+                }
+            });
+
+        }
+        catch (error) {
+
+        }
     }
 
 }

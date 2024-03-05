@@ -10,9 +10,10 @@ const loginController = require("./controllers/loginController");
 const editProfileController = require("./controllers/editProfileController");
 const passwordController = require("./controllers/changePasswordController");
 const profileController = require("./controllers/profileController");
-const bodyParser = require('body-parser');
 const postController = require('./controllers/postController');
+const deleteUserController = require('./controllers/deleteUserController');
 
+const bodyParser = require('body-parser');
 app.use(bodyParser.json());
 app.use(cors());
 
@@ -32,9 +33,11 @@ app.post('/api/edit', editProfileController.editProfile);
 
 app.post('/api/changepassword', passwordController.changePassword);
 
-app.get('/api/profile/', profileController.profile);
+app.get('/api/profile', profileController.profile);
 
-app.post('/api/post/', postController.postController);
+app.post('/api/post', postController.postController);
+
+app.post('/api/deleteUser',deleteUserController.deleteUser);
 
 app.listen(port, () => {
     console.log(`Server is running on port ${port}`)

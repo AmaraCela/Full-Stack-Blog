@@ -1,35 +1,8 @@
 import DatabaseConnection from "../database/DatabaseConnection";
 import bcryptjs from "bcryptjs";
+const jwt = require('jsonwebtoken');
 
 class User {
-    private user_id: number;
-    private username: string;
-    private email: string;
-    private password: string;
-
-    constructor(user_id: number, username: string, email: string, password: string) {
-        this.user_id = user_id;
-        this.username = username;
-        this.email = email;
-        this.password = password;
-    }
-
-    getUserId(): number {
-        return this.user_id;
-    }
-
-    getUsername(): string {
-        return this.username;
-    }
-
-    getEmail(): string {
-        return this.email;
-    }
-
-    getPassword(): string {
-        return this.password;
-    }
-
     static async registerUser(username: string, email: string, password: string) {
         const dbconnection = new DatabaseConnection();
         const connection = dbconnection.getConnection();
@@ -68,7 +41,15 @@ class User {
                 }
                 else {
                     const isValid = await bcryptjs.compare(password.toString(), result[0].password);
-                    isValid ? resolve({ user_id: result[0].user_id, username: username, email: result[0].email }) : resolve("Invalid password.")
+                    if (isValid) {
+                        const token = jwt.sign({ user_id: result[0].user_id, username: username, email: result[0].email }, process.env.ACCESS_TOKEN_SECRET);
+                        console.log(typeof (token));
+                        console.log(token);
+                        resolve({ user_id: result[0].user_id, username: username, email: result[0].email });
+                    }
+                    else {
+                        resolve("Invalid password.");
+                    }
                 }
             });
             dbconnection.closeConnection();

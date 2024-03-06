@@ -1,7 +1,5 @@
 import mysql from 'mysql';
-import dotenv from 'dotenv';
-
-dotenv.config();
+require("dotenv").config();
 
 class DatabaseConnection {
     private connection: mysql.Connection;

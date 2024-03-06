@@ -43,8 +43,6 @@ class User {
                     const isValid = await bcryptjs.compare(password.toString(), result[0].password);
                     if (isValid) {
                         const token = jwt.sign({ user_id: result[0].user_id, username: username, email: result[0].email }, process.env.ACCESS_TOKEN_SECRET);
-                        console.log(typeof (token));
-                        console.log(token);
                         resolve({ user_id: result[0].user_id, username: username, email: result[0].email });
                     }
                     else {

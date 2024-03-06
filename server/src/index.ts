@@ -1,9 +1,9 @@
 import { Request, Response } from "express";
+import dotenv from "dotenv";
+
 const express = require('express');
 const cors = require('cors');
-
 const app = express();
-
 const postsController = require("./controllers/getPostsController");
 const signupController = require("./controllers/signupController");
 const loginController = require("./controllers/loginController");
@@ -12,33 +12,34 @@ const passwordController = require("./controllers/changePasswordController");
 const profileController = require("./controllers/profileController");
 const postController = require('./controllers/postController');
 const deleteUserController = require('./controllers/deleteUserController');
-
 const bodyParser = require('body-parser');
+
+dotenv.config();
 app.use(bodyParser.json());
 app.use(cors());
 
-const port = 5000;
+const base_url = process.env.BASE_URL;
 
 app.get('/', (req: Request, res: Response) => {
     res.send('Hello from Express')
-})
+});
 
-app.get('/api/posts', postsController.getPosts);
+app.get(`${base_url}posts`, postsController.getPosts);
 
-app.post('/api/signup', signupController.signup);
+app.post(`${base_url}signup`, signupController.signup);
 
-app.post('/api/login', loginController.login);
+app.post(`${base_url}login`, loginController.login);
 
-app.post('/api/edit', editProfileController.editProfile);
+app.post(`${base_url}edit`, editProfileController.editProfile);
 
-app.post('/api/changepassword', passwordController.changePassword);
+app.post(`${base_url}changepassword`, passwordController.changePassword);
 
-app.get('/api/profile', profileController.profile);
+app.get(`${base_url}profile`, profileController.profile);
 
-app.post('/api/post', postController.postController);
+app.post(`${base_url}post`, postController.postController);
 
-app.post('/api/deleteUser',deleteUserController.deleteUser);
+app.post(`${base_url}deleteUser`,deleteUserController.deleteUser);
 
-app.listen(port, () => {
-    console.log(`Server is running on port ${port}`)
+app.listen(process.env.DEV_PORT, () => {
+    console.log(`Server is running on port ${process.env.DEV_PORT}`);
 })

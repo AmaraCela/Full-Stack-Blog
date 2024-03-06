@@ -1,4 +1,7 @@
 import mysql from 'mysql';
+import dotenv from 'dotenv';
+
+dotenv.config();
 
 class DatabaseConnection {
     private connection: mysql.Connection;
@@ -6,10 +9,10 @@ class DatabaseConnection {
     constructor() {
         this.connection = mysql.createConnection(
             {
-                host: "localhost",
-                user: "root",
-                password: "root",
-                database: "blog_database"
+                host: process.env.HOST,
+                user: process.env.USER,
+                password: process.env.PASSWORD,
+                database: process.env.DATABASE
             }
         );
 

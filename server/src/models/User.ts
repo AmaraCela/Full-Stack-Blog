@@ -67,8 +67,6 @@ class User {
                     resolve("Invalid username.");
                 }
                 else {
-                    console.log(password);
-                    console.log(typeof(password));
                     const isValid = await bcryptjs.compare(password.toString(), result[0].password);
                     isValid ? resolve({ user_id: result[0].user_id, username: username, email: result[0].email }) : resolve("Invalid password.")
                 }

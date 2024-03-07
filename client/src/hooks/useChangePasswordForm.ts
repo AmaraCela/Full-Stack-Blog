@@ -22,20 +22,26 @@ export const useChangePasswordForm = () => {
     const validateForm = (inputs: ChangePasswordBodyType) => {
         const newPasswordError = validatePassword(inputs.newPassword);
         const verifyNewPasswordError = validateVerify(inputs.newPassword, inputs.verifyNewPassword);
+
+        setHasErrors(Boolean(newPasswordError || verifyNewPasswordError));
+    }
+
+    const displayErrors = (inputs: ChangePasswordBodyType) => {
+        const newPasswordError = validatePassword(inputs.newPassword);
+        const verifyNewPasswordError = validateVerify(inputs.newPassword, inputs.verifyNewPassword);
         
         setErrors({
             ...errors,
             newPassword: newPasswordError,
             verifyNewPassword: verifyNewPasswordError,
         });
-
-        setHasErrors(Boolean(newPasswordError || verifyNewPasswordError));
     }
 
     return {
         hasErrors,
         errors,
         validateForm,
+        displayErrors,
     }
 
 }

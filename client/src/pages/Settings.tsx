@@ -14,16 +14,17 @@ const Settings = () => {
 
     const dispatch = useAppDispatch();
     const navigate = useNavigate();
+
     const username = useSelector(selectUser).username;
     const user_id = useSelector(selectUser).id;
-    const [activeButton, setActiveButton] = useState<number>(0);
-    const { hasErrors, errors, validateForm } = useChangePasswordForm();
-    const isButtonPressed = useRef(false);
-    const [successfulDisplay, setSuccessfulDisplay] = useState("hidden");
-
     const changePasswordError = useSelector(selectPassword).error;
     const changePasswordSuccess = useSelector(selectPassword).success;
     const deleteUserError = useSelector(selectUser).deleteError;
+
+    const [activeButton, setActiveButton] = useState<number>(0);
+    const { hasErrors, errors, validateForm, displayErrors } = useChangePasswordForm();
+    const isButtonPressed = useRef(false);
+    const [successfulDisplay, setSuccessfulDisplay] = useState("hidden");
 
     const [changePasswordInputs, setChangePasswordInputs] = useState<ChangePasswordBodyType>({
         currentUsername: username ?? '',
@@ -53,17 +54,21 @@ const Settings = () => {
     }
 
     useEffect(() => {
-        isButtonPressed.current && validateForm(changePasswordInputs);
+        isButtonPressed.current && displayErrors(changePasswordInputs);
     }, [changePasswordInputs]);
 
     useEffect(() => {
         changePasswordSuccess && setSuccessfulDisplay('flex');
     }, [changePasswordSuccess])
 
+    useEffect(() => {
+        !hasErrors && dispatch(changePassword(changePasswordInputs));
+    }, [hasErrors]);
+
     const handleChangePasswordSubmit = () => {
         validateForm(changePasswordInputs);
+        displayErrors(changePasswordInputs);
         isButtonPressed.current = true;
-        !hasErrors && dispatch(changePassword(changePasswordInputs));
     }
 
     const handleDeleteUserSubmit = () => {

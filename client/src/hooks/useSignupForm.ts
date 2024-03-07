@@ -21,7 +21,7 @@ export const useSignupForm = () => {
 
     const [hasErrors, setHasErrors] = useState<boolean>(true);
 
-    const validateForm = (inputs: SignupBodyType) => {
+    const displayErrors = (inputs: SignupBodyType) => {
         const usernameError = validateUsername(inputs.username);
         const emailError = validateEmail(inputs.email);
         const passwordError = validatePassword(inputs.password);
@@ -34,13 +34,21 @@ export const useSignupForm = () => {
             verify: verifyPasswordError
         });
 
-        setHasErrors(Boolean(usernameError || emailError || passwordError || verifyPasswordError));
+    }
 
+    const validateForm = (inputs: SignupBodyType) => {
+        const usernameError = validateUsername(inputs.username);
+        const emailError = validateEmail(inputs.email);
+        const passwordError = validatePassword(inputs.password);
+        const verifyPasswordError = validateVerify(inputs.password, inputs.verify);
+
+        setHasErrors(Boolean(usernameError || emailError || passwordError || verifyPasswordError));
     }
 
     return {
         errors,
         hasErrors,
         validateForm,
+        displayErrors,
     }
 } 

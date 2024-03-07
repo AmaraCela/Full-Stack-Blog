@@ -19,7 +19,7 @@ const EditProfile = () => {
 
     const isButtonPressed = useRef(false);
 
-    const { hasErrors, errors, validateForm } = useEditProfileForm();
+    const { hasErrors, errors, validateForm, displayErrors } = useEditProfileForm();
     const [inputs, setInputs] = useState<EditProfileBodyType>(
         {
             username: currentUsername ?? '',
@@ -28,15 +28,11 @@ const EditProfile = () => {
     );
 
     useEffect(() => {
-        isButtonPressed.current && validateForm(inputs);
+        isButtonPressed.current && displayErrors(inputs);
     }, [inputs])
 
-    const handleSubmit =  (): void => {
-        validateForm(inputs);
-        isButtonPressed.current = true;
-        
+    useEffect(() => {
         if (!hasErrors) {
-            console.log('dispatched');
             const newData =
             {
                 username: inputs.username,
@@ -45,6 +41,12 @@ const EditProfile = () => {
             dispatch(editProfile({ ...newData, user_id: currentId }));
             navigate(`/profile/${currentId}`);
         }
+    }, [hasErrors])
+
+    const handleSubmit =  (): void => {
+        validateForm(inputs);
+        displayErrors(inputs);
+        isButtonPressed.current = true;
     }
 
     return (

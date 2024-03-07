@@ -19,17 +19,23 @@ export const useEditProfileForm = () => {
         const usernameError = validateUsername(inputs.username);
         const emailError = validateEmail(inputs.email);
 
+        setHasErrors(!!(usernameError || emailError));
+    }
+
+    const displayErrors = (inputs: EditProfileBodyType) => {
+        const usernameError = validateUsername(inputs.username);
+        const emailError = validateEmail(inputs.email);
+
         setErrors({
             username: usernameError,
             email: emailError
         });
-
-        setHasErrors(!!(usernameError || emailError));
     }
 
     return {
         hasErrors,
         errors,
         validateForm,
+        displayErrors,
     }
 }

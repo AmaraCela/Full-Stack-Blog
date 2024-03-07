@@ -18,7 +18,8 @@ const SignUp = () => {
     const error = useSelector(selectUser).signupError;
     const isLoading = useSelector(selectUser).loading;
 
-    const { hasErrors, errors, validateForm } = useSignupForm();
+    const { hasErrors, errors, validateForm, displayErrors } = useSignupForm();
+
     const isButtonPressed = useRef(false);
 
     const [inputs, setInputs] = useState({
@@ -29,7 +30,7 @@ const SignUp = () => {
     });
 
     useEffect(() => {
-       isButtonPressed.current && validateForm(inputs);
+        isButtonPressed.current && displayErrors(inputs);
     }, [inputs]);
 
     useEffect(() => {
@@ -38,10 +39,7 @@ const SignUp = () => {
         }
     }, [isLoggedIn]);
 
-    const handleSubmit = (): void => {
-        validateForm (inputs);
-        isButtonPressed.current = true;
-
+    useEffect(() => {
         if (!hasErrors) {
             dispatch(signupUser({
                 username: inputs.username,
@@ -52,6 +50,12 @@ const SignUp = () => {
         } else {
             console.log("Input error");
         }
+    }, [hasErrors]);
+
+    const handleSubmit = (): void => {
+        validateForm(inputs);
+        displayErrors(inputs);
+        isButtonPressed.current = true;
     }
 
     return (

@@ -45,9 +45,6 @@ export const signupUser = createAsyncThunk(
 );
 
 
-// Define a helper function to get the token from the Redux store
-const getToken = (state: RootState) => state.user.token;
-
 export const editProfile = createAsyncThunk(
     'editProfile',
     async (inputs: {
@@ -55,13 +52,10 @@ export const editProfile = createAsyncThunk(
         username: string;
         email: string;
     }, { getState, rejectWithValue }) => {
-        console.log('heeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeerrrrrrrrrrrrrrrrreeeeeeeeeeeeeeeeeeeeeeeeeee');
-
-        // Use the helper function to get the token
-        const token = getToken(getState() as RootState);
-        console.log(token + " token");
-
-        const response = await createAPI('edit', { method: 'POST' })(inputs);
+        
+        const state:RootState = getState() as RootState;
+        const token = state.user.token ?? '';
+        const response = await createAPI('edit', { method: 'POST', token: token })(inputs);
         const data = await response.json();
         return !response.ok ? rejectWithValue(data.message) : data.user;
     }

@@ -1,28 +1,39 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import FormInput from "../components/FormInput";
 import "../styles/createBlog.css";
 import { useTitleValidation } from "../hooks/useTitleValidation";
 import { useSelector } from "react-redux";
-import { selectUser, useAppDispatch } from "../store/store";
+import { selectTag, selectUser, useAppDispatch } from "../store/store";
 import { createBlog } from "../store/blog/blogThunk";
+import { retriveTags } from "../store/tag/tagThunks";
 
 const CreateBlog = () => {
 
     const dispatch = useAppDispatch();
     const user_id = useSelector(selectUser).id;
+    const tags = useSelector(selectTag).tags;
 
     const [inputs, setInputs] = useState({
         title: '',
         description: '',
         tags: [] as string[],
         user_id: user_id ?? '',
+        
     });
+
 
     const [errors, setErrors] = useState({
         title: ''
     });
 
     const titleError = useTitleValidation(inputs.title);
+
+    useEffect(() => {
+        console.log('dispatched');
+        dispatch(retriveTags());
+        console.log('finished dispatching');
+    },[]);
+
 
     const handleSubmit = (event: React.FormEvent<HTMLElement>) => {
         event.preventDefault();
@@ -48,8 +59,7 @@ const CreateBlog = () => {
                     <div className="flex flex-col">
                         <label htmlFor="tags-dropdown" className="label regular-font">Select tags:</label>
                         <select name="tag" id="tags-dropdown" className="input-format regular-font" multiple onChange={(event) => setInputs({ ...inputs, tags: [...inputs.tags, event.target.value] })}>
-                            <option value="tag1">tag1</option>
-                            <option value="tag2">tag2</option>
+                            {tags.map((tag)=>(<option key={tag.tag_id} value={tag.tag_name}>{tag.tag_name}</option>))}
                         </select>
                     </div>
 

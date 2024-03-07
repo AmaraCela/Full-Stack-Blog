@@ -8,7 +8,7 @@ interface APIOptions {
 
 export const createAPI =
     <FormBody>(endpoint: string, options: APIOptions) =>
-        async (body: FormBody) => {
+        async (body?: FormBody) => {
             const headers = {
                 'Content-Type': 'application/json',
                 Accept: 'application/json',

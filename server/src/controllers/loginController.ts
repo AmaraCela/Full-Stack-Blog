@@ -6,7 +6,7 @@ export async function login(req: Request, res: Response) {
     const { username, password } = req.body;
 
     try {
-
+        
         const result: any = await User.getUserByUsername(username, password);
         typeof (result) === 'object' ? res.status(200).json({ user: result?.user , token: result?.token}) : res.status(401).json({ message: result })
 

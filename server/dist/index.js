@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-const express = require('express');
+import express from 'express';
 const app = express();
 const postsController = require("./controllers/postsController");
 const signupController = require("./controllers/signupController");

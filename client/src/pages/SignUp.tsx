@@ -21,8 +21,6 @@ const SignUp = () => {
     const { hasErrors, errors, validateForm } = useSignupForm();
     const isButtonPressed = useRef(false);
 
-    console.log(hasErrors);
-
     const [inputs, setInputs] = useState({
         username: "",
         email: "",

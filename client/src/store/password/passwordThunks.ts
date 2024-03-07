@@ -1,5 +1,6 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import { createAPI } from "../../utils/api";
+import { RootState } from "../store";
 
 export const changePassword = createAsyncThunk(
     'changePassword',
@@ -7,8 +8,10 @@ export const changePassword = createAsyncThunk(
         currentUsername: string,
         currentPassword: string,
         newPassword: string,
-    }, { rejectWithValue }) => {
-        const response = await createAPI("changePassword", {method:'POST'})(inputs);
+    }, { getState, rejectWithValue }) => {
+        const state: RootState = getState() as RootState;
+        const token = state.user.token ?? '';
+        const response = await createAPI("changePassword", {method:'POST', token: token})(inputs);
         const data = await response.json();
 
         if (response.status === 200) {

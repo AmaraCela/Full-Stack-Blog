@@ -34,6 +34,7 @@ const EditProfile = () => {
     const handleSubmit =  (): void => {
         validateForm(inputs);
         isButtonPressed.current = true;
+        
         if (!hasErrors) {
             console.log('dispatched');
             const newData =

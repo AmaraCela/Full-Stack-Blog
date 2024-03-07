@@ -51,8 +51,7 @@ export const editProfile = createAsyncThunk(
         username: string;
         email: string;
     }, { getState, rejectWithValue }) => {
-        
-        const state:RootState = getState() as RootState;
+        const state: RootState = getState() as RootState;
         const token = state.user.token ?? '';
         const response = await createAPI('edit', { method: 'POST', token: token })(inputs);
         const data = await response.json();
@@ -66,8 +65,10 @@ export const deleteUser = createAsyncThunk(
     async (inputs: {
         username: string;
         currentPassword: string;
-    }, { rejectWithValue }) => {
-        const response = await createAPI('deleteUser', { method: 'POST' })(inputs);
+    }, { getState, rejectWithValue }) => {
+        const state: RootState = getState() as RootState;
+        const token = state.user.token ?? '';
+        const response = await createAPI('deleteUser', { method: 'POST', token: token })(inputs);
         const data = await response.json();
         return response.ok ? data.successfulMessage : rejectWithValue(data.errorMessage);
     }

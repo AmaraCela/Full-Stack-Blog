@@ -3,12 +3,12 @@ import "../styles/navbar.css";
 import search from "../assets/search.png";
 import { Link, useLocation } from "react-router-dom";
 import { useSelector } from "react-redux";
-import { RootState } from '../store/store';
+import { selectUser } from '../store/store';
 import Dropdown from "./Dropdown";
 
 const Navbar = () => {
-    const isAuthenticated = useSelector((state: RootState) => state.user.isLoggedIn);
-    const username = useSelector((state: RootState) => state.user.username);
+    const isAuthenticated = useSelector(selectUser).isLoggedIn;
+    const username = useSelector(selectUser).username;
     const location = useLocation();
 
     const isRootPath = location.pathname === '/';

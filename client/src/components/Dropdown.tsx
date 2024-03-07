@@ -1,13 +1,14 @@
 import { useSelector } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
-import { RootState, useAppDispatch } from "../store/store";
+import { selectUser, useAppDispatch } from "../store/store";
 import "../styles/dropdown.css";
 import { logoutUser } from "../store/auth/userSlice";
 
 const Dropdown = () => {
     const dispatch = useAppDispatch();
     const navigate = useNavigate();
-    const userId = useSelector((state: RootState) => state.user.id);
+    const userId = useSelector(selectUser).id;
+
     
     const handleClick = () => {
         dispatch(logoutUser());

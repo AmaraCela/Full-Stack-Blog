@@ -6,7 +6,7 @@ import FormInput from "../components/FormInput";
 import FormLink from "../components/FormLink";
 import { useSelector } from "react-redux";
 import { signupUser } from "../store/auth/authThunks";
-import { RootState, useAppDispatch } from "../store/store";
+import { selectUser, useAppDispatch } from "../store/store";
 import Loading from "../components/Loading";
 import { useSignupForm } from "../hooks/useSignupForm";
 
@@ -14,9 +14,9 @@ const SignUp = () => {
     const navigate = useNavigate();
     const dispatch = useAppDispatch();
 
-    const isLoggedIn = useSelector((state: RootState) => state.user.isLoggedIn);
-    const error = useSelector((state: RootState) => state.user.signupError);
-    const isLoading = useSelector((state: RootState) => state.user.loading);
+    const isLoggedIn = useSelector(selectUser).isLoggedIn;
+    const error = useSelector(selectUser).signupError;
+    const isLoading = useSelector(selectUser).loading;
 
     const { hasErrors, errors, validateForm } = useSignupForm();
     const isButtonPressed = useRef(false);

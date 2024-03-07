@@ -6,16 +6,16 @@ import { loginUser } from "../store/auth/authThunks";
 import FormInput from "../components/FormInput";
 import FormLink from "../components/FormLink";
 import FormButton from "../components/FormButton";
-import { RootState, useAppDispatch } from "../store/store";
+import { selectUser, useAppDispatch } from "../store/store";
 import { useNavigate } from "react-router-dom";
 import Loading from "../components/Loading";
 
 const LogIn = () => {
     const dispatch = useAppDispatch();
     const navigate = useNavigate();
-    const isLoggedIn = useSelector((state: RootState) => state.user.isLoggedIn);
-    const error = useSelector((state: RootState) => state.user.loginError);
-    const isLoading = useSelector((state: RootState) => state.user.loading);
+    const isLoggedIn = useSelector(selectUser).isLoggedIn;
+    const error = useSelector(selectUser).loginError;
+    const isLoading = useSelector(selectUser).loading;
 
     const [inputs, setInputs] = useState({
         username: "",

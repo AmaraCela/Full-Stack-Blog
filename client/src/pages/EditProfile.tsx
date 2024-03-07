@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from "react";
 import { useSelector } from "react-redux";
-import { RootState, useAppDispatch } from "../store/store";
+import { selectUser, useAppDispatch } from "../store/store";
 import { editProfile } from "../store/auth/authThunks";
 import { useNavigate } from "react-router-dom";
 import edit from "../assets/girl-sitting-bean-bag-chair-working-laptop_129422-107-transformed-removebg-preview.png";
@@ -13,9 +13,9 @@ const EditProfile = () => {
     const dispatch = useAppDispatch();
     const navigate = useNavigate();
 
-    const currentId = useSelector((state: RootState) => state.user.id) ?? '';
-    const currentUsername = useSelector((state: RootState) => state.user.username);
-    const currentEmail = useSelector((state: RootState) => state.user.email);
+    const currentId = useSelector(selectUser).id ?? '';
+    const currentUsername = useSelector(selectUser).username;
+    const currentEmail = useSelector(selectUser).email;
 
     const isButtonPressed = useRef(false);
 
@@ -42,7 +42,7 @@ const EditProfile = () => {
                 email: inputs.email,
             };
             dispatch(editProfile({ ...newData, user_id: currentId }));
-            // navigate(`/profile/${currentId}`);
+            navigate(`/profile/${currentId}`);
         }
     }
 

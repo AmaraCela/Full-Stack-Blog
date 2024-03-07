@@ -1,6 +1,5 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import { createAPI } from "../../utils/api";
-import { useSelector } from "react-redux";
 import { RootState } from "../store";
 
 export const loginUser = createAsyncThunk(

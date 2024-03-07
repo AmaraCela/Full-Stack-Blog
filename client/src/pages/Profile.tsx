@@ -4,7 +4,7 @@ import "../styles/profile.css";
 import profile from "../assets/profile.png";
 import laptop from '../assets/laptop.jpg';
 import { useSelector } from "react-redux";
-import { RootState, useAppDispatch } from "../store/store";
+import { selectProfile, selectUser, useAppDispatch } from "../store/store";
 import { Link, useParams } from "react-router-dom";
 import edit from '../assets/edit-246.png';
 import { useEffect } from "react";
@@ -20,8 +20,8 @@ const Profile = () => {
     const dispatch = useAppDispatch();
     const { id } = useParams();
 
-    const loggedInUserId = useSelector((state: RootState) => state.user.id);
-    const user = useSelector((state: RootState) => state.profile.user);
+    const loggedInUserId = useSelector(selectUser).id;
+    const user = useSelector(selectProfile).user;
 
     useEffect(() => {
         dispatch(populateProfile(id ?? ''));

@@ -3,7 +3,7 @@ import FormInput from "../components/FormInput";
 import "../styles/settings.css";
 import FormButton from "../components/FormButton";
 import { useSelector } from "react-redux";
-import { RootState, useAppDispatch } from "../store/store";
+import { selectPassword, selectUser, useAppDispatch } from "../store/store";
 import { ChangePasswordBodyType, useChangePasswordForm } from "../hooks/useChangePasswordForm";
 import { changePassword } from "../store/password/passwordThunks";
 import { deleteUser } from "../store/auth/authThunks";
@@ -14,16 +14,16 @@ const Settings = () => {
 
     const dispatch = useAppDispatch();
     const navigate = useNavigate();
-    const username = useSelector((state: RootState) => state.user.username);
-    const user_id = useSelector((state: RootState) => state.user.id);
+    const username = useSelector(selectUser).username;
+    const user_id = useSelector(selectUser).id;
     const [activeButton, setActiveButton] = useState<number>(0);
     const { hasErrors, errors, validateForm } = useChangePasswordForm();
     const isButtonPressed = useRef(false);
     const [successfulDisplay, setSuccessfulDisplay] = useState("hidden");
 
-    const changePasswordError = useSelector((state: RootState) => state.password.error);
-    const changePasswordSuccess = useSelector((state: RootState) => state.password.success);
-    const deleteUserError = useSelector((state: RootState) => state.user.deleteError);
+    const changePasswordError = useSelector(selectPassword).error;
+    const changePasswordSuccess = useSelector(selectPassword).success;
+    const deleteUserError = useSelector(selectUser).deleteError;
 
     const [changePasswordInputs, setChangePasswordInputs] = useState<ChangePasswordBodyType>({
         currentUsername: username ?? '',

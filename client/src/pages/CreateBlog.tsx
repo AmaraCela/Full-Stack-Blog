@@ -3,13 +3,13 @@ import FormInput from "../components/FormInput";
 import "../styles/createBlog.css";
 import { useTitleValidation } from "../hooks/useTitleValidation";
 import { useSelector } from "react-redux";
-import { RootState, useAppDispatch } from "../store/store";
+import { selectUser, useAppDispatch } from "../store/store";
 import { createBlog } from "../store/blog/blogThunk";
 
 const CreateBlog = () => {
 
     const dispatch = useAppDispatch();
-    const user_id = useSelector((state: RootState) => state.user.id);
+    const user_id = useSelector(selectUser).id;
 
     const [inputs, setInputs] = useState({
         title: '',

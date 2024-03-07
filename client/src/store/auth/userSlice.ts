@@ -37,6 +37,7 @@ const userSlice = createSlice({
             state.username = null;
             state.email = null;
             state.loginError = null;
+            state.token = null;
         }
     },
     extraReducers: builder => {
@@ -55,16 +56,18 @@ const loginUserBuilder = (builder: any) => {
     }).addCase(loginUser.fulfilled, (state: UserState, action: any) => {
         state.loading = false;
         state.isLoggedIn = true;
-        state.username = action.payload.username;
-        state.email = action.payload.email;
-        state.id = action.payload.user_id;
+        state.username = action.payload.user.username;
+        state.email = action.payload.user.email;
+        state.id = action.payload.user.user_id;
         state.loginError = null;
+        state.token = action.payload.token;
     }).addCase(loginUser.rejected, (state: UserState, action: any) => {
         state.loading = false;
         state.isLoggedIn = false;
         state.username = null;
         state.email = null;
         state.id = null;
+        state.token = null;
         state.loginError = action.payload as string;
     });
 }

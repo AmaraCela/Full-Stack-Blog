@@ -12,7 +12,12 @@ export const createAPI =
             const headers = {
                 'Content-Type': 'application/json',
                 Accept: 'application/json',
-            };
+            } as Record<string, string>;
+
+            if (options.token) {
+                headers['Authorization'] = `Bearer ${options.token}`;
+            }
+
             return fetch(`http://localhost:5000/api/${endpoint}`, {
                 method: options.method ?? 'GET',
                 headers,

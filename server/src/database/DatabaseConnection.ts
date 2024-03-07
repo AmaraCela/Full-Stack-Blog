@@ -29,6 +29,7 @@ class DatabaseConnection {
 
     closeConnection(): void {
         this.connection.end((err) => {
+            
             if (err) {
                 console.log("There was an error closing the connection");
             }

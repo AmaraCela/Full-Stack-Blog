@@ -5,7 +5,7 @@ import { postController } from "../controllers/postController";
 const router = express.Router()
 const base_url = process.env.BASE_URL;
 
-router.get(`${base_url}posts`, getPosts);
-router.post(`${base_url}post`, postController);
+router.get(`/posts`, getPosts);
+router.post(`/post`, postController);
 
 export default router;

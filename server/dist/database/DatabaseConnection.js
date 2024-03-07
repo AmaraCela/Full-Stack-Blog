@@ -24,6 +24,7 @@ class DatabaseConnection {
     getConnection() {
         return this.connection;
     }
+    
     closeConnection() {
         this.connection.end((err) => {
             if (err) {

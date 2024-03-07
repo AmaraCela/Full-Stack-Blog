@@ -57,7 +57,6 @@ const Settings = () => {
     }, [changePasswordInputs]);
 
     useEffect(() => {
-        console.log(changePasswordSuccess);
         changePasswordSuccess && setSuccessfulDisplay('flex');
     }, [changePasswordSuccess])
 

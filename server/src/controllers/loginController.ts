@@ -7,8 +7,8 @@ export async function login(req: Request, res: Response) {
 
     try {
 
-        const result = await User.getUserByUsername(username, password);
-        typeof (result) === 'object' ? res.status(200).json({ user: result }) : res.status(401).json({ message: result })
+        const result: any = await User.getUserByUsername(username, password);
+        typeof (result) === 'object' ? res.status(200).json({ user: result?.user , token: result?.token}) : res.status(401).json({ message: result })
 
     }
     catch (error) {

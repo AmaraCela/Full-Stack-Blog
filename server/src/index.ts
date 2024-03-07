@@ -15,8 +15,8 @@ app.get('/', (req: Request, res: Response) => {
     res.send('Hello from Express')
 });
 
-app.use(userRouter);
-app.use(postRouter);
+app.use('/api',userRouter);
+app.use('/api',postRouter);
 
 app.listen(process.env.DEV_PORT, () => {
     console.log(`Server is running on port ${process.env.DEV_PORT}`);

@@ -28,24 +28,22 @@ const EditProfile = () => {
     );
 
     useEffect(() => {
-        if (!hasErrors) {
-            const newData =
-            {
-                username: inputs.username,
-                email: inputs.email,
-            };
-            dispatch(editProfile({ ...newData, user_id: currentId }));
-            navigate(`/profile/${currentId}`);
-        }
-    }, [hasErrors]);
-
-    useEffect(() => {
         isButtonPressed.current && validateForm(inputs);
     }, [inputs])
 
     const handleSubmit =  (): void => {
         validateForm(inputs);
         isButtonPressed.current = true;
+        if (!hasErrors) {
+            console.log('dispatched');
+            const newData =
+            {
+                username: inputs.username,
+                email: inputs.email,
+            };
+            dispatch(editProfile({ ...newData, user_id: currentId }));
+            // navigate(`/profile/${currentId}`);
+        }
     }
 
     return (

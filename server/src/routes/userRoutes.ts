@@ -8,13 +8,13 @@ import { deleteUser } from "../controllers/deleteUserController";
 import { authenticateToken } from "../middleware/middleware";
 
 const router = express.Router();
-const base_url = process.env.BASE_URL;
 
-router.post(`${base_url}signup`, signup);
-router.post(`${base_url}login`, login);
-router.post(`${base_url}edit`, authenticateToken, editProfile);
-router.post(`${base_url}changepassword`, changePassword);
-router.get(`${base_url}profile`, profile);
-router.post(`${base_url}deleteUser`,deleteUser);
+
+router.post(`/signup`, signup);
+router.post(`/login`, login);
+router.post(`/edit`, authenticateToken, editProfile);
+router.post(`/changepassword`, changePassword);
+router.get(`/profile`, profile);
+router.post(`/deleteUser`,deleteUser);
 
 export default router;

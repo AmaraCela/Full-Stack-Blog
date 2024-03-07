@@ -1,5 +1,7 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import { createAPI } from "../../utils/api";
+import { useSelector } from "react-redux";
+import { RootState } from "../store";
 
 export const loginUser = createAsyncThunk(
     'loginUser',
@@ -10,7 +12,7 @@ export const loginUser = createAsyncThunk(
         try {
             const response = await createAPI('login', { method: 'POST' })(inputs);
             const data = await response.json();
-            return !response.ok ? rejectWithValue(data.message) : data.user;
+            return !response.ok ? rejectWithValue(data.message) : data;
         }
         catch (error) {
             return rejectWithValue(error);
@@ -43,20 +45,28 @@ export const signupUser = createAsyncThunk(
 );
 
 
+// Define a helper function to get the token from the Redux store
+const getToken = (state: RootState) => state.user.token;
+
 export const editProfile = createAsyncThunk(
     'editProfile',
     async (inputs: {
         user_id: string;
         username: string;
         email: string;
+    }, { getState, rejectWithValue }) => {
+        console.log('heeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeerrrrrrrrrrrrrrrrreeeeeeeeeeeeeeeeeeeeeeeeeee');
 
-    }, { rejectWithValue }) => {
+        // Use the helper function to get the token
+        const token = getToken(getState() as RootState);
+        console.log(token + " token");
 
         const response = await createAPI('edit', { method: 'POST' })(inputs);
         const data = await response.json();
         return !response.ok ? rejectWithValue(data.message) : data.user;
     }
 );
+
 
 export const deleteUser = createAsyncThunk(
     'deleteUser',

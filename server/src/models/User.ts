@@ -42,8 +42,8 @@ class User {
                 else {
                     const isValid = await bcryptjs.compare(password.toString(), result[0].password);
                     if (isValid) {
-                        const token = jwt.sign({ user_id: result[0].user_id, username: username, email: result[0].email }, process.env.ACCESS_TOKEN_SECRET);
-                        resolve({ user_id: result[0].user_id, username: username, email: result[0].email });
+                        const token = jwt.sign({ user_id: result[0].user_id }, process.env.ACCESS_TOKEN_SECRET);
+                        resolve({ user: {user_id: result[0].user_id, username: username, email: result[0].email },token: token});
                     }
                     else {
                         resolve("Invalid password.");

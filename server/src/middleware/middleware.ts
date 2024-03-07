@@ -8,13 +8,11 @@ export function authenticateToken(req: Request, res: Response, next: NextFunctio
     if (authToken === null) {
         return res.status(403).json({ tokenError: 'You are not authenticated' });
     } 
-    
     try {
-        const decode = jwt.verify(authToken, process.env.ACCESS_TOKEN_SECRET);
+        jwt.verify(authToken, process.env.ACCESS_TOKEN_SECRET);
         next();
     }
     catch (error) {
         return res.status(403).json({ tokenError: 'Invalid token' });
     }
-    
 }

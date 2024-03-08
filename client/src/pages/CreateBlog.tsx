@@ -1,11 +1,11 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import FormInput from "../components/FormInput";
 import "../styles/createBlog.css";
-import { useTitleValidation } from "../hooks/useTitleValidation";
 import { useSelector } from "react-redux";
 import { selectTag, selectUser, useAppDispatch } from "../store/store";
 import { createBlog } from "../store/blog/blogThunk";
 import { retriveTags } from "../store/tag/tagThunks";
+import { useCreateBlogForm } from "../hooks/useCreateBlogForm";
 
 const CreateBlog = () => {
 
@@ -13,33 +13,36 @@ const CreateBlog = () => {
     const user_id = useSelector(selectUser).id;
     const tags = useSelector(selectTag).tags;
 
+    const { errors, hasErrors, validateForm, displayErrors } = useCreateBlogForm();
+
+    const isButtonPressed = useRef(false);
+
     const [inputs, setInputs] = useState({
         title: '',
         description: '',
         tags: [] as string[],
         user_id: user_id ?? '',
-        
     });
-
-
-    const [errors, setErrors] = useState({
-        title: ''
-    });
-
-    const titleError = useTitleValidation(inputs.title);
 
     useEffect(() => {
-        console.log('dispatched');
         dispatch(retriveTags());
-        console.log('finished dispatching');
-    },[]);
+    }, []);
 
+    useEffect(() => {
+        isButtonPressed.current && displayErrors({title: inputs.title});
+    },[inputs.title]);
+
+    useEffect(() => {
+        if(!hasErrors) {
+            dispatch(createBlog(inputs));
+        }
+    }, [hasErrors]);
 
     const handleSubmit = (event: React.FormEvent<HTMLElement>) => {
         event.preventDefault();
-        if (!errors.title) {
-            dispatch(createBlog(inputs));
-        }
+        validateForm({title: inputs.title});
+        displayErrors({title: inputs.title});
+        isButtonPressed.current = true;
     }
 
     return (
@@ -59,7 +62,7 @@ const CreateBlog = () => {
                     <div className="flex flex-col">
                         <label htmlFor="tags-dropdown" className="label regular-font">Select tags:</label>
                         <select name="tag" id="tags-dropdown" className="input-format regular-font" multiple onChange={(event) => setInputs({ ...inputs, tags: [...inputs.tags, event.target.value] })}>
-                            {tags.map((tag)=>(<option key={tag.tag_id} value={tag.tag_name}>{tag.tag_name}</option>))}
+                            {tags.map((tag) => (<option key={tag.tag_id} value={tag.tag_name}>{tag.tag_name}</option>))}
                         </select>
                     </div>
 

@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { validatePassword } from "../utils/validations/validatePassword";
 import { validateVerify } from "../utils/validations/validateVerifyPassword";
 

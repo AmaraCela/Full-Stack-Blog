@@ -5,7 +5,7 @@ import { editProfile } from "../controllers/editProfileController";
 import { changePassword } from "../controllers/changePasswordController";
 import { profile } from "../controllers/profileController";
 import { deleteUser } from "../controllers/deleteUserController";
-import { authenticateToken } from "../middleware/middleware";
+import { authenticateToken } from "../middleware/authenticationMiddleware";
 
 const router = express.Router();
 

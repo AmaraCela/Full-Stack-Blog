@@ -1,10 +1,13 @@
 import DatabaseConnection from "../database/DatabaseConnection";
+import multer from "multer";
 
 class Post {
     static async postBlog(title: string, description: string, user_id: string) {
         const dbconnection = new DatabaseConnection();
         const connection = dbconnection.getConnection();
 
+        const upload = multer({dest: '/uploads'});
+        
         const query = 'INSERT INTO posts (title, description, date_posted, user_id) VALUES (?, ?, ?, ?)';
 
         return new Promise((resolve, reject) => {

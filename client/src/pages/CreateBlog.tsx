@@ -9,19 +9,28 @@ import { useCreateBlogForm } from "../hooks/useCreateBlogForm";
 
 const CreateBlog = () => {
 
+    type CreateBlogInputTypes = {
+        title: string, 
+        description: string,
+        tags: string[],
+        user_id: string,
+        images: FileList | [],
+    }
     const dispatch = useAppDispatch();
     const user_id = useSelector(selectUser).id;
     const tags = useSelector(selectTag).tags;
-
     const { errors, hasErrors, validateForm, displayErrors } = useCreateBlogForm();
 
     const isButtonPressed = useRef(false);
 
-    const [inputs, setInputs] = useState({
+    const [files, setFiles] = useState<FileList | []>([]);
+
+    const [inputs, setInputs] = useState<CreateBlogInputTypes>({
         title: '',
         description: '',
         tags: [] as string[],
         user_id: user_id ?? '',
+        images: [],
     });
 
     useEffect(() => {
@@ -38,6 +47,10 @@ const CreateBlog = () => {
         }
     }, [hasErrors]);
 
+    useEffect(() => {
+        console.log(inputs);
+    }, [inputs])
+
     const handleSubmit = (event: React.FormEvent<HTMLElement>) => {
         event.preventDefault();
         validateForm({title: inputs.title});
@@ -45,6 +58,12 @@ const CreateBlog = () => {
         isButtonPressed.current = true;
     }
 
+    const handleFiles = (event: React.ChangeEvent<HTMLInputElement>) => {
+        const files = event.target.files;
+        setInputs({...inputs, images: event.target.files ?? []})
+    }
+
+   
     return (
         <div className="flex justify-center h-full items-center">
             <div className="flex rounded-md w-3/4 bg-[#ffffff] create-div pl-4 pr-4">
@@ -66,7 +85,7 @@ const CreateBlog = () => {
                         </select>
                     </div>
 
-                    <input type="file" className="pt-4 regular-font label w-1/3 flex items-center file-input" multiple />
+                    <input type="file" className="pt-4 regular-font label w-1/3 flex items-center file-input" multiple onChange={handleFiles} />
                     <input type="submit" value="Submit" className="submit-bt-blog flex items-center justify-center regular-font font-semibold rounded-md text-xl border-solid border-black border-2 w-fit h-fit mb-4 cursor-pointer p-1" />
 
                 </form>

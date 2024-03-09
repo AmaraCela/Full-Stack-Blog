@@ -1,3 +1,4 @@
+import { error } from 'console';
 import mysql from 'mysql';
 
 class DatabaseConnection {
@@ -32,6 +33,7 @@ class DatabaseConnection {
             
             if (err) {
                 console.log("There was an error closing the connection");
+                console.log(error);
             }
             else {
                 console.log("Connection closed successfully");

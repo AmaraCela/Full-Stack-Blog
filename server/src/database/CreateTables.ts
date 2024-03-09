@@ -12,7 +12,7 @@ class CreateTables {
             username varchar(45) NOT NULL,
             email varchar(45) NOT NULL,
             password varchar(45) NOT NULL,
-            PRIMARY KEY(user_id),
+            PRIMARY KEY (user_id),
             UNIQUE KEY username_UNIQUE (username),
             UNIQUE KEY user_id_UNIQUE (user_id)
         );`

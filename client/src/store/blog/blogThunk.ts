@@ -3,16 +3,16 @@ import { createAPI } from "../../utils/api";
 
 export const createBlog = createAsyncThunk(
     'createBlog',
-    async (blogInfo: {
-        title: string;
-        description: string;
-        user_id: string;
-    },
+    async (blogInfo: FormData,
         { rejectWithValue }) => {
         try {
-            const response = createAPI('post', { method: 'POST' })(blogInfo);
+            // const response = createAPI('post', { method: 'POST' })(blogInfo);
+            const response = await fetch("http://localhost:5000/api/post", {
+                method: 'POST',
+                body: blogInfo
+            });
         }
-        catch(error){
+        catch (error) {
             console.log(error);
         }
     }

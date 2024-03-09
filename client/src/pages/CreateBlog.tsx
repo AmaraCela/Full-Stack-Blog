@@ -23,8 +23,6 @@ const CreateBlog = () => {
 
     const isButtonPressed = useRef(false);
 
-    const [files, setFiles] = useState<FileList | []>([]);
-
     const [inputs, setInputs] = useState<CreateBlogInputTypes>({
         title: '',
         description: '',
@@ -33,6 +31,7 @@ const CreateBlog = () => {
         images: [],
     });
 
+    console.log(inputs.description);
     useEffect(() => {
         dispatch(retriveTags());
     }, []);
@@ -43,13 +42,19 @@ const CreateBlog = () => {
 
     useEffect(() => {
         if(!hasErrors) {
-            dispatch(createBlog(inputs));
+            const formData = new FormData();
+            formData.append('title', inputs.title);
+            formData.append('description', inputs.description);
+            formData.append('user_id', inputs.user_id);
+            for(let element of inputs.tags) {
+                formData.append('tags', element);
+            }
+            for(let i = 0; i<inputs.images.length; i++) {
+                formData.append('files', inputs.images[i]);
+            }
+            dispatch(createBlog(formData));
         }
     }, [hasErrors]);
-
-    useEffect(() => {
-        console.log(inputs);
-    }, [inputs])
 
     const handleSubmit = (event: React.FormEvent<HTMLElement>) => {
         event.preventDefault();
@@ -59,7 +64,6 @@ const CreateBlog = () => {
     }
 
     const handleFiles = (event: React.ChangeEvent<HTMLInputElement>) => {
-        const files = event.target.files;
         setInputs({...inputs, images: event.target.files ?? []})
     }
 
@@ -80,8 +84,10 @@ const CreateBlog = () => {
 
                     <div className="flex flex-col">
                         <label htmlFor="tags-dropdown" className="label regular-font">Select tags:</label>
-                        <select name="tag" id="tags-dropdown" className="input-format regular-font" multiple onChange={(event) => setInputs({ ...inputs, tags: [...inputs.tags, event.target.value] })}>
-                            {tags.map((tag) => (<option key={tag.tag_id} value={tag.tag_name}>{tag.tag_name}</option>))}
+                        <select name="tag" id="tags-dropdown" className="input-format regular-font" multiple onChange={(event) => {
+                            const selectedOptions = Array.from(event.target.selectedOptions, option => String(option.value));
+                            setInputs({ ...inputs, tags: selectedOptions })}}>
+                            {tags.map((tag) => (<option key={tag.tag_id} value={tag.tag_id}>{tag.tag_name}</option>))}
                         </select>
                     </div>
 

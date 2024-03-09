@@ -21,6 +21,7 @@ const tagSlice = createSlice({
     extraReducers: (builder) => {
         builder.addCase(retriveTags.fulfilled, (state: TagState, action) => {
             state.tags = action.payload;
+            console.log(action.payload);
         })
     },
 

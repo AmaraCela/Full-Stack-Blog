@@ -41,7 +41,7 @@ class Post {
                     }
                     catch (err) {
                         console.log(err);
-                        reject(err);   
+                        reject(err);
                     }
 
                 }
@@ -52,6 +52,18 @@ class Post {
         });
     }
 
+    static async deleteBlog(post_id: string) {
+        const dbconnection = new DatabaseConnection();
+        const connection = dbconnection.getConnection();
+
+        const query = 'DELETE FROM posts WHERE post_id = ?';
+        return new Promise((resolve, reject) => {
+            connection.query(query, [post_id], (err, _) => {
+                err ? reject(err) : resolve(true);
+            });
+            dbconnection.closeConnection();
+        });
+    }
 
     static async addPostTags(post_id: any, tags: string[]) {
         const dbconnection = new DatabaseConnection();
@@ -60,7 +72,7 @@ class Post {
         const query = 'INSERT INTO post_tags (post_id, tag_id) VALUES (?, ?)';
 
         return new Promise((resolve, reject) => {
-            for (let i = 0; i< tags.length; i++) {
+            for (let i = 0; i < tags.length; i++) {
                 connection.query(query, [post_id, tags[i]], (err, _) => {
                     if (err) {
                         reject(err);
@@ -68,7 +80,7 @@ class Post {
                     else {
                         resolve(true);
                     }
-                    
+
                 });
             }
             dbconnection.closeConnection();
@@ -82,7 +94,7 @@ class Post {
         const query = 'INSERT INTO images (post_id, image) VALUES (?, ?)';
 
         return new Promise((resolve, reject) => {
-            for (let i = 0; i< images.length; i++) {
+            for (let i = 0; i < images.length; i++) {
                 connection.query(query, [post_id, images[i].path], (err, _) => {
                     if (err) {
                         reject(err);
@@ -90,7 +102,7 @@ class Post {
                     else {
                         resolve(true);
                     }
-                    
+
                 });
             }
             dbconnection.closeConnection();

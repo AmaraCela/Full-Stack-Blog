@@ -2,10 +2,11 @@ import { useEffect, useRef, useState } from "react";
 import FormInput from "../components/FormInput";
 import "../styles/createBlog.css";
 import { useSelector } from "react-redux";
-import { selectTag, selectUser, useAppDispatch } from "../store/store";
+import { selectBlog, selectTag, selectUser, useAppDispatch } from "../store/store";
 import { createBlog } from "../store/blog/blogThunk";
 import { retriveTags } from "../store/tag/tagThunks";
 import { useCreateBlogForm } from "../hooks/useCreateBlogForm";
+import { useNavigate } from "react-router-dom";
 
 const CreateBlog = () => {
 
@@ -17,8 +18,12 @@ const CreateBlog = () => {
         images: FileList | [],
     }
     const dispatch = useAppDispatch();
+    const naviate = useNavigate();
     const user_id = useSelector(selectUser).id;
     const tags = useSelector(selectTag).tags;
+    const successful = useSelector(selectBlog).successful;
+    const error = useSelector(selectBlog).error;
+
     const { errors, hasErrors, validateForm, displayErrors } = useCreateBlogForm();
 
     const isButtonPressed = useRef(false);
@@ -55,6 +60,11 @@ const CreateBlog = () => {
             dispatch(createBlog(formData));
         }
     }, [hasErrors]);
+
+    useEffect(() => {
+        successful && naviate("/");
+    },[successful])
+
 
     const handleSubmit = (event: React.FormEvent<HTMLElement>) => {
         event.preventDefault();

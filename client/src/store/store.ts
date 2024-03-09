@@ -4,6 +4,7 @@ import profileReducer from "./profile/profileSlice";
 import createBlogReducer from "./blog/blogSlice";
 import passwordReducer from "./password/passwordSlice";
 import tagReducer from "./tag/tagSlice";
+import blogReducer from "./blog/blogSlice";
 import { useDispatch } from "react-redux";
 
 export const store = configureStore({
@@ -13,6 +14,8 @@ export const store = configureStore({
         createBlog: createBlogReducer,
         password: passwordReducer,
         tag: tagReducer,
+        blog: blogReducer,
+
     },
 });
 
@@ -24,3 +27,4 @@ export const selectProfile = (state: RootState) => state.profile;
 export const selectCreateBlog = (state: RootState) => state.createBlog;
 export const selectPassword = (state: RootState) => state.password;
 export const selectTag = (state: RootState) => state.tag;
+export const selectBlog = (state: RootState) => state.blog;

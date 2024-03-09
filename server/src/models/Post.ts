@@ -9,13 +9,13 @@ export type PostData = {
 }
 
 class Post {
+
     static async postBlog(data: PostData) {
         const dbconnection = new DatabaseConnection();
         const connection = dbconnection.getConnection();
 
         const query = 'INSERT INTO posts (title, description, date_posted, user_id) VALUES (?, ?, ?, ?)';
 
-        console.log(data.files);
         return new Promise((resolve, reject) => {
             connection.query(query, [data.title, data.description, new Date(), data.user_id], async (err, _) => {
                 if (err) {
@@ -29,17 +29,19 @@ class Post {
                         }
                         catch (err) {
                             console.log(err);
+                            return reject(err);
                         }
                         try {
                             await Post.addPostImages(result[0].post_id, data.files);
                         }
                         catch (err) {
                             console.log(err);
+                            return reject(err);
                         }
-                        resolve(true);
                     }
                     catch (err) {
                         console.log(err);
+                        reject(err);   
                     }
 
                 }

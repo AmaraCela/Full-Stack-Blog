@@ -1,13 +1,12 @@
-import BlogDisplay from "../components/BlogDisplay";
+import BlogDisplay, { BlogType } from "../components/BlogDisplay";
 import profileImg from "../assets/profileImg.png";
 import "../styles/profile.css";
 import profile from "../assets/profile.png";
-import laptop from '../assets/laptop.jpg';
 import { useSelector } from "react-redux";
 import { selectProfile, selectUser, useAppDispatch } from "../store/store";
 import { Link, useParams } from "react-router-dom";
 import edit from '../assets/edit-246.png';
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { populateProfile } from "../store/profile/profileThunks";
 import username from "../assets/username.png";
 import email from "../assets/email-removebg-preview.png";
@@ -22,31 +21,49 @@ const Profile = () => {
 
     const loggedInUserId = useSelector(selectUser).id;
     const user = useSelector(selectProfile).user;
+    const posts = useSelector(selectProfile).posts;
+
+    console.log(posts);
+    const [blogs, setBlogs] = useState<BlogType['blogs']>();
+
+    useEffect(() => {
+        const blogs:BlogType['blogs'] = [];
+        for (const element of posts) {
+            console.log(element.images);
+            const blog = {
+                id : element.post_id,
+                title: element.title,
+                description: element.description,
+                date: new Date(element.date_posted),
+                user: user ? user.username: '',
+                profilePic: profile,
+                tags: element.tags,
+                image: element.images,
+            }
+            blogs.push(blog);
+        }
+        setBlogs(blogs);
+    }, [posts]);
 
     useEffect(() => {
         dispatch(populateProfile(id ?? ''));
     }, [])
 
-    const tags = [
-        { id: 1, name: 'blog' },
-        { id: 2, name: 'tag' },
-        { id: 3, name: 'othertag' }
-    ];
 
-    const blogs = [
-        {
-            id: 1, user: 'User', image: laptop, profilePic: profile, title: "The title goes here...", description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi dapibus eu lectus id gravida...',
-            date: new Date(), tags: tags
-        },
-        {
-            id: 2, user: 'User', image: laptop, profilePic: profile, title: "The title goes here...", description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi dapibus eu lectus id gravida...',
-            date: new Date(), tags: tags
-        },
-        {
-            id: 3, user: 'User', image: laptop, profilePic: profile, title: "The title goes here...", description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi dapibus eu lectus id gravida...',
-            date: new Date(), tags: tags
-        }
-    ];
+    // const blogs = [
+    //     {
+    //         id: 1, user: 'User', image: laptop, profilePic: profile, title: "The title goes here...", description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi dapibus eu lectus id gravida...',
+    //         date: new Date(), tags: tags
+    //     },
+    //     {
+    //         id: 2, user: 'User', image: laptop, profilePic: profile, title: "The title goes here...", description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi dapibus eu lectus id gravida...',
+    //         date: new Date(), tags: tags
+    //     },
+    //     {
+    //         id: 3, user: 'User', image: laptop, profilePic: profile, title: "The title goes here...", description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi dapibus eu lectus id gravida...',
+    //         date: new Date(), tags: tags
+    //     }
+    // ];
 
     return (
         <div className="flex items-center flex-col">
@@ -147,7 +164,7 @@ const Profile = () => {
             </div>
 
             <div className="flex mx-16 2xl:container 2xl:mx-auto profile-blogs" id="profile-blogs">
-                <BlogDisplay blogs={blogs} />
+                {blogs ? <BlogDisplay blogs={blogs} /> : ''}
                 <Sidebar />
             </div>
         </div>

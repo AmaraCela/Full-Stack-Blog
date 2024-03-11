@@ -1,3 +1,4 @@
+import { UserProfile } from "../controllers/profileController";
 import DatabaseConnection from "../database/DatabaseConnection";
 
 export type PostData = {
@@ -72,8 +73,8 @@ class Post {
         const query = 'INSERT INTO post_tags (post_id, tag_id) VALUES (?, ?)';
 
         return new Promise((resolve, reject) => {
-            for (let i = 0; i < tags.length; i++) {
-                connection.query(query, [post_id, tags[i]], (err, _) => {
+            for (const element of tags) {
+                connection.query(query, [post_id, element], (err, _) => {
                     if (err) {
                         reject(err);
                     }
@@ -94,8 +95,8 @@ class Post {
         const query = 'INSERT INTO images (post_id, image) VALUES (?, ?)';
 
         return new Promise((resolve, reject) => {
-            for (let i = 0; i < images.length; i++) {
-                connection.query(query, [post_id, images[i].path], (err, _) => {
+            for (const element of images) {
+                connection.query(query, [post_id, element.path], (err, _) => {
                     if (err) {
                         reject(err);
                     }
@@ -139,6 +140,86 @@ class Post {
 
             dbconnection.closeConnection();
         });
+    }
+
+    static async getPostsOfUser(user_id: string) {
+        const dbconnection = new DatabaseConnection();
+        const connection = dbconnection.getConnection();
+
+        const query = `
+        SELECT
+        u.user_id,
+        u.username,
+        u.email,
+        p.post_id,
+        p.title,
+        p.description,
+        p.date_posted,
+        t.tag_id,
+        t.tag_name,
+        i.image
+        FROM
+        users u
+        LEFT JOIN posts p ON u.user_id = p.user_id
+        LEFT JOIN post_tags pt ON p.post_id = pt.post_id
+        LEFT JOIN tags t ON pt.tag_id = t.tag_id
+        LEFT JOIN images i ON p.post_id = i.post_id
+        WHERE
+        u.user_id = ?;
+    `;
+
+    return new Promise((resolve, reject) => {
+        connection.query(query, [user_id], (err, result) => {
+            if (err) {
+                reject(err);
+            } else {
+                if (!result || result.length === 0) {
+                    resolve(false);
+                } else {
+                    const structuredResult: UserProfile = {
+                        user_id: result[0].user_id,
+                        username: result[0].username,
+                        email: result[0].email,
+                        posts: result.reduce((acc: any[], row: any) => {
+                            if (acc.length === 0) {
+                                const newPost = {
+                                    post_id: row.post_id,
+                                    title: row.title,
+                                    description: row.description,
+                                    date_posted: row.date_posted,
+                                    tags: [{ tag_id: row.tag_id, tag_name: row.tag_name }],
+                                    images: [row.image],
+                                };
+                                acc.push(newPost);
+                            } else {
+                                const existingPost = acc.find((post) => post.post_id === row.post_id);
+
+                                if (existingPost) {
+                                    existingPost.tags.push({ tag_id: row.tag_id, tag_name: row.tag_name });
+                                    existingPost.images.push(row.image);
+                                } else {
+                                    const newPost = {
+                                        post_id: row.post_id,
+                                        title: row.title,
+                                        description: row.description,
+                                        date_posted: row.date_posted,
+                                        tags: [{ tag_id: row.tag_id, tag_name: row.tag_name }],
+                                        images: [row.image],
+                                    };
+                                    acc.push(newPost);
+                                }
+                            }
+
+                            return acc;
+                        }, [])
+                    };
+
+                    resolve(structuredResult);
+                }
+            }
+        });
+        dbconnection.closeConnection();
+    });
     }
 }
 

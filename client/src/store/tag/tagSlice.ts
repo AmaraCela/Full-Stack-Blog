@@ -1,7 +1,7 @@
 import { createSlice } from "@reduxjs/toolkit";
 import { retriveTags } from "./tagThunks";
 
-interface Tag {
+export interface Tag {
     tag_id: string;
     tag_name: string;
 }

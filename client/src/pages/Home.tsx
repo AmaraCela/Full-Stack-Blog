@@ -9,22 +9,22 @@ import personalBlog from "../assets/personal-blog.jpg";
 import lake from "../assets/lake.avif";
 
 const tags = [
-    { id: 1, name: 'blog' },
-    { id: 2, name: 'tag' },
-    { id: 3, name: 'othertag' }
+    { tag_id: '1', tag_name: 'blog' },
+    { tag_id: '2', tag_name: 'tag' },
+    { tag_id: '3', tag_name: 'othertag' }
 ]
 
 const blogs = [
     {
-        id: 1, user: 'User', image: personalBlog, profilePic: profile, title: "The title goes here...", description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi dapibus eu lectus id gravida...',
+        id: '1', user: 'User', image: personalBlog, profilePic: profile, title: "The title goes here...", description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi dapibus eu lectus id gravida...',
         date: new Date(), tags: tags
     },
     {
-        id: 2, user: 'User', image: laptop, profilePic: profile, title: "The title goes here...", description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi dapibus eu lectus id gravida...',
+        id: '2', user: 'User', image: laptop, profilePic: profile, title: "The title goes here...", description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi dapibus eu lectus id gravida...',
         date: new Date(), tags: tags
     },
     {
-        id: 3, user: 'User', image: lake, profilePic: profile, title: "The title goes here...", description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi dapibus eu lectus id gravida...',
+        id: '3', user: 'User', image: lake, profilePic: profile, title: "The title goes here...", description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi dapibus eu lectus id gravida...',
         date: new Date(), tags: tags
     }
 ];

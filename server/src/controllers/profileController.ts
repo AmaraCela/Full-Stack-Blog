@@ -1,48 +1,34 @@
-import DatabaseConnection from "../database/DatabaseConnection";
 import { Request, Response } from "express";
+import Post from "../models/Post";
 
-export function profile(req: Request, res: Response): void {
-    const dbconnection = new DatabaseConnection();
-    const connection = dbconnection.getConnection();
+export interface UserProfile {
+    user_id: number;
+    username: string;
+    email: string;
+    posts: Array<{
+        post_id: number;
+        title: string;
+        description: string;
+        date_posted: Date;
+        tags: Array<{ tag_id: number; tag_name: string }>;
+        images: Array<string>;
+    }>;
+}
 
-    const  user_id  = req.query.user_id;
+export async function profile(req: Request, res: Response): Promise<void> {
+
+    const user_id = req.query.user_id;
 
     if (!user_id) {
         res.status(400).json({ message: 'User ID is required in the query parameters.' });
         return;
     }
 
-    const query = `
-    SELECT
-      u.user_id,
-      u.username,
-      u.email,
-      p.post_id,
-      p.title,
-      p.description,
-      p.date_posted,
-      t.tag_id,
-      t.tag_name
-    FROM
-      users u
-      LEFT JOIN posts p ON u.user_id = p.user_id
-      LEFT JOIN post_tags pt ON p.post_id = pt.post_id
-      LEFT JOIN tags t ON pt.tag_id = t.tag_id
-    WHERE
-      u.user_id = ?;
-  `;
-    
-    connection.query(query, [user_id], (err, result) => {
-        if(err) {
-            console.log('There was an error retrieving the user profile.', err);
-            res.status(500).json({ message: 'There was an error retrieving the user profile.'})
-        } 
-        else if(result.length === 0) {
-            res.status(401).json({ message: 'User not found.' });
-        }
-        else{
-            res.status(200).json({ user: result });
-        }
-    });
-    dbconnection.closeConnection();
+    try {
+        const result = await Post.getPostsOfUser(user_id as string);
+        !result ? res.status(401).json({ message: 'User not found.' }) : res.status(200).json({ user: result })
+    }
+    catch (error) {
+        res.status(500).json({ message: 'There was an error retrieving the profile.' });
+    }
 }

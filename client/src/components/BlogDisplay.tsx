@@ -1,14 +1,11 @@
+import { Tag } from "../store/tag/tagSlice";
 import "../styles/blogDisplay.css";
 import { Link } from 'react-router-dom';
 
-interface Tag {
-    id: number;
-    name: string;
-}
 
-interface BlogType {
+export interface BlogType {
     blogs: {
-        id: number;
+        id: string;
         user: string;
         image: string;
         profilePic: string;
@@ -20,6 +17,7 @@ interface BlogType {
 }
 
 const BlogDisplay = ({ blogs }: BlogType) => {
+    console.log(blogs);
 
     return (
         <div className="blogs">
@@ -35,10 +33,10 @@ const BlogDisplay = ({ blogs }: BlogType) => {
                                     <p className="regular-font text-3xl font-semibold ml-1 blog-user">{item.user}</p>
                                 </div>
                                 <p className="mt-8 regular-font text-2xl font-bold blog-title">{item.title}</p>
-                                <p className="regular-font mt-2 text-base italic blog-tags">Talks about {item.tags.map((tag) => ("#" + tag.name + " "))}</p>
+                                <p className="regular-font mt-2 text-base italic blog-tags">Talks about {item.tags.map((tag) => ("#" + tag.tag_name + " "))}</p>
                                 <p className="mt-8 regular-font text-xl blog-desc">{item.description}</p>
                             </div>
-                            <p className="refular-font text-xl font-bold text-end date">Posted on: {item.date.getDate() + "/" + item.date.getMonth() + "/" + item.date.getFullYear()}</p>
+                            {/* <p className="refular-font text-xl font-bold text-end date">Posted on: {item.date.getDate() + "/" + item.date.getMonth() + "/" + item.date.getFullYear()}</p> */}
                         </div>
                     </div>
                 </Link>

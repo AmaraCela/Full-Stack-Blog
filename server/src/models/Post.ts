@@ -171,7 +171,7 @@ class Post {
     return new Promise((resolve, reject) => {
         connection.query(query, [user_id], (err, result) => {
             if (err) {
-                reject(err);
+                reject(err); 
             } else {
                 if (!result || result.length === 0) {
                     resolve(false);
@@ -181,32 +181,16 @@ class Post {
                         username: result[0].username,
                         email: result[0].email,
                         posts: result.reduce((acc: any[], row: any) => {
-                            if (acc.length === 0) {
-                                const newPost = {
-                                    post_id: row.post_id,
-                                    title: row.title,
-                                    description: row.description,
-                                    date_posted: row.date_posted,
-                                    tags: [{ tag_id: row.tag_id, tag_name: row.tag_name }],
-                                    images: [row.image],
-                                };
-                                acc.push(newPost);
+                            if (acc.length === 0) {  
+                                acc.push(Post.newEntry(row));
                             } else {
                                 const existingPost = acc.find((post) => post.post_id === row.post_id);
-
                                 if (existingPost) {
                                     existingPost.tags.push({ tag_id: row.tag_id, tag_name: row.tag_name });
                                     existingPost.images.push(row.image);
                                 } else {
-                                    const newPost = {
-                                        post_id: row.post_id,
-                                        title: row.title,
-                                        description: row.description,
-                                        date_posted: row.date_posted,
-                                        tags: [{ tag_id: row.tag_id, tag_name: row.tag_name }],
-                                        images: [row.image],
-                                    };
-                                    acc.push(newPost);
+                                    
+                                    acc.push(Post.newEntry(row));
                                 }
                             }
 
@@ -220,6 +204,17 @@ class Post {
         });
         dbconnection.closeConnection();
     });
+    }
+
+    static newEntry(row: any) {
+        return {
+            post_id: row.post_id,
+            title: row.title,
+            description: row.description,
+            date_posted: row.date_posted,
+            tags: [{ tag_id: row.tag_id, tag_name: row.tag_name }],
+            images: [row.image],
+        }
     }
 }
 

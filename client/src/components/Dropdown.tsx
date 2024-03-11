@@ -9,7 +9,6 @@ const Dropdown = () => {
     const navigate = useNavigate();
     const userId = useSelector(selectUser).id;
 
-    
     const handleClick = () => {
         dispatch(logoutUser());
         navigate('/login');

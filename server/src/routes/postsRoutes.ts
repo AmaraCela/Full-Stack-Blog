@@ -5,7 +5,7 @@ import multer from "multer";
 
 const storage = multer.diskStorage({
     destination: function (req, file, cb) {
-        cb(null, './');
+        cb(null, './uploads/');
     },
     filename: function (req, file, cb) {
         cb(null, file.originalname);
@@ -14,7 +14,8 @@ const storage = multer.diskStorage({
 
 const upload = multer({storage:storage})
 
-const router = express.Router()
+const router = express.Router();
+
 
 router.get(`/posts`, getPosts);
 router.post(`/post`, upload.array('files', 5), postController);

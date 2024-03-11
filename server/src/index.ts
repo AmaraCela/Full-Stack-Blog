@@ -5,12 +5,16 @@ import userRouter from "./routes/userRoutes";
 import postRouter from "./routes/postsRoutes";
 import tagRouter from "./routes/tagsRoutes";
 import dotenv from "dotenv";
+import path from "path";
 
 dotenv.config();
 
 const app = express();
 app.use(bodyParser.json());
 app.use(cors());
+
+const uploadPath = path.join(__dirname, '../uploads');
+app.use('/uploads', express.static(uploadPath));
 
 app.get('/', (req: Request, res: Response) => {
     res.send('Hello from Express')

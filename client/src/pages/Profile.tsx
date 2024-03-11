@@ -38,7 +38,7 @@ const Profile = () => {
                 user: user ? user.username: '',
                 profilePic: profile,
                 tags: element.tags,
-                image: element.images,
+                image: element.images[0],
             }
             blogs.push(blog);
         }

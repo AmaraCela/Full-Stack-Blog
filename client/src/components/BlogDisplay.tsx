@@ -30,7 +30,7 @@ const BlogDisplay = ({ blogs }: BlogType) => {
                                 </div>
                                 <p className="mt-8 regular-font text-2xl font-bold blog-title">{item.title}</p>
                                 <p className="regular-font mt-2 text-base italic blog-tags">Talks about {item.tags.map((tag) => ("#" + tag.tag_name + " "))}</p>
-                                <p className="mt-8 regular-font text-xl blog-desc">{item.description}</p>
+                                <p className="mt-8 regular-font text-xl blog-desc">{item.description.slice(0,50)}</p>
                             </div>
                             <p className="refular-font text-xl font-bold text-end date">Posted on: {item.date.getDate() + "/" + item.date.getMonth() + "/" + item.date.getFullYear()}</p>
                         </div>

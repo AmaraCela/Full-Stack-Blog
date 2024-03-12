@@ -173,7 +173,8 @@ class Post {
                     const structuredResult = this.generateStructuredResult(result);
                     resolve(structuredResult);
                 }
-            })
+            });
+            dbconnection.closeConnection();
         });
     }
 

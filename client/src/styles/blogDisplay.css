@@ -11,7 +11,9 @@
     height: 70vh;
     margin-top: 20px;
     @apply pl-1 pb-10 pt-2 flex cursor-pointer shadow-lg;
-}
+    width: 100%;
+
+} 
 
 .blog:hover {
     box-shadow: 3px 3px 5px #c46666;
@@ -71,5 +73,4 @@
     .blog-img {
         width: 100%;
     }
-
 }

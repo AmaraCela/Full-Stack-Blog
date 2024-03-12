@@ -163,11 +163,9 @@ const Profile = () => {
                 </a>
             </div>
 
-            <div className="w-full">
-                <div className="flex mx-16 2xl:container 2xl:mx-auto profile-blogs" id="profile-blogs">
-                    {blogs ? <BlogDisplay blogs={blogs} /> : ''}
-                    <Sidebar />
-                </div>
+            <div className="flex px-16 2xl:container 2xl:mx-auto profile-blogs w-full" id="profile-blogs">
+                {blogs ? <BlogDisplay blogs={blogs} /> : ''}
+                <Sidebar />
             </div>
         </div>
     );

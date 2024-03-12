@@ -14,24 +14,21 @@ const Blog = () => {
     const blog = useSelector(selectBlog).blog;
     const deleteSuccessful = useSelector(selectBlog).deleteSuccessful;
     const [activeIndex, setActiveIndex] = useState(0);
-    const [images, setImages] = useState<HTMLElement[]>([]);
     const { post_id } = useParams();
     const [deleteVisibility, setDeleteVisibility] = useState('hidden');
 
     useEffect(() => {
-        setImages(Array.from(document.querySelectorAll(".carousel-img")));
         dispatch(getIndividualBlog(post_id ?? ''));
     }, []);
 
     useEffect(() => {
-        console.log(deleteSuccessful);
         deleteSuccessful && navigate('/');
     }, [deleteSuccessful])
 
     const handleNavigation = (direction: "left" | "right") => {
 
         let newIndex = 0;
-        const imagesLength = images.length - 1;
+        const imagesLength = blog.posts[0].images.length - 1;
 
         if (direction === 'right' && activeIndex < imagesLength) {
             newIndex = (activeIndex + 1)
@@ -40,9 +37,6 @@ const Blog = () => {
         } else if (direction === 'left' && activeIndex > 0) {
             newIndex = (activeIndex - 1)
         }
-
-        images[activeIndex].style.display = "none";
-        images[newIndex].style.display = "block";
 
         setActiveIndex(newIndex);
     }
@@ -63,7 +57,7 @@ const Blog = () => {
                 </button>}
 
                 {blog.posts[0].images.map((image, index) => (
-                    <div className={`carousel-img relative ${index !== 0 ? 'hidden' : ''}`} key={image}>
+                    <div className={`carousel-img relative ${index !== activeIndex ? 'hidden' : ''}`} key={image}>
                         <img src={`http://localhost:5000/${image.replace(/\\/g, '/')}`} alt="" className="w-full h-full object-cover" />
                     </div>
                 ))}

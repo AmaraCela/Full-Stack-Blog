@@ -8,6 +8,7 @@ import { retriveTags } from "../store/tag/tagThunks";
 import { useCreateBlogForm } from "../hooks/useCreateBlogForm";
 import { useNavigate } from "react-router-dom";
 import { CreateBlogInputType } from "../types/blogTypes";
+import Loading from "../components/Loading";
 
 const CreateBlog = () => {
 
@@ -16,6 +17,7 @@ const CreateBlog = () => {
     const user_id = useSelector(selectUser).id;
     const tags = useSelector(selectTag).tags;
     const successful = useSelector(selectBlog).successful;
+    const isLoading = useSelector(selectBlog).loading;
     const error = useSelector(selectBlog).error;
 
     const { errors, hasErrors, validateForm, displayErrors } = useCreateBlogForm();
@@ -50,12 +52,13 @@ const CreateBlog = () => {
             for (let i = 0; i < inputs.images.length; i++) {
                 formData.append('files', inputs.images[i]);
             }
+            console.log(inputs);
             dispatch(createBlog(formData));
         }
     }, [hasErrors]);
 
     useEffect(() => {
-        successful && navigate("/");
+        // successful && navigate("/");
     }, [successful])
 
 
@@ -104,6 +107,13 @@ const CreateBlog = () => {
 
                 </form>
             </div>
+            {isLoading && <Loading />}
+
+            {error &&
+                <div className="info-box absolute p-8 bg-white rounded-md">
+                    <p>{error}</p>
+                    <button className="border-black border-2 rounded-md p-2 regular-font font-semibold" onClick={() => navigate('/')}>Okay</button>
+                </div>}
         </div>
     );
 }

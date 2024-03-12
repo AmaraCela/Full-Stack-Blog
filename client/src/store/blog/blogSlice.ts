@@ -52,9 +52,11 @@ const createBlogBuilder = (builder: any) => {
     }).addCase(createBlog.fulfilled, (state: BlogState, action: any) => {
         state.successful = true;
         state.error = null;
+        state.loading = false;
     }).addCase(createBlog.rejected, (state: BlogState, action: any) => {
         state.error = action.payload as string;
         state.successful = false;
+        state.loading = false;
     })
 }
 

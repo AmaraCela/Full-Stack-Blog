@@ -15,7 +15,7 @@ class Post {
         const connection = dbconnection.getConnection();
 
         const query = 'INSERT INTO posts (title, description, date_posted, user_id) VALUES (?, ?, ?, ?)';
-
+        console.log(data);
         return new Promise((resolve, reject) => {
             connection.query(query, [data.title, data.description, new Date(), data.user_id], async (err, _) => {
                 if (err) {
@@ -83,6 +83,9 @@ class Post {
                         }
                     });
                 }
+                
+            }
+            else {
                 reject("There are no tags");
             }
             dbconnection.closeConnection();

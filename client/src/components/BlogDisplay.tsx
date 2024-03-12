@@ -16,6 +16,7 @@ export interface BlogType {
 }
 
 const BlogDisplay = ({ blogs }: BlogType) => {
+    console.log(blogs);
     return (
         <div className="blogs">
             {blogs.map((item) => (

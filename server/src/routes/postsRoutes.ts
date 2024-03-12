@@ -3,6 +3,8 @@ import { getPosts } from "../controllers/getPostsController";
 import { postController } from "../controllers/postController";
 import multer from "multer";
 import { getPostById } from "../controllers/getPostByIdController";
+import { authenticateToken } from "../middleware/authenticationMiddleware";
+import { deleteBlog } from "../controllers/deleteBlogController";
 
 const storage = multer.diskStorage({
     destination: function (req, file, cb) {
@@ -19,7 +21,8 @@ const router = express.Router();
 
 
 router.get(`/posts`, getPosts);
-router.post(`/post`, upload.array('files', 5), postController);
+router.post(`/post`, authenticateToken, upload.array('files', 5), postController);
 router.get('/singlePost', getPostById);
+router.post('/deleteBlog', authenticateToken,  deleteBlog);
 
 export default router;

@@ -5,7 +5,7 @@ export function authenticateToken(req: Request, res: Response, next: NextFunctio
     const authHeader = req.headers['authorization'];
     const authToken = authHeader && authHeader.split(' ')[1];
 
-    if (authToken === null) {
+    if (authToken === undefined) {
         return res.status(403).json({ tokenError: 'You are not authenticated' });
     } 
     try {
@@ -13,6 +13,7 @@ export function authenticateToken(req: Request, res: Response, next: NextFunctio
         next();
     }
     catch (error) {
+        console.log(error);
         return res.status(403).json({ tokenError: 'Invalid token' });
     }
 }

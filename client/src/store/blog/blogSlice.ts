@@ -1,11 +1,13 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { createBlog, getIndividualBlog } from "./blogThunk";
+import { createBlog, deleteBlog, getIndividualBlog } from "./blogThunk";
 import { BlogType } from "../../types/blogTypes";
 
 type BlogState = {
     loading: boolean;
     successful: boolean;
     error: string | null;
+    deleteSuccessful: string | null;
+    deleteError: string | null;
     blog: BlogType;
 }
 
@@ -13,6 +15,8 @@ const initialState: BlogState = {
     loading: false,
     successful: false,
     error: null,
+    deleteSuccessful: null,
+    deleteError: null,
     blog: {
         user_id: "",
         username: "",
@@ -38,6 +42,7 @@ const createBlogSlice = createSlice({
     extraReducers: builder => {
        createBlogBuilder(builder);
        getIndividualBlogBuilder(builder);
+       deleteBlogBuilder(builder);
     }
 });
 
@@ -71,6 +76,16 @@ const getIndividualBlogBuilder = (builder: any) => {
                 images: []
             }]
         }
+    })
+}
+
+const deleteBlogBuilder = (builder: any) => {
+    builder.addCase(deleteBlog.fulfilled, (state: BlogState, action: any) => {
+        state.deleteSuccessful = action;
+        state.deleteError = null;
+    }).addCase(deleteBlog.rejected, (state: BlogState, action: any) => {
+        state.deleteError = action;
+        state.deleteSuccessful = null;
     })
 }
 

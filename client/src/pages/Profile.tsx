@@ -27,15 +27,15 @@ const Profile = () => {
     const [blogs, setBlogs] = useState<BlogType['blogs']>();
 
     useEffect(() => {
-        const blogs:BlogType['blogs'] = [];
+        const blogs: BlogType['blogs'] = [];
         for (const element of posts) {
             console.log(element.images);
             const blog = {
-                id : element.post_id,
+                id: element.post_id,
                 title: element.title,
                 description: element.description,
                 date: new Date(element.date_posted),
-                user: user ? user.username: '',
+                user: user ? user.username : '',
                 profilePic: profile,
                 tags: element.tags,
                 image: element.images[0],
@@ -163,9 +163,11 @@ const Profile = () => {
                 </a>
             </div>
 
-            <div className="flex mx-16 2xl:container 2xl:mx-auto profile-blogs" id="profile-blogs">
-                {blogs ? <BlogDisplay blogs={blogs} /> : ''}
-                <Sidebar />
+            <div className="w-full">
+                <div className="flex mx-16 2xl:container 2xl:mx-auto profile-blogs" id="profile-blogs">
+                    {blogs ? <BlogDisplay blogs={blogs} /> : ''}
+                    <Sidebar />
+                </div>
             </div>
         </div>
     );

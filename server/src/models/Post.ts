@@ -142,6 +142,42 @@ class Post {
         });
     }
 
+    static async getBlogById(post_id: string) {
+        const dbconnection = new DatabaseConnection();
+        const connection = dbconnection.getConnection();
+
+        const query = `SELECT 
+        u.user_id,
+        u.username,
+        u.email,
+        p.post_id,
+        p.title,
+        p.description,
+        p.date_posted,
+        t.tag_id,
+        t.tag_name,
+        i.image
+        FROM posts p 
+        LEFT JOIN users u ON p.user_id = u.user_id 
+        LEFT JOIN post_tags pt ON p.post_id = pt.post_id 
+        LEFT JOIN tags t ON pt.tag_id = t.tag_id
+        LEFT JOIN images i ON p.post_id = i.post_id 
+        WHERE p.post_id = ?`;
+
+        return new Promise((resolve, reject) => {
+            connection.query(query, [post_id], (err, result) => {
+                if (err) {
+                    reject(err);console.log(err);
+                }
+                else {
+                    const structuredResult = this.generateStructuredResult(result);
+                    console.log(structuredResult);
+                    resolve(structuredResult);
+                }
+            })
+        });
+    }
+
     static async getPostsOfUser(user_id: string) {
         const dbconnection = new DatabaseConnection();
         const connection = dbconnection.getConnection();
@@ -168,42 +204,49 @@ class Post {
         u.user_id = ?;
     `;
 
-    return new Promise((resolve, reject) => {
-        connection.query(query, [user_id], (err, result) => {
-            if (err) {
-                reject(err); 
-            } else {
-                if (!result || result.length === 0) {
+        return new Promise((resolve, reject) => {
+            connection.query(query, [user_id], (err, result) => {
+                if (err) {
+                    reject(err);
+                } else if (!result || result.length === 0) {
                     resolve(false);
                 } else {
-                    const structuredResult: UserProfile = {
-                        user_id: result[0].user_id,
-                        username: result[0].username,
-                        email: result[0].email,
-                        posts: result.reduce((acc: any[], row: any) => {
-                            if (acc.length === 0) {  
-                                acc.push(Post.newEntry(row));
-                            } else {
-                                const existingPost = acc.find((post) => post.post_id === row.post_id);
-                                if (existingPost) {
-                                    existingPost.tags.push({ tag_id: row.tag_id, tag_name: row.tag_name });
-                                    existingPost.images.push(row.image);
-                                } else {
-                                    
-                                    acc.push(Post.newEntry(row));
-                                }
-                            }
-
-                            return acc;
-                        }, [])
-                    };
-
+                    const structuredResult: UserProfile = this.generateStructuredResult(result);
                     resolve(structuredResult);
                 }
-            }
+
+            });
+            dbconnection.closeConnection();
         });
-        dbconnection.closeConnection();
-    });
+    }
+
+    static generateStructuredResult(result: any) {
+        return {
+            user_id: result[0].user_id,
+            username: result[0].username,
+            email: result[0].email,
+            posts: result.reduce((acc: any[], row: any) => {
+                if (acc.length === 0) {
+                    acc.push(Post.newEntry(row));
+                } else {
+                    const existingPost = acc.find((post) => post.post_id === row.post_id);
+                    if (existingPost) {
+                        const existingTag = existingPost.tags.find((tag: { tag_id: any; }) => tag.tag_id === row.tag_id);
+                    if (!existingTag) {
+                        existingPost.tags.push({ tag_id: row.tag_id, tag_name: row.tag_name });
+                    }
+
+                    const existingImage = existingPost.images.find((image: any) => image === row.image);
+                    if (!existingImage) {
+                        existingPost.images.push(row.image);
+                    }
+                    } else {
+                        acc.push(Post.newEntry(row));
+                    }
+                }
+                return acc;
+            }, [])
+        };
     }
 
     static newEntry(row: any) {

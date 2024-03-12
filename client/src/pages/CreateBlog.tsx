@@ -94,14 +94,14 @@ const CreateBlog = () => {
 
                     <div className="flex flex-col">
                         <label htmlFor="tags-dropdown" className="label regular-font">Select tags:</label>
-                        <select name="tag" id="tags-dropdown" className="input-format regular-font" multiple onChange={(event) => {
+                        <select name="tag" id="tags-dropdown" className="input-format regular-font" multiple required onChange={(event) => {
                             const selectedOptions = Array.from(event.target.selectedOptions, option => String(option.value));
                             setInputs({ ...inputs, tags: selectedOptions })}}>
                             {tags.map((tag) => (<option key={tag.tag_id} value={tag.tag_id}>{tag.tag_name}</option>))}
                         </select>
                     </div>
 
-                    <input type="file" className="pt-4 regular-font label w-1/3 flex items-center file-input" multiple onChange={handleFiles} />
+                    <input type="file" className="pt-4 regular-font label w-1/3 flex items-center file-input" multiple required onChange={handleFiles} />
                     <input type="submit" value="Submit" className="submit-bt-blog flex items-center justify-center regular-font font-semibold rounded-md text-xl border-solid border-black border-2 w-fit h-fit mb-4 cursor-pointer p-1" />
 
                 </form>

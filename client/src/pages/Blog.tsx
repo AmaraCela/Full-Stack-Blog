@@ -7,31 +7,11 @@ import { useParams } from "react-router-dom";
 
 const Blog = () => {
 
-    // const tags: Tag[] = [
-    //     { id: 1, name: 'blog' },
-    //     { id: 2, name: 'tag' },
-    //     { id: 3, name: 'othertag' }];
-
-    // const blog: BlogType = {
-    //     id: 1,
-    //     author: 'user',
-    //     profilePic: profile,
-    //     date: new Date(),
-    //     title: "Here goes the title",
-    //     description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque ut leo elementum, scelerisque justo eget, consequat leo. Nam eget aliquet sapien, vitae varius augue. Etiam commodo auctor turpis sit amet facilisis. Fusce sagittis, ipsum non faucibus cursus, purus magna ultrices dui, sed maximus odio urna eget lorem. Fusce cursus sodales magna at malesuada. Donec suscipit arcu sit amet turpis gravida, nec vulputate lacus iaculis. Curabitur vitae urna ut elit pharetra tincidunt. Aliquam sollicitudin nulla pulvinar egestas ullamcorper. Fusce neque lectus, sagittis sit amet tempus id, mollis sed neque. Fusce pulvinar leo ac ex euismod, sit amet pretium nibh scelerisque. Fusce ligula ante, congue sed libero sed, feugiat egestas odio. Donec fringilla vehicula ipsum, nec ornare velit. Curabitur pulvinar fringilla nibh quis efficitur.",
-    //     tags: tags,
-    //     images: [lake, personalBlog]
-    // }
-
     const dispatch = useAppDispatch();
     const blog = useSelector(selectBlog).blog;
     const [activeIndex, setActiveIndex] = useState(0);
     const [images, setImages] = useState<HTMLElement[]>([]);
     const { post_id } = useParams();
-    console.log("post id: " + post_id);
-    console.log(post_id);
-
-    console.log(blog);
 
     useEffect(() => {
         setImages(Array.from(document.querySelectorAll(".carousel-img")));

@@ -22,8 +22,7 @@ const Profile = () => {
     const loggedInUserId = useSelector(selectUser).id;
     const user = useSelector(selectProfile).user;
     const posts = useSelector(selectProfile).posts;
-
-    console.log(posts);
+    
     const [blogs, setBlogs] = useState<BlogType['blogs']>();
 
     useEffect(() => {

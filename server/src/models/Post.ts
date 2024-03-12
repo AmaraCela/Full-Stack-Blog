@@ -167,11 +167,10 @@ class Post {
         return new Promise((resolve, reject) => {
             connection.query(query, [post_id], (err, result) => {
                 if (err) {
-                    reject(err);console.log(err);
+                    reject(err);
                 }
                 else {
                     const structuredResult = this.generateStructuredResult(result);
-                    console.log(structuredResult);
                     resolve(structuredResult);
                 }
             })

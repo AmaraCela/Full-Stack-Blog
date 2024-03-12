@@ -22,7 +22,7 @@ const AllRoutes = () => {
           <Route path='/editprofile/:id' element={<EditProfile />} />
           <Route path='/settings' element={<Settings />} />
         </Route>
-        <Route path='/blogs/:id' element={<Blog />} />
+        <Route path='/blogs/:post_id' element={<Blog />} />
         <Route path='/login' element={<LogIn />} />
         <Route path='/signup' element={<SignUp />} />
         <Route path='/' element={<Home />} />

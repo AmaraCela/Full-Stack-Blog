@@ -16,3 +16,11 @@ export interface BlogType {
     profile_pic: string;
     posts: Post[];
 }
+
+export type CreateBlogInputType = {
+    title: string,
+    description: string,
+    tags: string[],
+    user_id: string,
+    images: FileList | [],
+}

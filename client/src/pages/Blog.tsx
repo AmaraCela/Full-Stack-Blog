@@ -55,15 +55,6 @@ const Blog = () => {
 
     return (
         <div className="blog-details md:px-16 px-8 2xl:container 2xl:mx-auto relative">
-            <div className="flex items-center justify-between">
-                <Link to={`../profile/${blog.user_id}`}>
-                    <div className="flex items-center">
-                        <img src={profilePic} alt="" className="w-16" />
-                        <h1 className="regular-font text-2xl font-semibold ml-4">{blog.username}</h1>
-                    </div>
-                </Link>
-                <p className="regular-font italic text-lg">posted on {`${new Date(blog.posts[0].date_posted).getDate()}/${new Date(blog.posts[0].date_posted).getMonth()}/${new Date(blog.posts[0].date_posted).getFullYear()}`}</p>
-            </div>
 
             <div className="carousel w-full flex justify-center items-center relative md:static md:p-6">
 
@@ -82,9 +73,19 @@ const Blog = () => {
                 </button>}
             </div>
 
-            <div className="flex">
-                <Link to={""}><img src={edit} alt="" className="w-8" /></Link>
+            <div className="flex justify-end">
+                <Link to={`../editBlog/${blog.posts[0].post_id}`}><img src={edit} alt="" className="w-8" /></Link>
                 <button onClick={() => { setDeleteVisibility('flex') }}><img src={deleteImg} alt="" className="w-7 h-7" /></button>
+            </div>
+
+            <div className="flex items-center justify-between">
+                <Link to={`../profile/${blog.user_id}`}>
+                    <div className="flex items-center">
+                        <img src={profilePic} alt="" className="w-16" />
+                        <h1 className="regular-font text-2xl font-semibold ml-4">{blog.username}</h1>
+                    </div>
+                </Link>
+                <p className="regular-font italic text-lg">posted on {`${new Date(blog.posts[0].date_posted).getDate()}/${new Date(blog.posts[0].date_posted).getMonth()}/${new Date(blog.posts[0].date_posted).getFullYear()}`}</p>
             </div>
 
             <h1 className="regular-font text-3xl font-bold mt-8">{blog.posts[0].title}</h1>

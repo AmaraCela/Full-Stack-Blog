@@ -10,7 +10,6 @@ export type PostData = {
 }
 
 class Post {
-
     static async postBlog(data: PostData) {
         const dbconnection = new DatabaseConnection();
         const connection = dbconnection.getConnection();
@@ -73,16 +72,18 @@ class Post {
         const query = 'INSERT INTO post_tags (post_id, tag_id) VALUES (?, ?)';
 
         return new Promise((resolve, reject) => {
-            for (const element of tags) {
-                connection.query(query, [post_id, element], (err, _) => {
-                    if (err) {
-                        reject(err);
-                    }
-                    else {
-                        resolve(true);
-                    }
-
-                });
+            if (tags) {
+                for (const element of tags) {
+                    connection.query(query, [post_id, element], (err, _) => {
+                        if (err) {
+                            reject(err);
+                        }
+                        else {
+                            resolve(true);
+                        }
+                    });
+                }
+                reject("There are no tags");
             }
             dbconnection.closeConnection();
         });
@@ -232,14 +233,14 @@ class Post {
                     const existingPost = acc.find((post) => post.post_id === row.post_id);
                     if (existingPost) {
                         const existingTag = existingPost.tags.find((tag: { tag_id: any; }) => tag.tag_id === row.tag_id);
-                    if (!existingTag) {
-                        existingPost.tags.push({ tag_id: row.tag_id, tag_name: row.tag_name });
-                    }
+                        if (!existingTag) {
+                            existingPost.tags.push({ tag_id: row.tag_id, tag_name: row.tag_name });
+                        }
 
-                    const existingImage = existingPost.images.find((image: any) => image === row.image);
-                    if (!existingImage) {
-                        existingPost.images.push(row.image);
-                    }
+                        const existingImage = existingPost.images.find((image: any) => image === row.image);
+                        if (!existingImage) {
+                            existingPost.images.push(row.image);
+                        }
                     } else {
                         acc.push(Post.newEntry(row));
                     }

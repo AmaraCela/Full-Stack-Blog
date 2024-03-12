@@ -10,6 +10,7 @@ import Footer from '../components/Footer';
 import PrivateRoutes from './PrivateRoutes';
 import EditProfile from '../pages/EditProfile';
 import Settings from '../pages/Settings';
+import EditBlog from '../pages/EditBlog';
 
 const AllRoutes = () => {
   return (
@@ -21,6 +22,7 @@ const AllRoutes = () => {
           <Route path='/profile/:id' element={<Profile />} />
           <Route path='/editprofile/:id' element={<EditProfile />} />
           <Route path='/settings' element={<Settings />} />
+          <Route path='/editBlog/:id' element= {<EditBlog />} />
         </Route>
         <Route path='/blogs/:post_id' element={<Blog />} />
         <Route path='/login' element={<LogIn />} />

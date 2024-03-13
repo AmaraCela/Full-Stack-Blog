@@ -33,7 +33,7 @@ const CreateBlog = () => {
     });
 
     useEffect(() => {
-        dispatch(retriveTags());
+        tags.length === 0 && dispatch(retriveTags());
     }, []);
 
     useEffect(() => {
@@ -52,7 +52,6 @@ const CreateBlog = () => {
             for (let i = 0; i < inputs.images.length; i++) {
                 formData.append('files', inputs.images[i]);
             }
-            console.log(inputs);
             dispatch(createBlog(formData));
         }
     }, [hasErrors]);
@@ -76,7 +75,7 @@ const CreateBlog = () => {
 
     return (
         <div className="flex justify-center h-full items-center">
-            <div className="flex rounded-md w-3/4 bg-[#ffffff] create-div pl-4 pr-4">
+            <div className="flex rounded-md w-3/4 bg-[#ffffff] create-div pl-4 pr-4 h-fit">
                 <form className="grid blog-form align-middle w-full mt-4" onSubmit={(event) => handleSubmit(event)}>
 
                     <FormInput label="Title for new blog:" value={inputs.title} placeholder="Enter title..."
@@ -103,6 +102,7 @@ const CreateBlog = () => {
                         <input type="file" className="pt-4 regular-font label w-1/3 flex items-center file-input" multiple required onChange={handleFiles} />
                         <p className={`text-xs text-red-700 italic font-bold ${errors.images ? "block" : "hidden"}`}>{errors.images}</p>
                     </div>
+
                     <input type="submit" value="Submit" className="submit-bt-blog flex items-center justify-center regular-font font-semibold rounded-md text-xl border-solid border-black border-2 w-fit h-fit mb-4 cursor-pointer p-1" />
 
                 </form>

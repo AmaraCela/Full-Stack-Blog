@@ -21,10 +21,10 @@ const Blog = () => {
 
     useEffect(() => {
         dispatch(getIndividualBlog(post_id ?? ''));
-        dispatch(resetState());
     }, []);
 
     useEffect(() => {
+        dispatch(resetState());
         deleteSuccessful && navigate('/');
     }, [deleteSuccessful])
 
@@ -64,7 +64,7 @@ const Blog = () => {
                      {blog.posts[0].images.length > 1 && <button className="p-4 cursor-pointer ml-1 next md:static md:text-white absolute z-20 right-1 text-white" onClick={() => handleNavigation("right")}>
                         <p>&#10095;</p>
                     </button>}
-                    <button title="remove full screen" onClick={() => setImageVisibility('hidden')} className="absolute top-1 font-extrabold right-5 text-white regular-font text-2xl">X</button>
+                    <button title="remove full scr" onClick={() => setImageVisibility('hidden')} className="absolute top-1 font-extrabold right-5 text-white regular-font text-2xl">X</button>
                 </div>
             )}
 

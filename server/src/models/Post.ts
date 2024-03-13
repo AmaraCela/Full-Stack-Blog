@@ -22,50 +22,41 @@ class Post {
                     console.log('Error starting transaction: ', err);
                     return;
                 }
-                try {
-                    connection.query(query, [data.title, data.description, new Date(), data.user_id], async (err, _) => {
+                connection.query(query, [data.title, data.description, new Date(), data.user_id], async (err, _) => {
+                    try {
+                        const result: any = await Post.getBlogId(connection, data.title, data.user_id);
                         try {
-                            const result: any = await Post.getBlogId(connection, data.title, data.user_id);
-                            try {
-                                await Post.addPostTags(connection, result[0].post_id, data.tags);
-                                await Post.addPostImages(connection, result[0].post_id, data.files);
-                                connection.commit((err) => {
-                                    if (err) {
-                                        console.error('Error committing transaction:', err);
-                                        connection.rollback(() => {
-                                            console.log('Transaction rolled back.');
-                                        });
-                                    } else {
-                                        console.log('Transaction committed successfully.');
-                                    }
-                                    dbconnection.closeConnection(); 
-                                    resolve(true);
-                                });
-                            } catch (err) {
-                                console.log(err);
-                                connection.rollback(() => {
-                                    console.log('Transaction rolled back due to error in adding tags or images.');
-                                    dbconnection.closeConnection(); 
-                                    reject(err);
-                                });
-                            }
-                        } catch (err) {
-                            console.log(err);
-                            connection.rollback(() => {
-                                console.log('Transaction rolled back due to error in fetching blog ID.');
+                            await Post.addPostTags(connection, result[0].post_id, data.tags);
+                            await Post.addPostImages(connection, result[0].post_id, data.files);
+                            connection.commit((err) => {
+                                if (err) {
+                                    console.error('Error committing transaction:', err);
+                                    connection.rollback(() => {
+                                        console.log('Transaction rolled back.');
+                                    });
+                                } else {
+                                    console.log('Transaction committed successfully.');
+                                }
                                 dbconnection.closeConnection();
-                                reject(err);
+                                resolve(true);
                             });
+                        } catch (err) {
+                            Post.handleError(err, connection, reject, dbconnection);
                         }
-                    });
-                } catch (err) {
-                    console.log(err);
-                    connection.rollback(() => {
-                        console.log('Transaction rolled back due to error in executing main query.');
-                        dbconnection.closeConnection();
-                    });
-                }
+                    } catch (err) {
+                        Post.handleError(err, connection, reject, dbconnection);
+                    }
+                });
+
             });
+        });
+    }
+
+    static handleError(err: any, connection: mysql.Connection, reject: any, dbconnection: DatabaseConnection) {
+        console.log(err);
+        connection.rollback(() => {
+            dbconnection.closeConnection();
+            reject(err);
         });
     }
 
@@ -80,6 +71,10 @@ class Post {
             });
             dbconnection.closeConnection();
         });
+    }
+
+    static async updateBlog(post_id: any, title: string, description: string, tags: string []) {
+        
     }
 
     static async addPostTags(connection: mysql.Connection, post_id: any, tags: string[]) {

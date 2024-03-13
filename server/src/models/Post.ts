@@ -1,5 +1,6 @@
 import { UserProfile } from "../controllers/profileController";
 import DatabaseConnection from "../database/DatabaseConnection";
+import mysql from 'mysql';
 
 export type PostData = {
     title: string;
@@ -13,42 +14,58 @@ class Post {
     static async postBlog(data: PostData) {
         const dbconnection = new DatabaseConnection();
         const connection = dbconnection.getConnection();
-
         const query = 'INSERT INTO posts (title, description, date_posted, user_id) VALUES (?, ?, ?, ?)';
-        console.log(data);
-        return new Promise((resolve, reject) => {
-            connection.query(query, [data.title, data.description, new Date(), data.user_id], async (err, _) => {
+
+        return new Promise(async (resolve, reject) => {
+            connection.beginTransaction(async (err) => {
                 if (err) {
-                    reject(err);
+                    console.log('Error starting transaction: ', err);
+                    return;
                 }
-                else {
-                    try {
-                        const result: any = await Post.getBlogId(data.title, data.user_id);
+                try {
+                    connection.query(query, [data.title, data.description, new Date(), data.user_id], async (err, _) => {
                         try {
-                            await Post.addPostTags(result[0].post_id, data.tags);
-                        }
-                        catch (err) {
+                            const result: any = await Post.getBlogId(connection, data.title, data.user_id);
+                            try {
+                                await Post.addPostTags(connection, result[0].post_id, data.tags);
+                                await Post.addPostImages(connection, result[0].post_id, data.files);
+                                connection.commit((err) => {
+                                    if (err) {
+                                        console.error('Error committing transaction:', err);
+                                        connection.rollback(() => {
+                                            console.log('Transaction rolled back.');
+                                        });
+                                    } else {
+                                        console.log('Transaction committed successfully.');
+                                    }
+                                    dbconnection.closeConnection(); 
+                                    resolve(true);
+                                });
+                            } catch (err) {
+                                console.log(err);
+                                connection.rollback(() => {
+                                    console.log('Transaction rolled back due to error in adding tags or images.');
+                                    dbconnection.closeConnection(); 
+                                    reject(err);
+                                });
+                            }
+                        } catch (err) {
                             console.log(err);
-                            return reject(err);
+                            connection.rollback(() => {
+                                console.log('Transaction rolled back due to error in fetching blog ID.');
+                                dbconnection.closeConnection();
+                                reject(err);
+                            });
                         }
-                        try {
-                            await Post.addPostImages(result[0].post_id, data.files);
-                        }
-                        catch (err) {
-                            console.log(err);
-                            return reject(err);
-                        }
-                    }
-                    catch (err) {
-                        console.log(err);
-                        reject(err);
-                    }
-
+                    });
+                } catch (err) {
+                    console.log(err);
+                    connection.rollback(() => {
+                        console.log('Transaction rolled back due to error in executing main query.');
+                        dbconnection.closeConnection();
+                    });
                 }
-                resolve(true);
             });
-
-            dbconnection.closeConnection();
         });
     }
 
@@ -65,10 +82,7 @@ class Post {
         });
     }
 
-    static async addPostTags(post_id: any, tags: string[]) {
-        const dbconnection = new DatabaseConnection();
-        const connection = dbconnection.getConnection();
-
+    static async addPostTags(connection: mysql.Connection, post_id: any, tags: string[]) {
         const query = 'INSERT INTO post_tags (post_id, tag_id) VALUES (?, ?)';
 
         return new Promise((resolve, reject) => {
@@ -83,18 +97,15 @@ class Post {
                         }
                     });
                 }
-                
+
             }
             else {
                 reject("There are no tags");
             }
-            dbconnection.closeConnection();
         });
     }
 
-    static async addPostImages(post_id: any, images: Express.Multer.File[]) {
-        const dbconnection = new DatabaseConnection();
-        const connection = dbconnection.getConnection();
+    static async addPostImages(connection: mysql.Connection, post_id: any, images: Express.Multer.File[]) {
 
         const query = 'INSERT INTO images (post_id, image) VALUES (?, ?)';
 
@@ -110,14 +121,11 @@ class Post {
 
                 });
             }
-            dbconnection.closeConnection();
         });
     }
 
 
-    static async getBlogId(title: string, user_id: string) {
-        const dbconnection = new DatabaseConnection();
-        const connection = dbconnection.getConnection();
+    static async getBlogId(connection: mysql.Connection, title: string, user_id: string) {
 
         const query = 'SELECT post_id FROM posts WHERE title = ? AND user_id = ?';
 
@@ -126,7 +134,6 @@ class Post {
                 err ? reject(err) : resolve(result);
             });
 
-            dbconnection.closeConnection();
         });
 
     }

@@ -28,7 +28,6 @@ const Profile = () => {
     useEffect(() => {
         const blogs: BlogType['blogs'] = [];
         for (const element of posts) {
-            console.log(element.images);
             const blog = {
                 id: element.post_id,
                 title: element.title,

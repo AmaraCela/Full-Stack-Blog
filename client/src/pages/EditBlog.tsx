@@ -18,7 +18,6 @@ const EditBlog = () => {
         images: [],
     });
 
-
     return (
         <div className="w-full h-full flex justify-center">
             <div className="w-2/4 bg-white h-fit info-box rounded-md p-8">

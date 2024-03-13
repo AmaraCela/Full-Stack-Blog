@@ -37,7 +37,10 @@ const createBlogSlice = createSlice({
     name: 'createBlog',
     initialState,
     reducers: {
-
+        resetState(state) {
+            state.deleteSuccessful = null;
+            state.deleteError = null;
+        }
     },
     extraReducers: builder => {
        createBlogBuilder(builder);
@@ -92,3 +95,4 @@ const deleteBlogBuilder = (builder: any) => {
 }
 
 export default createBlogSlice.reducer;
+export const { resetState} = createBlogSlice.actions;

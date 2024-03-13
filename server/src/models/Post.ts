@@ -73,8 +73,76 @@ class Post {
         });
     }
 
-    static async updateBlog(post_id: any, title: string, description: string, tags: string []) {
-        
+    static async updateBlog(post_id: any, title: string, description: string, tags: string[]) {
+        const dbconnection = new DatabaseConnection();
+        const connection = dbconnection.getConnection();
+
+        const query = 'UPDATE posts SET title = ?, description = ? WHERE post_id = ?';
+
+        return new Promise((resolve, reject) => {
+            connection.beginTransaction((err) => {
+                if (err) {
+                    reject(err);
+                    return;
+                }
+                connection.query(query, [title, description, post_id], async (err, _) => {
+                    if (err) {
+                        reject(err);
+                        return;
+                    }
+
+                    try {
+                        await Post.deleteBlogTags(connection, post_id);
+                    }
+                    catch (err) {
+                        connection.rollback(() => {
+                            reject(err);
+                            dbconnection.closeConnection();
+                            return;
+                        });
+                    }
+
+                    try {
+                        await Post.addPostTags(connection, post_id, tags);
+                    }
+                    catch (err) {
+                        connection.rollback(() => {
+                            reject(err);
+                            dbconnection.closeConnection();
+                            return;
+                        });
+                    }
+
+                    connection.commit((err) => {
+                        if (err) {
+                            console.log('Error committing transaction.');
+                            connection.rollback(() => {
+                                console.log('Transaction rolled back.');
+                            })
+                        } 
+                        dbconnection.closeConnection();
+                        resolve(true);
+                    })
+
+                });
+
+            })
+
+        });
+    }
+
+    static async deleteBlogTags(connection: mysql.Connection, post_id: any) {
+        const query = 'DELETE FROM post_tags WHERE post_id = ?';
+        return new Promise((resolve, reject) => {
+            connection.query(query, [post_id], (err, _) => {
+                if (err) {
+                    reject (err);
+                    return;
+                }
+                resolve (true);
+            });
+        });
+
     }
 
     static async addPostTags(connection: mysql.Connection, post_id: any, tags: string[]) {

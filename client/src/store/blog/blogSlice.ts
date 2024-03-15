@@ -1,5 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { createBlog, deleteBlog, getIndividualBlog } from "./blogThunk";
+import { createBlog, deleteBlog, getIndividualBlog, updateBlog } from "./blogThunk";
 import { BlogType } from "../../types/blogTypes";
 
 type BlogState = {
@@ -8,6 +8,8 @@ type BlogState = {
     error: string | null;
     deleteSuccessful: string | null;
     deleteError: string | null;
+    editSuccessful: string | null;
+    editError: string | null;
     blog: BlogType;
 }
 
@@ -17,6 +19,8 @@ const initialState: BlogState = {
     error: null,
     deleteSuccessful: null,
     deleteError: null,
+    editSuccessful: null,
+    editError: null,
     blog: {
         user_id: "",
         username: "",
@@ -46,6 +50,7 @@ const createBlogSlice = createSlice({
        createBlogBuilder(builder);
        getIndividualBlogBuilder(builder);
        deleteBlogBuilder(builder);
+       updateBlogBuilder(builder);
     }
 });
 
@@ -91,6 +96,16 @@ const deleteBlogBuilder = (builder: any) => {
     }).addCase(deleteBlog.rejected, (state: BlogState, action: any) => {
         state.deleteError = action;
         state.deleteSuccessful = null;
+    })
+}
+
+const updateBlogBuilder = (builder: any) => {
+    builder.addCase(updateBlog.fulfilled, (state: BlogState, action: any) => {
+        state.editSuccessful = action;
+        state.editError = null;
+    }).addCase(updateBlog.rejected, (state: BlogState, action: any) => {
+        state.editError = action;
+        state.editSuccessful = null;
     })
 }
 

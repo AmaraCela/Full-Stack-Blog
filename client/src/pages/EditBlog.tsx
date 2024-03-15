@@ -1,22 +1,26 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import FormInput from "../components/FormInput";
 import { useSelector } from "react-redux";
 import { selectBlog, selectTag, selectUser, useAppDispatch } from "../store/store";
-import { useCreateBlogForm } from "../hooks/useCreateBlogForm";
 import { retriveTags } from "../store/tag/tagThunks";
-import { useParams } from "react-router-dom";
-import { getIndividualBlog } from "../store/blog/blogThunk";
+import { useNavigate, useParams } from "react-router-dom";
+import { getIndividualBlog, updateBlog } from "../store/blog/blogThunk";
 import FormButton from "../components/FormButton";
+import { useEditBlogForm } from "../hooks/useEditBlogForm";
 
 const EditBlog = () => {
 
-    const { errors, hasErrors, validateForm, displayErrors } = useCreateBlogForm();
+    const { errors, hasErrors, validateForm, displayErrors } = useEditBlogForm();
     const tags = useSelector(selectTag).tags;
     const dispatch = useAppDispatch();
     const { id } = useParams();
     const blog = useSelector(selectBlog).blog;
+    const isButtonPressed = useRef(false);
+    const succesfulMessage = useSelector(selectBlog).editSuccessful;
+    const navigate = useNavigate();
 
     const [inputs, setInputs] = useState({
+        post_id: id ?? '',
         title: blog.posts[0].title,
         description: blog.posts[0].description,
         tags: blog.posts[0].tags.map((item) => item.tag_id),
@@ -24,15 +28,27 @@ const EditBlog = () => {
 
     useEffect(() => {
         tags.length === 0 && dispatch(retriveTags());
-    }, []);
-
-    useEffect(() => {
         dispatch(getIndividualBlog(id ?? ''));
     }, []);
 
+    useEffect(() => {
+        isButtonPressed.current && displayErrors(inputs);
+    }, [inputs])
+
+
+    useEffect(() => {
+        if (!hasErrors) {
+            dispatch(updateBlog(inputs));
+            navigate(`../blogs/${id}`);
+
+        }
+    }, [hasErrors])
+
 
     const handleSave = () => {
-        
+        validateForm(inputs);
+        displayErrors(inputs);
+        isButtonPressed.current = true;
     }
 
     return (

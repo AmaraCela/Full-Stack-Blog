@@ -16,7 +16,6 @@ const EditBlog = () => {
     const { id } = useParams();
     const blog = useSelector(selectBlog).blog;
     const isButtonPressed = useRef(false);
-    const succesfulMessage = useSelector(selectBlog).editSuccessful;
     const navigate = useNavigate();
 
     const [inputs, setInputs] = useState({
@@ -65,11 +64,11 @@ const EditBlog = () => {
 
                 <div className="flex flex-col">
                     <label htmlFor="tags-dropdown" className="label regular-font">Select tags:</label>
-                    <select name="tag" id="tags-dropdown" className="input-format regular-font" multiple required onChange={(event) => {
+                    <select name="tag" id="tags-dropdown" className="input-format regular-font" value={inputs.tags} multiple required onChange={(event) => {
                         const selectedOptions = Array.from(event.target.selectedOptions, option => String(option.value));
                         setInputs({ ...inputs, tags: selectedOptions })
                     }}>
-                        {tags.map((tag) => (<option key={tag.tag_id} value={tag.tag_id} selected={inputs.tags.filter((input) => input === tag.tag_id).length === 1}>{tag.tag_name}</option>))}
+                        {tags.map((tag) => (<option key={tag.tag_id} value={tag.tag_id}>{tag.tag_name}</option>))}
                     </select>
                     <p className={`text-xs text-red-700 italic font-bold ${errors.tags ? "block" : "hidden"}`}>{errors.tags}</p>
                 </div>

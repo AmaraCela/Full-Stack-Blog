@@ -5,16 +5,17 @@ import Pagination from "../components/Pagination";
 import { useSelector } from "react-redux";
 import { selectBlog, useAppDispatch } from "../store/store";
 import BlogDisplay from "../components/BlogDisplay";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { getBlogs } from "../store/blog/blogThunk";
 
 const Home = () => {
     const dispatch = useAppDispatch();
     const blogs = useSelector(selectBlog).blog;
+    const [currentPage, setCurrentPage] = useState(1);
 
     useEffect(() => {
-        dispatch(getBlogs({offset: 1}));
-    }, []);
+        dispatch(getBlogs({offset: ((currentPage-1)*4)}));
+    }, [currentPage]);
 
 
     return (
@@ -24,7 +25,7 @@ const Home = () => {
                     {blogs && blogs.length > 0 && <BlogDisplay blogs={blogs} />}
                     <Sidebar />
                 </div>
-                <Pagination />
+                <Pagination currentPage={currentPage} setCurrentPage={setCurrentPage} />
             </div>
         </>
     );

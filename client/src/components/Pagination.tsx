@@ -4,14 +4,14 @@ import { selectBlog, useAppDispatch } from "../store/store";
 import { numberOfBlogs } from "../store/blog/blogThunk";
 import { useSelector } from "react-redux";
 
-const Pagination = () => {
+const Pagination = ({currentPage, setCurrentPage}: {currentPage: number, setCurrentPage: any}) => {
     const dispatch = useAppDispatch();
 
     const numBlogs = useSelector(selectBlog).nrBlogs;
-    const nrPages = numBlogs ? Math.ceil(numBlogs/10) : 0;
-    const paginationSlots = nrPages > 4 ? 4 : 1;
+    const nrPages = numBlogs ? Math.ceil(numBlogs/4) : 0;
+    const paginationSlots = nrPages > 4 ? 4 : nrPages;
 
-    const [currentPage, setCurrentPage] = useState(1);
+    
     const [displayingIndexes, setDisplayingIndexes] = useState<number[]>([]);
     const [cursorLeft, setCursorLeft] = useState("not-allowed");
     const [cursorRight, setCursorRight] = useState("pointer");
@@ -51,7 +51,7 @@ const Pagination = () => {
                 setDisplayingIndexes(newIndexes);
             }
 
-            setCurrentPage((currentPage) => currentPage - 1);
+            setCurrentPage((currentPage: number) => currentPage - 1);
         } else {
             setCursorLeft("not-allowed");
         }

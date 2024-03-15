@@ -1,7 +1,6 @@
 import { useState } from "react";
 import { validateTitle } from "../utils/validations/validateTitle";
 import { validateTags } from "../utils/validations/validateTags";
-import { validateImages } from "../utils/validations/validateImages";
 
 export type EditBlogBodyType = {
     title: string;

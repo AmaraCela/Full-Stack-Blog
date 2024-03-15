@@ -202,14 +202,25 @@ class Post {
     }
 
 
-    static async getPosts() {
+    static async getPosts(offset: number) {
         const dbconnection = new DatabaseConnection();
         const connection = dbconnection.getConnection();
-        const query = 'SELECT * FROM posts';
+        const query = `SELECT 
+        p.*, 
+        u.username, 
+        t.tag_id, 
+        t.tag_name, 
+        i.image 
+        FROM (SELECT * FROM posts LIMIT 4 OFFSET ?) p 
+        LEFT JOIN users u ON p.user_id = u.user_id
+        LEFT JOIN post_tags pt ON p.post_id = pt.post_id
+        LEFT JOIN tags t ON pt.tag_id = t.tag_id
+        LEFT JOIN images i ON p.post_id = i.post_id`;
 
         return new Promise((resolve, reject) => {
-            connection.query(query, (err, results) => {
-                err ? reject(err) : resolve(results);
+            connection.query(query, [offset], (err, results) => {
+                const structuredResult: UserProfile = this.generateStructuredResult(results);
+                err ? reject(err) : resolve(structuredResult);
             });
 
             dbconnection.closeConnection();
@@ -296,10 +307,12 @@ class Post {
 
     static generateStructuredResult(result: any) {
         return {
-            user_id: result[0].user_id,
-            username: result[0].username,
-            email: result[0].email,
-            posts: result.reduce((acc: any[], row: any) => {
+            posts: Post.posts(result),
+        };
+    }
+
+    static posts (result: any) {
+        return result.reduce((acc: any[], row: any) => {
                 if (acc.length === 0) {
                     acc.push(Post.newEntry(row));
                 } else {
@@ -319,13 +332,15 @@ class Post {
                     }
                 }
                 return acc;
-            }, [])
-        };
+            }, []);    
     }
 
     static newEntry(row: any) {
         return {
             post_id: row.post_id,
+            user_id: row.user_id,
+            username: row.username,
+            email: row.email,
             title: row.title,
             description: row.description,
             date_posted: row.date_posted,
@@ -333,6 +348,21 @@ class Post {
             images: [row.image],
         }
     }
+
+    static async getNumberOfBlogs() {
+        const dbconnection = new DatabaseConnection();
+        const connection = dbconnection.getConnection();
+
+        const query = 'SELECT COUNT(*) FROM posts';
+
+        return new Promise((resolve, reject) => {
+            connection.query(query, (err, result) => {
+                err ? reject(err) : resolve (result[0]['COUNT(*)']);
+            });
+            dbconnection.closeConnection();
+        });
+    }
+
 }
 
 export default Post;

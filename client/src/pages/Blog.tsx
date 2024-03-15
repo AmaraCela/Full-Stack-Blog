@@ -1,4 +1,4 @@
-import "../styles/blog.css"; import { useEffect, useRef, useState } from "react";
+import "../styles/blog.css"; import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import { selectBlog, useAppDispatch } from "../store/store";
 import { deleteBlog, getIndividualBlog } from "../store/blog/blogThunk";
@@ -20,6 +20,7 @@ const Blog = () => {
     const [imageVisibility, setImageVisibility] = useState('hidden');
 
     useEffect(() => {
+        console.log('here');
         dispatch(getIndividualBlog(post_id ?? ''));
     }, []);
 
@@ -31,7 +32,7 @@ const Blog = () => {
     const handleNavigation = (direction: "left" | "right") => {
 
         let newIndex = 0;
-        const imagesLength = blog.posts[0].images.length - 1;
+        const imagesLength = blog[0].images.length - 1;
 
         if (direction === 'right' && activeIndex < imagesLength) {
             newIndex = (activeIndex + 1)
@@ -45,23 +46,23 @@ const Blog = () => {
     }
 
     const handleDelete = () => {
-        dispatch(deleteBlog(blog.posts[0].post_id));
+        dispatch(deleteBlog(blog[0].post_id));
     }
 
 
     return (
         <>
-            {blog.posts && blog.posts.length > 0 && (
+            {blog && blog.length > 0 && (
                 <div className={`absolute w-full h-full bg-black object-fill top-0 flex justify-center items-center z-50 ${imageVisibility}`}>
-                    {blog.posts[0].images.length > 1 && <button className="p-4 cursor-pointer mr-1 prev md:static md:text-white absolute z-20 left-1 text-white" onClick={() => handleNavigation("left")}>
+                    {blog[0].images.length > 1 && <button className="p-4 cursor-pointer mr-1 prev md:static md:text-white absolute z-20 left-1 text-white" onClick={() => handleNavigation("left")}>
                         <p>&#10094;</p>
                     </button>}
-                    {blog.posts[0].images && blog.posts[0].images.length > 0 && (
+                    {blog[0].images && blog[0].images.length > 0 && (
 
-                        <img className=" max-h-full" src={`http://localhost:5000/${blog.posts[0].images[activeIndex].replace(/\\/g, '/')}`} alt="" />
+                        <img className=" max-h-full" src={`http://localhost:5000/${blog[0].images[activeIndex].replace(/\\/g, '/')}`} alt="" />
                         
                     )}
-                     {blog.posts[0].images.length > 1 && <button className="p-4 cursor-pointer ml-1 next md:static md:text-white absolute z-20 right-1 text-white" onClick={() => handleNavigation("right")}>
+                     {blog[0].images.length > 1 && <button className="p-4 cursor-pointer ml-1 next md:static md:text-white absolute z-20 right-1 text-white" onClick={() => handleNavigation("right")}>
                         <p>&#10095;</p>
                     </button>}
                     <button title="remove full scr" onClick={() => setImageVisibility('hidden')} className="absolute top-1 font-extrabold right-5 text-white regular-font text-2xl">X</button>
@@ -71,41 +72,41 @@ const Blog = () => {
             <div className={`blog-details md:px-16 px-8 2xl:container 2xl:mx-auto relative ${imageVisibility === '' ? `overflow-y-hidden` : ``}`}>
                 <div className="carousel w-full flex justify-center items-center relative md:static md:p-6">
 
-                    {blog.posts[0].images.length > 1 && <button className="p-4 cursor-pointer mr-1 prev md:static md:text-black absolute z-20 left-1 text-white" onClick={() => handleNavigation("left")}>
+                    {blog[0].images.length > 1 && <button className="p-4 cursor-pointer mr-1 prev md:static md:text-black absolute z-20 left-1 text-white" onClick={() => handleNavigation("left")}>
                         <p>&#10094;</p>
                     </button>}
 
-                    {blog.posts[0].images.map((image, index) => (
+                    {blog[0].images.map((image, index) => (
                         <button onClick={() => setImageVisibility('')} className={`carousel-img relative ${index !== activeIndex ? 'hidden' : ''}`} key={image}>
                             <img src={`http://localhost:5000/${image.replace(/\\/g, '/')}`} alt="" className="w-full h-full object-cover" />
                         </button>
                     ))}
 
-                    {blog.posts[0].images.length > 1 && <button className="p-4 cursor-pointer ml-1 next md:static md:text-black absolute z-20 right-1 text-white" onClick={() => handleNavigation("right")}>
+                    {blog[0].images.length > 1 && <button className="p-4 cursor-pointer ml-1 next md:static md:text-black absolute z-20 right-1 text-white" onClick={() => handleNavigation("right")}>
                         <p>&#10095;</p>
                     </button>}
                 </div>
 
                 <div className="flex justify-end">
-                    <Link to={`../editBlog/${blog.posts[0].post_id}`}><img src={edit} alt="" className="w-8" /></Link>
+                    <Link to={`../editBlog/${blog[0].post_id}`}><img src={edit} alt="" className="w-8" /></Link>
                     <button onClick={() => { setDeleteVisibility('flex'); }}><img src={deleteImg} alt="" className="w-7 h-7" /></button>
                 </div>
 
                 <div className="flex items-center justify-between">
-                    <Link to={`../profile/${blog.user_id}`}>
+                    <Link to={`../profile/${blog[0].user_id}`}>
                         <div className="flex items-center">
                             <img src={profilePic} alt="" className="w-16" />
-                            <h1 className="regular-font text-2xl font-semibold ml-4">{blog.username}</h1>
+                            <h1 className="regular-font text-2xl font-semibold ml-4">{blog[0].username}</h1>
                         </div>
                     </Link>
-                    <p className="regular-font italic text-lg">posted on {`${new Date(blog.posts[0].date_posted).getDate()}/${new Date(blog.posts[0].date_posted).getMonth()}/${new Date(blog.posts[0].date_posted).getFullYear()}`}</p>
+                    <p className="regular-font italic text-lg">posted on {`${new Date(blog[0].date_posted).getDate()}/${new Date(blog[0].date_posted).getMonth()}/${new Date(blog[0].date_posted).getFullYear()}`}</p>
                 </div>
 
                 <hr className="border-black border-2 mt-2" />
 
-                <h1 className="regular-font text-3xl font-bold mt-8">{blog.posts[0].title}</h1>
-                <p className="mt-2 regular-font text-base italic">Talks about {blog.posts[0].tags.map((tag) => ("#" + tag.tag_name + " "))}</p>
-                <p className="mt-8 regular-font text-xl blog-description">{blog.posts[0].description}</p>
+                <h1 className="regular-font text-3xl font-bold mt-8">{blog[0].title}</h1>
+                <p className="mt-2 regular-font text-base italic">Talks about {blog[0].tags.map((tag) => ("#" + tag.tag_name + " "))}</p>
+                <p className="mt-8 regular-font text-xl blog-description">{blog[0].description}</p>
 
                 <div className={`absolute w-11/12 h-full top-0 flex items-center justify-center ${deleteVisibility}`}>
                     <div className="self-center bg-white p-5 rounded-md info-box">
@@ -118,7 +119,8 @@ const Blog = () => {
                         </div>
                     </div>
                 </div>
-            </div></>
+            </div>
+            </>
     );
 }
 export default Blog;

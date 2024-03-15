@@ -1,6 +1,6 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { createBlog, deleteBlog, getIndividualBlog, updateBlog } from "./blogThunk";
-import { BlogType } from "../../types/blogTypes";
+import { createBlog, deleteBlog, getBlogs, getIndividualBlog, numberOfBlogs, updateBlog } from "./blogThunk";
+import { Post } from "../../types/blogTypes";
 
 type BlogState = {
     loading: boolean;
@@ -10,7 +10,8 @@ type BlogState = {
     deleteError: string | null;
     editSuccessful: string | null;
     editError: string | null;
-    blog: BlogType;
+    nrBlogs: number | null;
+    blog: Post[];
 }
 
 const initialState: BlogState = {
@@ -21,20 +22,19 @@ const initialState: BlogState = {
     deleteError: null,
     editSuccessful: null,
     editError: null,
-    blog: {
+    nrBlogs: null,
+    blog: [{
+        post_id: "",
         user_id: "",
         username: "",
         email: "",
         profile_pic: "",
-        posts: [{
-            post_id: "",
-            title: "",
-            description: "",
-            date_posted: "",
-            tags: [],
-            images: []
-        }]
-    }
+        title: "",
+        description: "",
+        date_posted: "",
+        tags: [],
+        images: []
+    }]
 }
 
 const createBlogSlice = createSlice({
@@ -47,10 +47,12 @@ const createBlogSlice = createSlice({
         }
     },
     extraReducers: builder => {
-       createBlogBuilder(builder);
-       getIndividualBlogBuilder(builder);
-       deleteBlogBuilder(builder);
-       updateBlogBuilder(builder);
+        createBlogBuilder(builder);
+        getIndividualBlogBuilder(builder);
+        deleteBlogBuilder(builder);
+        updateBlogBuilder(builder);
+        nrBlogsBuilder(builder);
+        getBlogsBuilder(builder);
     }
 });
 
@@ -70,22 +72,21 @@ const createBlogBuilder = (builder: any) => {
 
 const getIndividualBlogBuilder = (builder: any) => {
     builder.addCase(getIndividualBlog.fulfilled, (state: BlogState, action: any) => {
+        console.log(action.payload);
         state.blog = action.payload;
     }).addCase(getIndividualBlog.rejected, (state: BlogState) => {
-        state.blog = {
+        state.blog = [{
+            post_id: "",
             user_id: "",
             username: "",
             email: "",
             profile_pic: "",
-            posts: [{
-                post_id: "",
-                title: "",
-                description: "",
-                date_posted: "",
-                tags: [],
-                images: []
-            }]
-        }
+            title: "",
+            description: "",
+            date_posted: "",
+            tags: [],
+            images: []
+        }]
     })
 }
 
@@ -109,5 +110,19 @@ const updateBlogBuilder = (builder: any) => {
     })
 }
 
+const nrBlogsBuilder = (builder: any) => {
+    builder.addCase(numberOfBlogs.fulfilled, (state: BlogState, action: any) => {
+        state.nrBlogs = action.payload;
+    }).addCase(numberOfBlogs.rejected, (state: BlogState) => {
+        state.nrBlogs = null;
+    })
+}
+
+const getBlogsBuilder = (builder: any) => {
+    builder.addCase(getBlogs.fulfilled, (state: BlogState, action: any) => {
+        state.blog = action.payload;
+    })
+}
+
 export default createBlogSlice.reducer;
-export const { resetState} = createBlogSlice.actions;
+export const { resetState } = createBlogSlice.actions;

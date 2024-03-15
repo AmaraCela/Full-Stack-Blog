@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState } from "react";
 import FormInput from "../components/FormInput";
 import { useSelector } from "react-redux";
-import { selectBlog, selectTag, selectUser, useAppDispatch } from "../store/store";
+import { selectBlog, selectTag, useAppDispatch } from "../store/store";
 import { retriveTags } from "../store/tag/tagThunks";
 import { useNavigate, useParams } from "react-router-dom";
 import { getIndividualBlog, updateBlog } from "../store/blog/blogThunk";
@@ -20,9 +20,9 @@ const EditBlog = () => {
 
     const [inputs, setInputs] = useState({
         post_id: id ?? '',
-        title: blog.posts[0].title,
-        description: blog.posts[0].description,
-        tags: blog.posts[0].tags.map((item) => item.tag_id),
+        title: blog[0].title,
+        description: blog[0].description,
+        tags: blog[0].tags.map((item) => item.tag_id),
     });
 
     useEffect(() => {

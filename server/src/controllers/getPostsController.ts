@@ -1,10 +1,10 @@
 import { Request, Response } from "express";
 import Post from "../models/Post";
 
-export function getPosts(req: Request, res: Response): void {
-    
+export async function getPosts(req: Request, res: Response): Promise<void> {
+    const offset = parseInt(req.query.offset as string);
     try {
-        const posts = Post.getPosts();
+        const posts = await Post.getPosts(offset);
         res.status(200).json(posts);
     } 
     catch (error) {

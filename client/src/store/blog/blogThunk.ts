@@ -34,7 +34,7 @@ export const getIndividualBlog = createAsyncThunk(
         try {
             const response = await createAPI(`singlePost/?post_id=${post_id}`, {})(null);
             const data = await response.json();
-            return response.ok ? data.result : rejectWithValue(data.errorMessage);
+            return response.ok ? data.posts : rejectWithValue(data.errorMessage);
         }
         catch (error) {
             console.log(error);
@@ -73,7 +73,32 @@ export const updateBlog = createAsyncThunk(
         const token = state.user.token ?? '';
         const response = await createAPI("updateBlog", { method: 'POST', token })(info);
         const data = await response.json();
-
         return response.ok ? data.successFulMessage : rejectWithValue(data.errorMessage);
+    }
+);
+
+export const getBlogs = createAsyncThunk(
+    'getBlogs',
+    async (info: {
+        offset: number
+    }, { rejectWithValue }) => {
+        try {
+            const response = await createAPI(`posts?offset=${info.offset}`, {})();
+            const data = await response.json();
+            return response.ok ? data.posts : rejectWithValue(data.error);
+        }
+        catch (err) {
+            rejectWithValue(err)
+        }
+
+    }
+);
+
+export const numberOfBlogs = createAsyncThunk(
+    'numberOfBlogs',
+    async (_, { rejectWithValue }) => {
+        const response = await createAPI("nrPosts", {})();
+        const data = await response.json();
+        return response.ok ? data.number : rejectWithValue("Could not retrieve the number of blogs");
     }
 );

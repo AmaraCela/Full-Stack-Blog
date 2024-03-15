@@ -1,9 +1,15 @@
 import { useEffect, useState } from "react";
 import "../styles/pagination.css";
+import { selectBlog, useAppDispatch } from "../store/store";
+import { numberOfBlogs } from "../store/blog/blogThunk";
+import { useSelector } from "react-redux";
 
 const Pagination = () => {
-    const nrPages = 10;
-    const paginationSlots = 4;
+    const dispatch = useAppDispatch();
+
+    const numBlogs = useSelector(selectBlog).nrBlogs;
+    const nrPages = numBlogs ? Math.ceil(numBlogs/10) : 0;
+    const paginationSlots = nrPages > 4 ? 4 : 1;
 
     const [currentPage, setCurrentPage] = useState(1);
     const [displayingIndexes, setDisplayingIndexes] = useState<number[]>([]);
@@ -12,6 +18,7 @@ const Pagination = () => {
 
 
     useEffect(() => {
+        dispatch(numberOfBlogs());
         let newIndexes = [];
 
         for (let i = currentPage; i < currentPage + paginationSlots; i++) {
@@ -27,7 +34,7 @@ const Pagination = () => {
             setCursorLeft("not-allowed");
         }
 
-        if (currentPage === (nrPages - 1)) {
+        if (currentPage === (nrPages)) {
             setCursorRight("not-allowed");
         }
 
@@ -51,9 +58,8 @@ const Pagination = () => {
     }
 
     function moveRight() {
-        if (currentPage < nrPages - 1) {
+        if (currentPage < nrPages) {
             setCursorLeft("pointer");
-
             if (displayingIndexes[paginationSlots - 1] === currentPage) {
                 let newIndexes = displayingIndexes.slice(1);
                 newIndexes = [...newIndexes, (currentPage + 1)]

@@ -6,6 +6,7 @@ import { getPostById } from "../controllers/getPostByIdController";
 import { authenticateToken } from "../middleware/authenticationMiddleware";
 import { deleteBlog } from "../controllers/deleteBlogController";
 import { updateBlog } from "../controllers/updateBlogController";
+import { getNumberOfBlogs } from "../controllers/numberOfBlogsController";
 
 const storage = multer.diskStorage({
     destination: function (req, file, cb) {
@@ -26,5 +27,6 @@ router.post(`/post`, authenticateToken, upload.array('files', 5), postController
 router.get('/singlePost', getPostById);
 router.post('/deleteBlog', authenticateToken,  deleteBlog);
 router.post('/updateBlog', authenticateToken, updateBlog);
+router.get('/nrPosts', getNumberOfBlogs);
 
 export default router;

@@ -14,6 +14,7 @@ import Sidebar from "../components/Sidebar";
 import blog from "../assets/blog.png";
 import resume from "../assets/resume.png";
 import FormButton from "../components/FormButton";
+import noimage from "../assets/image.png";
 
 const Profile = () => {
     const dispatch = useAppDispatch();
@@ -24,6 +25,7 @@ const Profile = () => {
     const posts = useSelector(selectProfile).posts;
     const [image, setImage] = useState<string | null>(null);
     const [file, setFile] = useState<File | null>(null);
+    const [imageDivVisibility, setImageDivVisibility] = useState('hidden');
 
     useEffect(() => {
         dispatch(populateProfile(id ?? ''));
@@ -43,7 +45,6 @@ const Profile = () => {
         }
     }
 
-
     function handleUpload() {
         const formData = new FormData();
         formData.append('user_id', loggedInUserId ?? '');
@@ -52,16 +53,19 @@ const Profile = () => {
         dispatch(addProfilePicture(formData));
     }
 
-
     return (
         <div className="flex items-center flex-col">
             <div className="w-3/5 bg-[#9CBBF2] rounded-md flex pt-4 pb-4 justify-between mt-4 profile-div" id="profile">
 
                 <div className="flex flex-col items-center flex-wrap w-3/5 px-8 image-bio">
-                    <img src={user?.profile_img ?? profileImg} alt="" className="w-32" />
+                    <div className="relative">
+                        <div className="rounded-full border-2 border-black border-solid w-40 h-40 flex items-center justify-center overflow-hidden">
+                            <img src={user?.profile_img ? `http://localhost:5000/${user?.profile_img.replace(/\\/g, '/')}` : profileImg} alt="" className="object-cover w-full h-full" />
+                        </div>
+                        <button className="w-8 h-8 absolute bottom-0 right-0"><img src={edit} alt="" onClick={() => setImageDivVisibility('flex')} /></button>
+                    </div>
                     <p className="regular-font pt-4 text-lg font-semibold">Bio</p>
                     <p className="regular-font text-sm text-center">{user?.bio ?? 'Bio not entered yet.'}</p>
-                    <img src={edit} className="w-8 h-8" alt="" />
                 </div>
 
                 <div className="flex justify-evenly w-full relative items-center bg-white rounded-md mx-2 my-4 border-black border-2 profile-info-div">
@@ -154,15 +158,25 @@ const Profile = () => {
                 <Sidebar />
             </div>
 
-            <div className="absolute bg-white info-box h-3/4 w-3/4 z-50 flex flex-col justify-evenly items-center rounded-md">
-                <div className="rounded-full border-2 border-black border-dashed w-48 h-48 flex items-center justify-center overflow-hidden">
-                    {image ? <img src={image} alt="" className="object-cover w-full h-full" /> :
-                        <p className="text-center w-full h-full flex items-center justify-center">No image selected.</p>
+            <div className={`absolute bg-white info-box h-3/4 w-1/2 p-20 z-50 flex-col justify-evenly items-center rounded-md ${imageDivVisibility}`}>
+                <button title="Remove" className="regular-font absolute top-0 font-bold text-2xl right-1" onClick={() => setImageDivVisibility('hidden')}>X</button>
+                <div className="rounded-full border-2 border-black border-dashed w-48 h-48 flex items-center justify-center overflow-hidden relative round-img-div mb-4">
+                    {image ?
+                        (<img src={image} alt="" className="object-cover w-full h-full" />) :
+                        (
+                            <div className="w-full h-full flex items-center justify-center flex-col">
+                                <img src={noimage} alt="" />
+                                <p className="text-center">No image selected.</p>
+                            </div>
+                        )
                     }
+                    <div className="bg-black h-full w-full opacity-0 flex items-center justify-center absolute upload-div">
+                        <label htmlFor="profile-pic" className="inline-block text-white cursor-pointer">Upload image.</label>
+                        <input type="file" name="" id="profile-pic" accept="image/*" onChange={(e) => handleImageUpload(e)} hidden />
+                    </div>
                 </div>
-                
-                <input type="file" name="" id="profile-pic" accept="image/*" onChange={(e) => handleImageUpload(e)} />
-                <FormButton value={"Upload"} handle={ handleUpload } />
+
+                <FormButton value={"Upload"} handle={handleUpload} />
             </div>
         </div>
     );

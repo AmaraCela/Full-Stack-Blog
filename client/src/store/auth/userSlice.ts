@@ -8,6 +8,7 @@ interface UserState {
     username: string | null;
     email: string | null;
     id: string | null;
+    profileImg: string | null;
     loginError: string | null;
     signupError: string | null;
     editError: string | null;
@@ -21,6 +22,7 @@ const initialState: UserState = {
     username: null,
     email: null,
     id: null,
+    profileImg: null,
     loginError: null,
     signupError: null,
     editError: null,
@@ -59,6 +61,7 @@ const loginUserBuilder = (builder: any) => {
         state.username = action.payload.user.username;
         state.email = action.payload.user.email;
         state.id = action.payload.user.user_id;
+        state.profileImg = action.payload.user.profile_img;
         state.loginError = null;
         state.token = action.payload.token;
     }).addCase(loginUser.rejected, (state: UserState, action: any) => {
@@ -67,6 +70,7 @@ const loginUserBuilder = (builder: any) => {
         state.username = null;
         state.email = null;
         state.id = null;
+        state.profileImg = null;
         state.token = null;
         state.loginError = action.payload as string;
     });

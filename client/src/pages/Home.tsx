@@ -17,8 +17,6 @@ const Home = () => {
         dispatch(getBlogs({offset: ((currentPage-1)*4)}));
     }, [currentPage]);
 
-
-    console.log(blogs);
     return (
         <><Wave/>
             <div className="home flex items-center flex-col relative mx-16 2xl:container 2xl:mx-auto">

@@ -9,6 +9,7 @@ import Dropdown from "./Dropdown";
 const Navbar = () => {
     const isAuthenticated = useSelector(selectUser).isLoggedIn;
     const username = useSelector(selectUser).username;
+    const profile = useSelector(selectUser).profileImg;
     const location = useLocation();
 
     const isRootPath = location.pathname === '/';
@@ -20,7 +21,9 @@ const Navbar = () => {
                 {isAuthenticated ?
                     <div className="relative">
                         <div className="flex items-end profile-link cursor-pointer">
-                            <img src={profileImg} alt="profile-img" className="w-12 h-12" />
+                            <div className="rounded-full overflow-clip w-12 h-12 border-2 border-black">
+                                <img src={profile ? `http://localhost:5000/${profile.replace(/\\/g, '/')}` : profileImg} alt="profile-img" className="w-full h-full object-cover" />
+                            </div>
                             <p className="regular-font text-2xl pl-1 hidden sm:block">{username}</p>
                         </div>
                         <Dropdown />

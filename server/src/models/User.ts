@@ -137,7 +137,7 @@ class User {
         return new Promise((resolve, reject) => {
             try {
                 connection.query(query, [picture.path, user_id], (error, result) => {
-                    error ? reject(error) : resolve(true);
+                    error ? reject(error) : resolve(picture.path);
                 });
             }
             catch (err) {

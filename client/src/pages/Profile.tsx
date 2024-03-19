@@ -6,13 +6,14 @@ import { selectProfile, selectUser, useAppDispatch } from "../store/store";
 import { Link, useParams } from "react-router-dom";
 import edit from '../assets/edit-246.png';
 import { useEffect, useState } from "react";
-import { populateProfile } from "../store/profile/profileThunks";
+import { addProfilePicture, populateProfile } from "../store/profile/profileThunks";
 import username from "../assets/username.png";
 import email from "../assets/email-removebg-preview.png";
 import settings from "../assets/settings.png";
 import Sidebar from "../components/Sidebar";
 import blog from "../assets/blog.png";
 import resume from "../assets/resume.png";
+import FormButton from "../components/FormButton";
 
 const Profile = () => {
     const dispatch = useAppDispatch();
@@ -22,6 +23,7 @@ const Profile = () => {
     const user = useSelector(selectProfile).user;
     const posts = useSelector(selectProfile).posts;
     const [image, setImage] = useState<string | null>(null);
+    const [file, setFile] = useState<File | null>(null);
 
     useEffect(() => {
         dispatch(populateProfile(id ?? ''));
@@ -31,15 +33,25 @@ const Profile = () => {
         const file = event.target.files?.[0];
 
         if (file) {
+            setFile(file);
             const reader = new FileReader();
             reader.onload = () => {
                 const result = reader.result as string;
-                console.log(result);
                 setImage(result);
             };
             reader.readAsDataURL(file);
         }
     }
+
+
+    function handleUpload() {
+        const formData = new FormData();
+        formData.append('user_id', loggedInUserId ?? '');
+        formData.append('files', file ?? '');
+
+        dispatch(addProfilePicture(formData));
+    }
+
 
     return (
         <div className="flex items-center flex-col">
@@ -148,7 +160,9 @@ const Profile = () => {
                         <p className="text-center w-full h-full flex items-center justify-center">No image selected.</p>
                     }
                 </div>
+                
                 <input type="file" name="" id="profile-pic" accept="image/*" onChange={(e) => handleImageUpload(e)} />
+                <FormButton value={"Upload"} handle={ handleUpload } />
             </div>
         </div>
     );

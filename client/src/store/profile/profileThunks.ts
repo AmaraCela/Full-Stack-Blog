@@ -1,5 +1,6 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import { createAPI } from "../../utils/api";
+import { RootState } from "../store";
 
 export const populateProfile = createAsyncThunk(
     'profile',
@@ -15,3 +16,31 @@ export const populateProfile = createAsyncThunk(
         }
     }
 );
+
+export const addProfilePicture = createAsyncThunk(
+    'addProfilePicture',
+    async (info: FormData,
+        { getState, rejectWithValue }) => {
+        try {
+            console.log(info);
+            const state: RootState = getState() as RootState;
+            const token = state.user.token ?? '';
+            const response = await fetch("http://localhost:5000/api/profileImg", {
+                method: 'POST',
+                body: info,
+                headers: {
+                    'Authorization': `Bearer ${token}`,
+                }
+            });
+            
+            const data = await response.json();
+            console.log(data);
+        
+            //to do
+            return response.ok ? data.path : rejectWithValue(data.errorMessage);
+        }
+        catch (error) {
+            console.log(error);
+        }
+    }
+)

@@ -1,6 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { populateProfile } from './profileThunks';
-import { Tag } from "../tag/tagSlice";
+import { addProfilePicture, populateProfile } from './profileThunks';
 import { Post } from "../../types/blogTypes";
 
 interface User {
@@ -45,7 +44,12 @@ const profileSlice = createSlice({
             state.loading = false;
         }).addCase(populateProfile.rejected, (state, action) => {
             state.error = action.payload as string;
+        }).addCase(addProfilePicture.fulfilled, (state, action) => {
+            if (state.user) {
+                state.user.profile_img = action.payload ?? '';
+            }
         })
+        
 
     }
 });

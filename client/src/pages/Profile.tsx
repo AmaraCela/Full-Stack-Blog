@@ -5,7 +5,7 @@ import { useSelector } from "react-redux";
 import { selectProfile, selectUser, useAppDispatch } from "../store/store";
 import { Link, useParams } from "react-router-dom";
 import edit from '../assets/edit-246.png';
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { populateProfile } from "../store/profile/profileThunks";
 import username from "../assets/username.png";
 import email from "../assets/email-removebg-preview.png";
@@ -21,20 +21,35 @@ const Profile = () => {
     const loggedInUserId = useSelector(selectUser).id;
     const user = useSelector(selectProfile).user;
     const posts = useSelector(selectProfile).posts;
+    const [image, setImage] = useState<string | null>(null);
 
     useEffect(() => {
         dispatch(populateProfile(id ?? ''));
-    }, [])
+    }, []);
+
+    function handleImageUpload(event: React.ChangeEvent<HTMLInputElement>) {
+        const file = event.target.files?.[0];
+
+        if (file) {
+            const reader = new FileReader();
+            reader.onload = () => {
+                const result = reader.result as string;
+                console.log(result);
+                setImage(result);
+            };
+            reader.readAsDataURL(file);
+        }
+    }
 
     return (
         <div className="flex items-center flex-col">
-
             <div className="w-3/5 bg-[#9CBBF2] rounded-md flex pt-4 pb-4 justify-between mt-4 profile-div" id="profile">
 
                 <div className="flex flex-col items-center flex-wrap w-3/5 px-8 image-bio">
-                    <img src={profileImg} alt="" className="w-32" />
+                    <img src={user?.profile_img ?? profileImg} alt="" className="w-32" />
                     <p className="regular-font pt-4 text-lg font-semibold">Bio</p>
-                    <p className="regular-font text-sm text-center">Short description lorem ipsum that goes on like this.</p>
+                    <p className="regular-font text-sm text-center">{user?.bio ?? 'Bio not entered yet.'}</p>
+                    <img src={edit} className="w-8 h-8" alt="" />
                 </div>
 
                 <div className="flex justify-evenly w-full relative items-center bg-white rounded-md mx-2 my-4 border-black border-2 profile-info-div">
@@ -60,10 +75,8 @@ const Profile = () => {
                             <Link to={`/editprofile/${user?.user_id}`} title="Edit profile"><img src={edit} alt="" className="w-8 h-8 absolute top-0 right-12 mt-1" /></Link> : ""}
                         {loggedInUserId === user?.user_id ?
                             <Link to={`/settings`} title="Profile settings"><img src={settings} alt="" className="w-8 h-8 absolute top-0 right-3 mt-1" /></Link> : ""}
-
                     </div>
                 </div>
-
             </div>
 
             {/* <div className="bg-[#9CBBF2] flex flex-col items-end w-2/5 profile-div rounded-md p-4">
@@ -125,8 +138,17 @@ const Profile = () => {
             </div>
 
             <div className="flex px-16 2xl:container 2xl:mx-auto profile-blogs w-full" id="profile-blogs">
-                {posts ? <BlogDisplay blogs={posts}  /> : ''}
+                {posts ? <BlogDisplay blogs={posts} /> : ''}
                 <Sidebar />
+            </div>
+
+            <div className="absolute bg-white info-box h-3/4 w-3/4 z-50 flex flex-col justify-evenly items-center rounded-md">
+                <div className="rounded-full border-2 border-black border-dashed w-48 h-48 flex items-center justify-center overflow-hidden">
+                    {image ? <img src={image} alt="" className="object-cover w-full h-full" /> :
+                        <p className="text-center w-full h-full flex items-center justify-center">No image selected.</p>
+                    }
+                </div>
+                <input type="file" name="" id="profile-pic" accept="image/*" onChange={(e) => handleImageUpload(e)} />
             </div>
         </div>
     );

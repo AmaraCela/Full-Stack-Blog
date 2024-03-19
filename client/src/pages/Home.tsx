@@ -18,11 +18,12 @@ const Home = () => {
     }, [currentPage]);
 
 
+    console.log(blogs);
     return (
         <><Wave/>
             <div className="home flex items-center flex-col relative mx-16 2xl:container 2xl:mx-auto">
                 <div className="flex flex-row w-full home-main">
-                    {blogs && blogs.length > 0 && <BlogDisplay blogs={blogs} />}
+                    {blogs && blogs.length > 0 && blogs[0].post_id !== '' && <BlogDisplay blogs={blogs} />}
                     <Sidebar />
                 </div>
                 <Pagination currentPage={currentPage} setCurrentPage={setCurrentPage} />

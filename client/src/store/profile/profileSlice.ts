@@ -7,6 +7,8 @@ interface User {
     user_id: string;
     username: string;
     email: string;
+    profile_img: string | null;
+    bio: string | null;
 }
 
 interface ProfileState {
@@ -37,7 +39,7 @@ const profileSlice = createSlice({
             state.error = '';
         }).addCase(populateProfile.fulfilled, (state, action) => {
             const posts = action.payload.posts;
-            const userInformation = { user_id: posts[0].user_id, username: posts[0].username, email: posts[0].email };
+            const userInformation = { user_id: posts[0].user_id, username: posts[0].username, email: posts[0].email, profile_img: posts[0].profile_img, bio: posts[0].bio };
             state.user = userInformation;
             state.posts = posts;
             state.loading = false;

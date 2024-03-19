@@ -29,7 +29,7 @@ class User {
         const dbconnection = new DatabaseConnection();
         const connection = dbconnection.getConnection();
 
-        const query = 'SELECT user_id, email, password FROM users WHERE username = ?';
+        const query = 'SELECT user_id, email, password, profile_img, bio FROM users WHERE username = ?';
 
         return new Promise((resolve, reject) => {
             connection.query(query, [username], async (err, result) => {
@@ -43,7 +43,7 @@ class User {
                     const isValid = await bcryptjs.compare(password.toString(), result[0].password);
                     if (isValid) {
                         const token = jwt.sign({ user_id: result[0].user_id }, process.env.ACCESS_TOKEN_SECRET);
-                        resolve({ user: {user_id: result[0].user_id, username: username, email: result[0].email },token: token});
+                        resolve({ user: { user_id: result[0].user_id, username: username, email: result[0].email, profile_img: result[0].profile_img, bio: result[0].bio }, token: token });
                     }
                     else {
                         resolve("Invalid password.");
@@ -128,6 +128,26 @@ class User {
         catch (error) {
 
         }
+    }
+
+    static async changeProfilePicture(user_id: string, picture: Express.Multer.File) {
+        const dbconnection = new DatabaseConnection();
+        const connection = dbconnection.getConnection();
+        const query = "UPDATE users SET profile_img = ? WHERE user_id = ?";
+        return new Promise((resolve, reject) => {
+            try {
+                connection.query(query, [picture.path, user_id], (error, result) => {
+                    error ? reject(error) : resolve(true);
+                });
+            }
+            catch (err) {
+                reject(err);
+            }
+            finally {
+                dbconnection.closeConnection();
+            }
+        })
+
     }
 
 }

@@ -14,5 +14,4 @@ body {
 
 .input-format {
   @apply border-2 border-[#000000] rounded-md pl-1 h-9;
-
 }

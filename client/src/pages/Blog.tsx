@@ -1,6 +1,6 @@
 import "../styles/blog.css"; import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
-import { selectBlog, useAppDispatch } from "../store/store";
+import { selectBlog, selectUser, useAppDispatch } from "../store/store";
 import { deleteBlog, getIndividualBlog } from "../store/blog/blogThunk";
 import { Link, useNavigate, useParams } from "react-router-dom";
 import profilePic from "../assets/profileImg.png";
@@ -13,6 +13,7 @@ const Blog = () => {
     const dispatch = useAppDispatch();
     const navigate = useNavigate();
     const blog = useSelector(selectBlog).blog;
+    const user_id = useSelector(selectUser).id;
     const deleteSuccessful = useSelector(selectBlog).deleteSuccessful;
     const [activeIndex, setActiveIndex] = useState(0);
     const { post_id } = useParams();
@@ -20,14 +21,17 @@ const Blog = () => {
     const [imageVisibility, setImageVisibility] = useState('hidden');
 
     useEffect(() => {
-        console.log('here');
         dispatch(getIndividualBlog(post_id ?? ''));
     }, []);
 
     useEffect(() => {
+        document.body.style.overflowY = imageVisibility === 'hidden' ? 'scroll' : 'hidden';
+    }, [imageVisibility]);
+
+    useEffect(() => {
         dispatch(resetState());
         deleteSuccessful && navigate('/');
-    }, [deleteSuccessful])
+    }, [deleteSuccessful]);
 
     const handleNavigation = (direction: "left" | "right") => {
 
@@ -60,7 +64,7 @@ const Blog = () => {
                     {blog[0].images && blog[0].images.length > 0 && (
 
                         <img className=" max-h-full" src={`http://localhost:5000/${blog[0].images[activeIndex].replace(/\\/g, '/')}`} alt="" />
-                        
+    
                     )}
                      {blog[0].images.length > 1 && <button className="p-4 cursor-pointer ml-1 next md:static md:text-white absolute z-20 right-1 text-white" onClick={() => handleNavigation("right")}>
                         <p>&#10095;</p>
@@ -69,7 +73,7 @@ const Blog = () => {
                 </div>
             )}
 
-            <div className={`blog-details md:px-16 px-8 2xl:container 2xl:mx-auto relative ${imageVisibility === '' ? `overflow-y-hidden` : ``}`}>
+            <div className={`blog-details md:px-16 px-8 2xl:container 2xl:mx-auto relative`}>
                 <div className="carousel w-full flex justify-center items-center relative md:static md:p-6">
 
                     {blog[0].images.length > 1 && <button className="p-4 cursor-pointer mr-1 prev md:static md:text-black absolute z-20 left-1 text-white" onClick={() => handleNavigation("left")}>
@@ -77,7 +81,7 @@ const Blog = () => {
                     </button>}
 
                     {blog[0].images.map((image, index) => (
-                        <button onClick={() => setImageVisibility('')} className={`carousel-img relative ${index !== activeIndex ? 'hidden' : ''}`} key={image}>
+                        <button title="Click to expand" onClick={() => {window.scrollTo(0,0); setImageVisibility('')}} className={`carousel-img relative ${index !== activeIndex ? 'hidden' : ''}`} key={image}>
                             <img src={`http://localhost:5000/${image.replace(/\\/g, '/')}`} alt="" className="w-full h-full object-cover" />
                         </button>
                     ))}
@@ -87,10 +91,10 @@ const Blog = () => {
                     </button>}
                 </div>
 
-                <div className="flex justify-end">
+                {user_id === blog[0].user_id ? <div className="flex justify-end">
                     <Link to={`../editBlog/${blog[0].post_id}`}><img src={edit} alt="" className="w-8" /></Link>
                     <button onClick={() => { setDeleteVisibility('flex'); }}><img src={deleteImg} alt="" className="w-7 h-7" /></button>
-                </div>
+                </div> : ''}
 
                 <div className="flex items-center justify-between">
                     <Link to={`../profile/${blog[0].user_id}`}>

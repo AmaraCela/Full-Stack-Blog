@@ -64,9 +64,9 @@ const Blog = () => {
                     {blog[0].images && blog[0].images.length > 0 && (
 
                         <img className=" max-h-full" src={`http://localhost:5000/${blog[0].images[activeIndex].replace(/\\/g, '/')}`} alt="" />
-    
+
                     )}
-                     {blog[0].images.length > 1 && <button className="p-4 cursor-pointer ml-1 next md:static md:text-white absolute z-20 right-1 text-white" onClick={() => handleNavigation("right")}>
+                    {blog[0].images.length > 1 && <button className="p-4 cursor-pointer ml-1 next md:static md:text-white absolute z-20 right-1 text-white" onClick={() => handleNavigation("right")}>
                         <p>&#10095;</p>
                     </button>}
                     <button title="remove full scr" onClick={() => setImageVisibility('hidden')} className="absolute top-1 font-extrabold right-5 text-white regular-font text-2xl">X</button>
@@ -81,7 +81,7 @@ const Blog = () => {
                     </button>}
 
                     {blog[0].images.map((image, index) => (
-                        <button title="Click to expand" onClick={() => {window.scrollTo(0,0); setImageVisibility('')}} className={`carousel-img relative ${index !== activeIndex ? 'hidden' : ''}`} key={image}>
+                        <button title="Click to expand" onClick={() => { window.scrollTo(0, 0); setImageVisibility('') }} className={`carousel-img relative ${index !== activeIndex ? 'hidden' : ''}`} key={image}>
                             <img src={`http://localhost:5000/${image.replace(/\\/g, '/')}`} alt="" className="w-full h-full object-cover" />
                         </button>
                     ))}
@@ -99,7 +99,9 @@ const Blog = () => {
                 <div className="flex items-center justify-between">
                     <Link to={`../profile/${blog[0].user_id}`}>
                         <div className="flex items-center">
-                            <img src={profilePic} alt="" className="w-16" />
+                            <div className="overflow-hidden h-16 w-16 rounded-full border-2 border-black">
+                                <img src={blog[0].profile_img ? `http://localhost:5000/${blog[0].profile_img.replace(/\\/g, '/')}` : profilePic} alt="" className="w-full h-full object-cover" />
+                            </div>
                             <h1 className="regular-font text-2xl font-semibold ml-4">{blog[0].username}</h1>
                         </div>
                     </Link>
@@ -124,7 +126,7 @@ const Blog = () => {
                     </div>
                 </div>
             </div>
-            </>
+        </>
     );
 }
 export default Blog;

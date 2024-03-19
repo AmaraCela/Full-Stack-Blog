@@ -1,9 +1,11 @@
 import "../styles/blogDisplay.css";
 import { Link } from 'react-router-dom';
 import { Post } from "../types/blogTypes";
+import profileImg from "../assets/profile.png";
 
 
 const BlogDisplay = ({ blogs }: { blogs: Post[] }) => {
+    console.log(blogs);
     return (
         <div className="blogs">
             {blogs.map((item) => (
@@ -13,7 +15,10 @@ const BlogDisplay = ({ blogs }: { blogs: Post[] }) => {
                         <div className="info p-2 flex flex-col justify-between">
                             <div>
                                 <div className="flex flex-row items-end">
-                                    <img src={item.profile_pic} alt="" className="h-14 blog-profile rounded-full w-14" />
+                                    <div className="h-12 w-12 rounded-full overflow-hidden border-2 border-black">
+                                        <img src={item.profile_img ? `http://localhost:5000/${item.profile_img.replace(/\\/g, '/')}` : profileImg} alt="" className="blog-profile h-full w-full object-cover" />
+                                    </div>
+                                    
                                     <p className="regular-font text-3xl font-semibold ml-1 blog-user">{item.username}</p>
                                 </div>
                                 <p className="mt-8 regular-font text-2xl font-bold blog-title">{item.title}</p>

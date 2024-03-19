@@ -208,6 +208,8 @@ class Post {
         const query = `SELECT 
         p.*, 
         u.username, 
+        u.user_id,
+        u.profile_img,
         t.tag_id, 
         t.tag_name, 
         i.image 
@@ -235,6 +237,7 @@ class Post {
         u.user_id,
         u.username,
         u.email,
+        u.profile_img,
         p.post_id,
         p.title,
         p.description,

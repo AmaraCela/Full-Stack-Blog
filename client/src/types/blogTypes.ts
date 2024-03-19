@@ -5,7 +5,7 @@ export interface Post {
     user_id: string;
     username: string;
     email?: string;
-    profile_pic?: string;
+    profile_img?: string;
     title: string;
     description: string;
     date_posted: string;

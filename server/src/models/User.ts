@@ -146,10 +146,8 @@ class User {
             finally {
                 dbconnection.closeConnection();
             }
-        })
-
+        });
     }
-
 }
 
 export default User;

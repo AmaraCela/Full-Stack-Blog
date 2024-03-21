@@ -16,7 +16,7 @@ class Post {
         const connection = dbconnection.getConnection();
         const query = 'INSERT INTO posts (title, description, date_posted, user_id) VALUES (?, ?, ?, ?)';
 
-        return new Promise(async (resolve, reject) => {
+        return new Promise((resolve, reject) => {
             connection.beginTransaction(async (err) => {
                 if (err) {
                     console.log('Error starting transaction: ', err);
@@ -119,7 +119,7 @@ class Post {
                             connection.rollback(() => {
                                 console.log('Transaction rolled back.');
                             })
-                        } 
+                        }
                         dbconnection.closeConnection();
                         resolve(true);
                     })
@@ -136,10 +136,10 @@ class Post {
         return new Promise((resolve, reject) => {
             connection.query(query, [post_id], (err, _) => {
                 if (err) {
-                    reject (err);
+                    reject(err);
                     return;
                 }
-                resolve (true);
+                resolve(true);
             });
         });
 
@@ -316,28 +316,28 @@ class Post {
         };
     }
 
-    static posts (result: any) {
+    static posts(result: any) {
         return result.reduce((acc: any[], row: any) => {
-                if (acc.length === 0) {
-                    acc.push(Post.newEntry(row));
-                } else {
-                    const existingPost = acc.find((post) => post.post_id === row.post_id);
-                    if (existingPost) {
-                        const existingTag = existingPost.tags.find((tag: { tag_id: any; }) => tag.tag_id === row.tag_id);
-                        if (!existingTag) {
-                            existingPost.tags.push({ tag_id: row.tag_id, tag_name: row.tag_name });
-                        }
-
-                        const existingImage = existingPost.images.find((image: any) => image === row.image);
-                        if (!existingImage) {
-                            existingPost.images.push(row.image);
-                        }
-                    } else {
-                        acc.push(Post.newEntry(row));
+            if (acc.length === 0) {
+                acc.push(Post.newEntry(row));
+            } else {
+                const existingPost = acc.find((post) => post.post_id === row.post_id);
+                if (existingPost) {
+                    const existingTag = existingPost.tags.find((tag: { tag_id: any; }) => tag.tag_id === row.tag_id);
+                    if (!existingTag) {
+                        existingPost.tags.push({ tag_id: row.tag_id, tag_name: row.tag_name });
                     }
+
+                    const existingImage = existingPost.images.find((image: any) => image === row.image);
+                    if (!existingImage) {
+                        existingPost.images.push(row.image);
+                    }
+                } else {
+                    acc.push(Post.newEntry(row));
                 }
-                return acc;
-            }, []);    
+            }
+            return acc;
+        }, []);
     }
 
     static newEntry(row: any) {
@@ -364,9 +364,161 @@ class Post {
 
         return new Promise((resolve, reject) => {
             connection.query(query, (err, result) => {
-                err ? reject(err) : resolve (result[0]['COUNT(*)']);
+                err ? reject(err) : resolve(result[0]['COUNT(*)']);
             });
             dbconnection.closeConnection();
+        });
+    }
+
+
+    static async filterBlogs(keyword: string) {
+        return new Promise(async (resolve, reject) => {
+            try {
+                const blogsByTitle = await this.filterBlogsByTitle(keyword);
+                const blogsByDescription = await this.filterBlogsByDescription(keyword);
+                const blogsByUser = await this.filterBlogsByUser(keyword);
+                const blogsByTag = await this.filterBlogsByTag(keyword);
+                resolve({ blogsByTitle, blogsByDescription, blogsByUser, blogsByTag });
+            }
+            catch (error) {
+                reject(error);
+            }
+        });
+    }
+
+    static async filterBlogsByTag(keyword: string) {
+        const dbconnection = new DatabaseConnection();
+        const connection = dbconnection.getConnection();
+
+        const query = `SELECT
+        u.user_id,
+        u.username,
+        u.profile_img,
+        p.post_id,
+        p.title,
+        p.description,
+        t.tag_name
+        FROM posts p
+        LEFT JOIN users u ON p.user_id = u.user_id
+        LEFT JOIN post_tags pt ON pt.post_id = p.post_id
+        LEFT JOIN tags t ON pt.tag_id = t.tag_id
+        WHERE t.tag_name LIKE CONCAT('%', ?, '%');
+        `;
+
+        return new Promise((resolve, reject) => {
+            try {
+                connection.query(query, [keyword], (err, result) => {
+                    err ? reject(err) : resolve(this.generateStructuredResult(result));
+                });
+            }
+            catch (error) {
+                reject(error);
+            }
+            finally {
+                dbconnection.closeConnection();
+            }
+        });
+    }
+
+    static async filterBlogsByDescription(keyword: string) {
+        const dbconnection = new DatabaseConnection();
+        const connection = dbconnection.getConnection();
+
+        const query = `SELECT
+        u.user_id,
+        u.username,
+        u.profile_img,
+        p.post_id,
+        p.title,
+        p.description,
+        t.tag_name
+        FROM posts p
+        LEFT JOIN users u ON p.user_id = u.user_id
+        LEFT JOIN post_tags pt ON pt.post_id = p.post_id
+        LEFT JOIN tags t ON pt.tag_id = t.tag_id
+        WHERE p.description LIKE CONCAT('%', ?, '%');
+        `;
+
+        return new Promise((resolve, reject) => {
+            try {
+                connection.query(query, [keyword], (err, result) => {
+                    err ? reject(err) : resolve(this.generateStructuredResult(result));
+                });
+            }
+            catch (error) {
+                reject(error);
+            }
+            finally {
+                dbconnection.closeConnection();
+            }
+        });
+    }
+
+    static async filterBlogsByTitle(keyword: string) {
+        const dbconnection = new DatabaseConnection();
+        const connection = dbconnection.getConnection();
+
+        const query = `SELECT
+        u.user_id,
+        u.username,
+        u.profile_img,
+        p.post_id,
+        p.title,
+        p.description,
+        t.tag_name
+        FROM posts p
+        LEFT JOIN users u ON p.user_id = u.user_id
+        LEFT JOIN post_tags pt ON pt.post_id = p.post_id
+        LEFT JOIN tags t ON pt.tag_id = t.tag_id
+        WHERE p.title LIKE CONCAT('%', ?, '%');
+        `;
+
+        return new Promise((resolve, reject) => {
+            try {
+                connection.query(query, [keyword], (err, result) => {
+                    err ? reject(err) : resolve(this.generateStructuredResult(result));
+                });
+            }
+            catch (error) {
+                reject(error);
+            }
+            finally {
+                dbconnection.closeConnection();
+            }
+        });
+    }
+
+    static async filterBlogsByUser(keyword: string) {
+        const dbconnection = new DatabaseConnection();
+        const connection = dbconnection.getConnection();
+
+        const query = `SELECT
+        u.user_id,
+        u.username,
+        u.profile_img,
+        p.post_id,
+        p.title,
+        p.description,
+        t.tag_name
+        FROM posts p
+        LEFT JOIN users u ON p.user_id = u.user_id
+        LEFT JOIN post_tags pt ON pt.post_id = p.post_id
+        LEFT JOIN tags t ON pt.tag_id = t.tag_id
+        WHERE u.username LIKE CONCAT('%', ?, '%');
+        `;
+
+        return new Promise((resolve, reject) => {
+            try {
+                connection.query(query, [keyword], (err, result) => {
+                    err ? reject(err) : resolve(this.generateStructuredResult(result));
+                });
+            }
+            catch (error) {
+                reject(error);
+            }
+            finally {
+                dbconnection.closeConnection();
+            }
         });
     }
 

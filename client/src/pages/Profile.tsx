@@ -15,6 +15,7 @@ import blog from "../assets/blog.png";
 import resume from "../assets/resume.png";
 import FormButton from "../components/FormButton";
 import noimage from "../assets/image.png";
+import ProfileImage from "../components/ProfileImage";
 
 const Profile = () => {
     const dispatch = useAppDispatch();
@@ -59,9 +60,7 @@ const Profile = () => {
 
                 <div className="flex flex-col items-center flex-wrap w-3/5 px-8 image-bio">
                     <div className="relative">
-                        <div className="rounded-full border-2 border-black border-solid w-40 h-40 flex items-center justify-center overflow-hidden">
-                            <img src={user?.profile_img ? `http://localhost:5000/${user?.profile_img.replace(/\\/g, '/')}` : profileImg} alt="" className="object-cover w-full h-full" />
-                        </div>
+                        <ProfileImage size={40} image={user?.profile_img ?? null}/>
                         <button className="w-8 h-8 absolute bottom-0 right-0"><img src={edit} alt="" onClick={() => setImageDivVisibility('flex')} /></button>
                     </div>
                     <p className="regular-font pt-4 text-lg font-semibold">Bio</p>

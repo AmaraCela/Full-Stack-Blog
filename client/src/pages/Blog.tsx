@@ -3,7 +3,7 @@ import { useSelector } from "react-redux";
 import { selectBlog, selectUser, useAppDispatch } from "../store/store";
 import { deleteBlog, getIndividualBlog } from "../store/blog/blogThunk";
 import { Link, useNavigate, useParams } from "react-router-dom";
-import profilePic from "../assets/profileImg.png";
+import ProfileImage from "../components/ProfileImage";
 import edit from "../assets/edit-246.png";
 import deleteImg from "../assets/delete.png";
 import { resetState } from "../store/blog/blogSlice";
@@ -99,9 +99,7 @@ const Blog = () => {
                 <div className="flex items-center justify-between">
                     <Link to={`../profile/${blog[0].user_id}`}>
                         <div className="flex items-center">
-                            <div className="overflow-hidden h-16 w-16 rounded-full border-2 border-black">
-                                <img src={blog[0].profile_img ? `http://localhost:5000/${blog[0].profile_img.replace(/\\/g, '/')}` : profilePic} alt="" className="w-full h-full object-cover" />
-                            </div>
+                            <ProfileImage size={16} image={blog[0].profile_img ?? null}/>
                             <h1 className="regular-font text-2xl font-semibold ml-4">{blog[0].username}</h1>
                         </div>
                     </Link>

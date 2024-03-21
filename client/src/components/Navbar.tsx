@@ -5,6 +5,7 @@ import { Link, useLocation } from "react-router-dom";
 import { useSelector } from "react-redux";
 import { selectUser } from '../store/store';
 import Dropdown from "./Dropdown";
+import ProfileImage from "./ProfileImage";
 
 const Navbar = () => {
     const isAuthenticated = useSelector(selectUser).isLoggedIn;
@@ -21,9 +22,7 @@ const Navbar = () => {
                 {isAuthenticated ?
                     <div className="relative">
                         <div className="flex items-end profile-link cursor-pointer">
-                            <div className="rounded-full overflow-clip w-12 h-12 border-2 border-black">
-                                <img src={profile ? `http://localhost:5000/${profile.replace(/\\/g, '/')}` : profileImg} alt="profile-img" className="w-full h-full object-cover" />
-                            </div>
+                            <ProfileImage size={12} image={profile} />
                             <p className="regular-font text-2xl pl-1 hidden sm:block">{username}</p>
                         </div>
                         <Dropdown />

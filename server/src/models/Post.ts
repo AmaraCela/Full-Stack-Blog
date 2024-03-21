@@ -397,6 +397,7 @@ class Post {
         p.post_id,
         p.title,
         p.description,
+        p.date_posted,
         t.tag_name
         FROM posts p
         LEFT JOIN users u ON p.user_id = u.user_id
@@ -431,6 +432,7 @@ class Post {
         p.post_id,
         p.title,
         p.description,
+        p.date_posted,
         t.tag_name
         FROM posts p
         LEFT JOIN users u ON p.user_id = u.user_id
@@ -465,6 +467,7 @@ class Post {
         p.post_id,
         p.title,
         p.description,
+        p.date_posted,
         t.tag_name
         FROM posts p
         LEFT JOIN users u ON p.user_id = u.user_id
@@ -499,6 +502,7 @@ class Post {
         p.post_id,
         p.title,
         p.description,
+        p.date_posted,
         t.tag_name
         FROM posts p
         LEFT JOIN users u ON p.user_id = u.user_id

@@ -21,7 +21,7 @@ const SearchResult = () => {
     return (
         <div>
             <h1>Showing results for "{keyword}" </h1>
-            <SearchBlogDisplay {...blogsByUser[0]} />
+            {blogsByUser.map((blog) => (<SearchBlogDisplay {...blog} />))}
         </div>
     );
 }

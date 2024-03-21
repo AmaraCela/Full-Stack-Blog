@@ -9,7 +9,6 @@ export const searchBlog = createAsyncThunk(
         try {
             const response = await createAPI('search', {method: 'POST'})(keyword);
             const data = await response.json();
-
             return response.ok ? data : rejectWithValue(data.errorMessage);
         }
         catch (error) {

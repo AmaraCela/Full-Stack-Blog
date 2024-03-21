@@ -24,10 +24,10 @@ const blogSearchSlice = createSlice({
     },
     extraReducers: builder => {
         builder.addCase(searchBlog.fulfilled, (state: SearchBlogType, action: any) => {
-            state.blogsByUser = action.payload.blogsByUser;
-            state.blogsByTitle = action.payload.blogsByTitle;
-            state.blogsByDescription = action.payload.blogsByDescription;
-            state.blogsByTag = action.payload.blogsByTag;
+            state.blogsByUser = action.payload.blogsByUser.posts;
+            state.blogsByTitle = action.payload.blogsByTitle.posts;
+            state.blogsByDescription = action.payload.blogsByDescription.posts;
+            state.blogsByTag = action.payload.blogsByTag.posts;
         }).addCase(searchBlog.rejected, (state: SearchBlogType) => {
             state.blogsByUser = [];
             state.blogsByTitle = [];

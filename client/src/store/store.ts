@@ -4,6 +4,7 @@ import profileReducer from "./profile/profileSlice";
 import passwordReducer from "./password/passwordSlice";
 import tagReducer from "./tag/tagSlice";
 import blogReducer from "./blog/blogSlice";
+import searchBlogReducer from "./blogSearch/blogSearchSlice";
 import { useDispatch } from "react-redux";
 import storage from "redux-persist/lib/storage";
 import { persistReducer, persistStore } from "redux-persist";
@@ -19,6 +20,7 @@ const rootReducer = combineReducers({
     password: passwordReducer,
     tag: tagReducer,
     blog: blogReducer,
+    searchBlog: searchBlogReducer,
 })
 
 const persistedReducer = persistReducer(persistConfig, rootReducer);
@@ -35,4 +37,5 @@ export const selectProfile = (state: RootState) => state.profile;
 export const selectPassword = (state: RootState) => state.password;
 export const selectTag = (state: RootState) => state.tag;
 export const selectBlog = (state: RootState) => state.blog;
+export const selectSearchBlog = (state: RootState) => state.searchBlog;
 export const persistor = persistStore(store);

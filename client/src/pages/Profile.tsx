@@ -1,5 +1,4 @@
 import BlogDisplay from "../components/BlogDisplay";
-import profileImg from "../assets/profileImg.png";
 import "../styles/profile.css";
 import { useSelector } from "react-redux";
 import { selectProfile, selectUser, useAppDispatch } from "../store/store";
@@ -24,6 +23,7 @@ const Profile = () => {
     const loggedInUserId = useSelector(selectUser).id;
     const user = useSelector(selectProfile).user;
     const posts = useSelector(selectProfile).posts;
+    console.log(posts);
     const [image, setImage] = useState<string | null>(null);
     const [file, setFile] = useState<File | null>(null);
     const [imageDivVisibility, setImageDivVisibility] = useState('hidden');
@@ -153,7 +153,7 @@ const Profile = () => {
             </div>
 
             <div className="flex px-16 2xl:container 2xl:mx-auto profile-blogs w-full" id="profile-blogs">
-                {posts ? <BlogDisplay blogs={posts} /> : ''}
+                {posts.length > 0 && posts[0].post_id ? <BlogDisplay blogs={posts} /> : <p className="regular-font text-2xl w-full mt-8">There don't seem to be any posts.</p>}
                 <Sidebar />
             </div>
 

@@ -1,7 +1,6 @@
 import "../styles/blogDisplay.css";
 import { Link } from 'react-router-dom';
 import { Post } from "../types/blogTypes";
-import profileImg from "../assets/profile.png";
 import ProfileImage from "./ProfileImage";
 
 

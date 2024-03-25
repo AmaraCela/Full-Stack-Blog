@@ -61,7 +61,7 @@ const Profile = () => {
                 <div className="flex flex-col items-center flex-wrap w-3/5 px-8 image-bio">
                     <div className="relative">
                         <ProfileImage size={40} image={user?.profile_img ?? null}/>
-                        <button className="w-8 h-8 absolute bottom-0 right-0"><img src={edit} alt="" onClick={() => setImageDivVisibility('flex')} /></button>
+                        <button className="w-8 h-8 absolute bottom-0 right-0" onClick={() => setImageDivVisibility('flex')}><img src={edit} alt="" /></button>
                     </div>
                     <p className="regular-font pt-4 text-lg font-semibold">Bio</p>
                     <p className="regular-font text-sm text-center">{user?.bio ?? 'Bio not entered yet.'}</p>

@@ -28,7 +28,7 @@ const AllRoutes = () => {
         <Route path='/blogs/:post_id' element={<Blog />} />
         <Route path='/login' element={<LogIn />} />
         <Route path='/signup' element={<SignUp />} />
-        <Route path='/search' element={<SearchResult />} />
+        <Route path='/search/:keyword' element={<SearchResult />} />
         <Route path='/' element={<Home />} />
       </Routes>
       <Footer />

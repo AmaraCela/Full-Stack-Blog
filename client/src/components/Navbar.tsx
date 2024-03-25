@@ -1,19 +1,26 @@
-import profileImg from "../assets/profile.png";
 import "../styles/navbar.css";
 import search from "../assets/search.png";
-import { Link, useLocation } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import { useSelector } from "react-redux";
 import { selectUser } from '../store/store';
 import Dropdown from "./Dropdown";
 import ProfileImage from "./ProfileImage";
+import { useState } from "react";
+import FormButton from "./FormButton";
 
 const Navbar = () => {
     const isAuthenticated = useSelector(selectUser).isLoggedIn;
     const username = useSelector(selectUser).username;
     const profile = useSelector(selectUser).profileImg;
+    const [keyword, setKeyword] = useState("");
     const location = useLocation();
+    const navigate = useNavigate();
 
     const isRootPath = location.pathname === '/';
+
+    const handleSearch = () => {
+        navigate(`/search/${keyword}`);
+    }
 
     return (
         <nav className="flex justify-between items-center nav flex-col mx-16 2xl:container 2xl:mx-auto">
@@ -30,7 +37,11 @@ const Navbar = () => {
                     <Link to="/login" className="w-fit sm:w-1/5"><button className="login-nav regular-font">Login</button></Link>}
             </div>
             {isRootPath && <div className="flex items-center search-bar w-full justify-center">
-                <input className="relative text-center h-9 rounded-md w-96 search-input pl-10 place-items-end" type="search" placeholder="Search..." style={{ backgroundImage: `url(${search})` }} />
+                <input className="relative text-center h-9 rounded-md w-96 search-input pl-10 place-items-end mr-2" type="search" placeholder="Search..." style={{ backgroundImage: `url(${search})` }}
+                    value={keyword} onChange={(e) => { setKeyword(e.target.value) }}
+                    onKeyUp={(e) => {e.key === 'Enter' &&  navigate(`/search/${keyword}`)}}
+                />
+                <FormButton value="Search" handle={handleSearch} />
             </div>}
         </nav>
     )

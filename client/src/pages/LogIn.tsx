@@ -17,6 +17,7 @@ const LogIn = () => {
     const navigate = useNavigate();
     const isLoggedIn = useSelector(selectUser).isLoggedIn;
     const error = useSelector(selectUser).loginError;
+    const serverError = useSelector(selectUser).serverError;
     const isLoading = useSelector(selectUser).loading;
 
     const [inputs, setInputs] = useState({
@@ -88,7 +89,7 @@ const LogIn = () => {
                 <img src={login} alt="" className="form-img rounded-r-md" />
             </div>
             {isLoading && <Loading />}
-            {error && error === 'There was an error connecting to the server.' && <ErrorBox error={error} />}
+            {serverError && <ErrorBox error={serverError} />}
         </div>
     );
 }

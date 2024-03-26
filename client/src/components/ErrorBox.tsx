@@ -5,6 +5,10 @@ const ErrorBox = ({error}: {error: string}) => {
     const [visibility, setVisibility] = useState("flex");
 
     useEffect(() => {
+        return () => {document.body.style.overflowY = 'scroll';}
+    }, []);
+
+    useEffect(() => {
         document.body.style.overflowY = visibility === 'flex' ?  "hidden" : "scroll" ;
     }, [visibility]);
 

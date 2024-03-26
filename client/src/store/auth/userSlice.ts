@@ -8,6 +8,7 @@ interface UserState {
     username: string | null;
     email: string | null;
     id: string | null;
+    serverError: string | null;
     profileImg: string | null;
     loginError: string | null;
     signupError: string | null;
@@ -22,6 +23,7 @@ const initialState: UserState = {
     username: null,
     email: null,
     id: null,
+    serverError: null,
     profileImg: null,
     loginError: null,
     signupError: null,
@@ -42,8 +44,7 @@ const userSlice = createSlice({
             state.token = null;
         }, 
         resetError: (state) => { 
-            state.loginError = null;
-            state.signupError = null;
+            state.serverError = null;
         }
     },
     extraReducers: builder => {
@@ -76,7 +77,8 @@ const loginUserBuilder = (builder: any) => {
         state.id = null;
         state.profileImg = null;
         state.token = null;
-        state.loginError = action.payload.message === 'Failed to fetch' ? 'There was an error connecting to the server.' : action.payload as string;
+        state.serverError = action.payload.message === 'Failed to fetch' ? 'There was an error connecting to the server.': null;
+        state.loginError = action.payload as string;
     });
 }
 
@@ -84,7 +86,8 @@ const signupUserBuilder = (builder: any) => {
     builder.addCase(signupUser.pending, (state: UserState) => {
         state.loading = true;
     }).addCase(signupUser.rejected, (state: UserState, action: any) => {
-        state.signupError = action.payload ? action.payload as string : action.error.message;
+        state.serverError = !action.payload ? action.error.message : null;
+        state.signupError = action.payload as string;
         state.loading = false;
     });
 }

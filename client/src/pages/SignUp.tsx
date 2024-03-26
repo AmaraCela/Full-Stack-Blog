@@ -17,6 +17,7 @@ const SignUp = () => {
     const dispatch = useAppDispatch();
     const isLoggedIn = useSelector(selectUser).isLoggedIn;
     const error = useSelector(selectUser).signupError;
+    const serverError = useSelector(selectUser).serverError;
     const isLoading = useSelector(selectUser).loading;
     const { hasErrors, errors, validateForm, displayErrors } = useSignupForm();
     const isButtonPressed = useRef(false);
@@ -27,6 +28,14 @@ const SignUp = () => {
         password: "",
         verify: "",
     });
+
+    useEffect(() => {
+        return () => {dispatch(resetError())};
+    }, []);
+
+    useEffect(() => {
+        console.log(serverError);
+    }, [serverError])
 
     useEffect(() => {
         isButtonPressed.current && displayErrors(inputs);
@@ -104,7 +113,7 @@ const SignUp = () => {
                 <img src={signup} alt="" className="form-img rounded-r-md" />
             </div>
             {isLoading && <Loading />}
-            {error === 'Failed to fetch' && <ErrorBox error={"There was an error connecting to the server."} />}
+            {serverError && <ErrorBox error={"There was an error connecting to the server."} />}
         </div>
     );
 }

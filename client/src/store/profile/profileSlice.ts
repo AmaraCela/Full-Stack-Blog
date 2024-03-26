@@ -21,7 +21,7 @@ const initialState: ProfileState = {
     user: null,
     posts: [],
     loading: false,
-    error: ''
+    error: '',
 }
 
 const profileSlice = createSlice({

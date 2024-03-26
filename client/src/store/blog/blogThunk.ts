@@ -38,6 +38,7 @@ export const getIndividualBlog = createAsyncThunk(
         }
         catch (error) {
             console.log(error);
+            return rejectWithValue(error);
         }
     }
 );

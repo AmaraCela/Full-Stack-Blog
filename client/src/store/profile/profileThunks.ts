@@ -12,7 +12,7 @@ export const populateProfile = createAsyncThunk(
             return response.ok ? data : rejectWithValue(data.message);
         }
         catch (error) {
-            console.log(error);
+            return rejectWithValue(error);
         }
     }
 );

@@ -75,9 +75,10 @@ const createBlogBuilder = (builder: any) => {
 
 const getIndividualBlogBuilder = (builder: any) => {
     builder.addCase(getIndividualBlog.fulfilled, (state: BlogState, action: any) => {
-        console.log(action.payload);
         state.blog = action.payload;
-    }).addCase(getIndividualBlog.rejected, (state: BlogState) => {
+        state.loading = false;
+    }).addCase(getIndividualBlog.rejected, (state: BlogState, action: any) => {
+        state.loading = false;
         state.blog = [{
             post_id: "",
             user_id: "",
@@ -90,7 +91,23 @@ const getIndividualBlogBuilder = (builder: any) => {
             tags: [],
             images: []
         }]
-    })
+        state.serverError = action.payload as string;
+    }).addCase(getIndividualBlog.pending, (state: BlogState) => {
+        state.loading = true;
+        state.serverError = null;
+        state.blog = [{
+            post_id: "",
+            user_id: "",
+            username: "",
+            email: "",
+            profile_img: "",
+            title: "",
+            description: "",
+            date_posted: "",
+            tags: [],
+            images: []
+        }]
+    }) 
 }
 
 const deleteBlogBuilder = (builder: any) => {

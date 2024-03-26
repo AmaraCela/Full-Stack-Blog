@@ -2,7 +2,7 @@ import BlogDisplay from "../components/BlogDisplay";
 import "../styles/profile.css";
 import { useSelector } from "react-redux";
 import { selectProfile, selectUser, useAppDispatch } from "../store/store";
-import { Link, useParams } from "react-router-dom";
+import { Link, useNavigate, useParams } from "react-router-dom";
 import edit from '../assets/edit-246.png';
 import { useEffect, useState } from "react";
 import { addProfilePicture, populateProfile } from "../store/profile/profileThunks";
@@ -15,15 +15,18 @@ import resume from "../assets/resume.png";
 import FormButton from "../components/FormButton";
 import noimage from "../assets/image.png";
 import ProfileImage from "../components/ProfileImage";
+import Loading from "../components/Loading";
 
 const Profile = () => {
     const dispatch = useAppDispatch();
+    const navigate = useNavigate();
     const { id } = useParams();
 
     const loggedInUserId = useSelector(selectUser).id;
     const user = useSelector(selectProfile).user;
     const posts = useSelector(selectProfile).posts;
-    console.log(posts);
+    const error = useSelector(selectProfile).error;
+    const loading = useSelector(selectProfile).loading;
     const [image, setImage] = useState<string | null>(null);
     const [file, setFile] = useState<File | null>(null);
     const [imageDivVisibility, setImageDivVisibility] = useState('hidden');
@@ -31,6 +34,10 @@ const Profile = () => {
     useEffect(() => {
         dispatch(populateProfile(id ?? ''));
     }, []);
+
+    useEffect(() => {
+        error && navigate("/error");
+    }, [error])
 
     function handleImageUpload(event: React.ChangeEvent<HTMLInputElement>) {
         const file = event.target.files?.[0];
@@ -53,6 +60,7 @@ const Profile = () => {
 
         dispatch(addProfilePicture(formData));
     }
+
 
     return (
         <div className="flex items-center flex-col">
@@ -177,6 +185,7 @@ const Profile = () => {
 
                 <FormButton value={"Upload"} handle={handleUpload} />
             </div>
+            {loading && <Loading/>}
         </div>
     );
 }

@@ -10,6 +10,7 @@ import { useNavigate } from "react-router-dom";
 import { CreateBlogInputType } from "../types/blogTypes";
 import Loading from "../components/Loading";
 import { resetState } from "../store/blog/blogSlice";
+import ErrorBox from "../components/ErrorBox";
 
 const CreateBlog = () => {
 
@@ -112,11 +113,7 @@ const CreateBlog = () => {
             </div>
             {isLoading && <Loading />}
 
-            {error &&
-                <div className="info-box absolute p-8 bg-white rounded-md">
-                    <p>{error}</p>
-                    <button className="border-black border-2 rounded-md p-2 regular-font font-semibold" onClick={() => navigate('/')}>Okay</button>
-                </div>}
+            {error && <ErrorBox error={error}/>}
         </div>
     );
 }

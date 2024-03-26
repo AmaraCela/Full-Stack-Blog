@@ -4,6 +4,7 @@ import { Post } from "../../types/blogTypes";
 
 type BlogState = {
     loading: boolean;
+    serverError: string | null;
     successful: boolean;
     error: string | null;
     deleteSuccessful: string | null;
@@ -16,6 +17,7 @@ type BlogState = {
 
 const initialState: BlogState = {
     loading: false,
+    serverError: null,
     successful: false,
     error: null,
     deleteSuccessful: null,
@@ -114,15 +116,30 @@ const updateBlogBuilder = (builder: any) => {
 const nrBlogsBuilder = (builder: any) => {
     builder.addCase(numberOfBlogs.fulfilled, (state: BlogState, action: any) => {
         state.nrBlogs = action.payload;
-    }).addCase(numberOfBlogs.rejected, (state: BlogState) => {
+        state.serverError = null;
+        state.loading = false;
+    }).addCase(numberOfBlogs.rejected, (state: BlogState, action: any) => {
         state.nrBlogs = null;
-    })
+        state.serverError = action.payload;
+        state.loading = false;
+    }).addCase(numberOfBlogs.pending, (state: BlogState) => {
+        state.loading = true;
+    });
 }
 
 const getBlogsBuilder = (builder: any) => {
     builder.addCase(getBlogs.fulfilled, (state: BlogState, action: any) => {
+        console.log('here');
+        state.loading = false;
         state.blog = action.payload;
-    })
+    }).addCase(getBlogs.rejected, (state: BlogState, action: any) => {
+        state.loading = false;
+        console.log(action.payload);
+        state.serverError = action.payload;
+    }).addCase(getBlogs.pending, (state: BlogState) => {
+        state.loading = true;
+        state.serverError = null;
+    });
 }
 
 export default createBlogSlice.reducer;

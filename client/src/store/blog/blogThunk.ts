@@ -88,7 +88,7 @@ export const getBlogs = createAsyncThunk(
             return response.ok ? data.posts : rejectWithValue(data.error);
         }
         catch (err) {
-            rejectWithValue(err)
+            return rejectWithValue(err)
         }
 
     }

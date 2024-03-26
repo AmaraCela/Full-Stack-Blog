@@ -21,6 +21,7 @@ const Blog = () => {
     const [imageVisibility, setImageVisibility] = useState('hidden');
 
     useEffect(() => {
+        window.scrollTo(0,0);
         dispatch(getIndividualBlog(post_id ?? ''));
     }, []);
 

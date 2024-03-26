@@ -12,6 +12,7 @@ import EditProfile from '../pages/EditProfile';
 import Settings from '../pages/Settings';
 import EditBlog from '../pages/EditBlog';
 import SearchResult from '../pages/SearchReults';
+import ErrorPage from '../pages/ErrorPage';
 
 const AllRoutes = () => {
   return (
@@ -29,6 +30,7 @@ const AllRoutes = () => {
         <Route path='/login' element={<LogIn />} />
         <Route path='/signup' element={<SignUp />} />
         <Route path='/search/:keyword' element={<SearchResult />} />
+        <Route path='/error' element={<ErrorPage />}/>
         <Route path='/' element={<Home />} />
       </Routes>
       <Footer />

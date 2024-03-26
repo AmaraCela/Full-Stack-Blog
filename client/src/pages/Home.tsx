@@ -7,15 +7,24 @@ import { selectBlog, useAppDispatch } from "../store/store";
 import BlogDisplay from "../components/BlogDisplay";
 import { useEffect, useState } from "react";
 import { getBlogs } from "../store/blog/blogThunk";
+import Loading from "../components/Loading";
+import { useNavigate } from "react-router-dom";
 
 const Home = () => {
     const dispatch = useAppDispatch();
+    const navigate = useNavigate();
     const blogs = useSelector(selectBlog).blog;
+    const isLoading = useSelector(selectBlog).loading;
+    const serverError = useSelector(selectBlog).serverError;
     const [currentPage, setCurrentPage] = useState(1);
 
     useEffect(() => {
         dispatch(getBlogs({offset: ((currentPage-1)*4)}));
     }, [currentPage]);
+
+    useEffect(() => {
+        console.log(serverError);
+    }, [serverError]);
 
     return (
         <><Wave/>
@@ -26,6 +35,8 @@ const Home = () => {
                 </div>
                 <Pagination currentPage={currentPage} setCurrentPage={setCurrentPage} />
             </div>
+            {isLoading && <Loading />}
+            {serverError && navigate("/error")}
         </>
     );
 }

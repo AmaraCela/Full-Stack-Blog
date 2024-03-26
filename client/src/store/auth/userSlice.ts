@@ -60,6 +60,7 @@ const loginUserBuilder = (builder: any) => {
     builder.addCase(loginUser.pending, (state: UserState) => {
         state.isLoggedIn = false;
         state.loading = true;
+        state.serverError = null;
     }).addCase(loginUser.fulfilled, (state: UserState, action: any) => {
         state.loading = false;
         state.isLoggedIn = true;

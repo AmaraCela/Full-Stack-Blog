@@ -21,7 +21,7 @@ const Home = () => {
         <><Wave/>
             <div className="home flex items-center flex-col relative mx-16 2xl:container 2xl:mx-auto">
                 <div className="flex flex-row w-full home-main">
-                    {blogs && blogs.length > 0 && blogs[0].post_id !== '' && <BlogDisplay blogs={blogs} />}
+                    {blogs && blogs.length > 0 && blogs[0].post_id !== '' ? <BlogDisplay blogs={blogs} /> : <p className="regular-font text-2xl w-full mt-8">There don't seem to be any recent posts.</p>}
                     <Sidebar />
                 </div>
                 <Pagination currentPage={currentPage} setCurrentPage={setCurrentPage} />

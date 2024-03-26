@@ -217,7 +217,8 @@ class Post {
         LEFT JOIN users u ON p.user_id = u.user_id
         LEFT JOIN post_tags pt ON p.post_id = pt.post_id
         LEFT JOIN tags t ON pt.tag_id = t.tag_id
-        LEFT JOIN images i ON p.post_id = i.post_id`;
+        LEFT JOIN images i ON p.post_id = i.post_id
+        ORDER BY p.date_posted DESC`;
 
         return new Promise((resolve, reject) => {
             connection.query(query, [offset], (err, results) => {
@@ -250,7 +251,8 @@ class Post {
         LEFT JOIN post_tags pt ON p.post_id = pt.post_id 
         LEFT JOIN tags t ON pt.tag_id = t.tag_id
         LEFT JOIN images i ON p.post_id = i.post_id 
-        WHERE p.post_id = ?`;
+        WHERE p.post_id = ?
+        ORDER BY p.date_posted DESC;`;
 
         return new Promise((resolve, reject) => {
             connection.query(query, [post_id], (err, result) => {
@@ -291,7 +293,8 @@ class Post {
         LEFT JOIN tags t ON pt.tag_id = t.tag_id
         LEFT JOIN images i ON p.post_id = i.post_id
         WHERE
-        u.user_id = ?;
+        u.user_id = ?
+        ORDER BY p.date_posted DESC;
     `;
 
         return new Promise((resolve, reject) => {
@@ -438,7 +441,8 @@ class Post {
         LEFT JOIN users u ON p.user_id = u.user_id
         LEFT JOIN post_tags pt ON pt.post_id = p.post_id
         LEFT JOIN tags t ON pt.tag_id = t.tag_id
-        WHERE p.description LIKE CONCAT('%', ?, '%');
+        WHERE p.description LIKE CONCAT('%', ?, '%')
+        ORDER BY p.date_posted DESC;
         `;
 
         return new Promise((resolve, reject) => {
@@ -473,7 +477,8 @@ class Post {
         LEFT JOIN users u ON p.user_id = u.user_id
         LEFT JOIN post_tags pt ON pt.post_id = p.post_id
         LEFT JOIN tags t ON pt.tag_id = t.tag_id
-        WHERE p.title LIKE CONCAT('%', ?, '%');
+        WHERE p.title LIKE CONCAT('%', ?, '%')
+        ORDER BY p.date_posted DESC;
         `;
 
         return new Promise((resolve, reject) => {
@@ -508,7 +513,8 @@ class Post {
         LEFT JOIN users u ON p.user_id = u.user_id
         LEFT JOIN post_tags pt ON pt.post_id = p.post_id
         LEFT JOIN tags t ON pt.tag_id = t.tag_id
-        WHERE u.username LIKE CONCAT('%', ?, '%');
+        WHERE u.username LIKE CONCAT('%', ?, '%')
+        ORDER BY p.date_posted DESC;
         `;
 
         return new Promise((resolve, reject) => {

@@ -37,6 +37,7 @@ const profileSlice = createSlice({
             state.loading = true;
             state.error = '';
         }).addCase(populateProfile.fulfilled, (state, action) => {
+            console.log(action.payload);
             const posts = action.payload.posts;
             const userInformation = { user_id: posts[0].user_id, username: posts[0].username, email: posts[0].email, profile_img: posts[0].profile_img, bio: posts[0].bio };
             state.user = userInformation;

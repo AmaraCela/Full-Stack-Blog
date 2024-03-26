@@ -34,7 +34,7 @@ const SignUp = () => {
     }, []);
 
     useEffect(() => {
-        console.log(serverError);
+        serverError && setInputs({username: "", email:"", password: "", verify: ""});
     }, [serverError])
 
     useEffect(() => {

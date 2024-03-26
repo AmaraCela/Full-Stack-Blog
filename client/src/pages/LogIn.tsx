@@ -48,6 +48,10 @@ const LogIn = () => {
         }
     }, [error]);
 
+    useEffect(() => {
+        serverError && setInputs({username: "", password: ""});
+    }, [serverError])
+
     const handleSubmit = () => {
         try {
             dispatch(loginUser(inputs));

@@ -40,6 +40,9 @@ const userSlice = createSlice({
             state.email = null;
             state.loginError = null;
             state.token = null;
+        }, 
+        resetError: (state) => { 
+            state.loginError = null;
         }
     },
     extraReducers: builder => {
@@ -72,7 +75,7 @@ const loginUserBuilder = (builder: any) => {
         state.id = null;
         state.profileImg = null;
         state.token = null;
-        state.loginError = action.payload as string;
+        state.loginError = action.payload.message === 'Failed to fetch' ? 'There was an error connecting to the server.' : action.payload as string;
     });
 }
 
@@ -112,5 +115,5 @@ const deleteUserBuilder = (builder: any) => {
     });
 }
 
-export const { logoutUser } = userSlice.actions;
+export const { logoutUser, resetError } = userSlice.actions;
 export default userSlice.reducer;

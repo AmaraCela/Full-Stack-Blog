@@ -9,6 +9,8 @@ import FormButton from "../components/FormButton";
 import { selectUser, useAppDispatch } from "../store/store";
 import { useNavigate } from "react-router-dom";
 import Loading from "../components/Loading";
+import ErrorBox from "../components/ErrorBox";
+import { resetError } from "../store/auth/userSlice";
 
 const LogIn = () => {
     const dispatch = useAppDispatch();
@@ -28,6 +30,12 @@ const LogIn = () => {
     });
 
     useEffect(() => {
+        return () => {
+            dispatch(resetError())
+        };
+    }, []);
+
+    useEffect(() => {
         if (isLoggedIn) {
             navigate('/');
         }
@@ -42,7 +50,8 @@ const LogIn = () => {
 
     const handleSubmit = () => {
         try {
-            (dispatch(loginUser(inputs)));
+            dispatch(loginUser(inputs));
+            dispatch(resetError());
         }
         catch (error) {
             setInputsError({ ...inputsError, password: 'Check username and password.' });
@@ -58,12 +67,12 @@ const LogIn = () => {
                         <linearGradient id="sw-gradient" x1="2" x2="1" y1="1" y2="0">
                             <stop id="stop1" stopColor="rgba(156, 187, 242, 1)" offset="0%" />
                             <stop id="stop2" stopColor="rgba(156, 187, 242, 1)" offset="100%" />
-                        </linearGradient>                  
-                    </defs>                
+                        </linearGradient>
+                    </defs>
                     <path fill="url(#sw-gradient)" d="M16.7,-10.1C17.5,-2.7,11.4,2.3,4.1,8.1C-3.1,13.9,-11.5,20.6,-19.8,16.9C-28.2,13.3,-36.6,-0.7,-33.3,-11.4C-30,-22.2,-15,-29.8,-3.5,-28.6C7.9,-27.5,15.8,-17.6,16.7,-10.1Z" width="100%" height="100%" transform="translate(50 50)" strokeWidth="0" stroke="url(#sw-gradient)" />
                 </svg>
 
-               <div className="bg-[#ffffff] grid justify-evenly p-4 items-center rounded-l-md login-signup-form">
+                <div className="bg-[#ffffff] grid justify-evenly p-4 items-center rounded-l-md login-signup-form">
                     <h1 className="regular-font text-3xl font-bold form-title z-10">Login</h1>
 
                     <FormInput label="Username" value={inputs.username} placeholder="Enter Username..."
@@ -80,6 +89,7 @@ const LogIn = () => {
                 <img src={login} alt="" className="form-img rounded-r-md" />
             </div>
             {isLoading && <Loading />}
+            {error && error === 'There was an error connecting to the server.' && <ErrorBox error={error} />}
         </div>
     );
 }

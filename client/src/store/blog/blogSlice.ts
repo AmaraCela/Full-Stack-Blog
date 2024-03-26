@@ -44,6 +44,7 @@ const createBlogSlice = createSlice({
         resetState(state) {
             state.deleteSuccessful = null;
             state.deleteError = null;
+            state.successful = false;
         }
     },
     extraReducers: builder => {

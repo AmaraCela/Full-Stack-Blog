@@ -9,6 +9,7 @@ import { useCreateBlogForm } from "../hooks/useCreateBlogForm";
 import { useNavigate } from "react-router-dom";
 import { CreateBlogInputType } from "../types/blogTypes";
 import Loading from "../components/Loading";
+import { resetState } from "../store/blog/blogSlice";
 
 const CreateBlog = () => {
 
@@ -19,7 +20,7 @@ const CreateBlog = () => {
     const successful = useSelector(selectBlog).successful;
     const isLoading = useSelector(selectBlog).loading;
     const error = useSelector(selectBlog).error;
-
+    const [mounted, setMounted] = useState(false);
     const { errors, hasErrors, validateForm, displayErrors } = useCreateBlogForm();
 
     const isButtonPressed = useRef(false);
@@ -33,6 +34,8 @@ const CreateBlog = () => {
     });
 
     useEffect(() => {
+        dispatch(resetState());
+        setMounted(true);
         tags.length === 0 && dispatch(retriveTags());
     }, []);
 
@@ -57,7 +60,7 @@ const CreateBlog = () => {
     }, [hasErrors]);
 
     useEffect(() => {
-        // successful && navigate("/");
+        mounted && successful && navigate("/");
     }, [successful])
 
 

@@ -43,6 +43,7 @@ const userSlice = createSlice({
         }, 
         resetError: (state) => { 
             state.loginError = null;
+            state.signupError = null;
         }
     },
     extraReducers: builder => {
@@ -83,7 +84,7 @@ const signupUserBuilder = (builder: any) => {
     builder.addCase(signupUser.pending, (state: UserState) => {
         state.loading = true;
     }).addCase(signupUser.rejected, (state: UserState, action: any) => {
-        state.signupError = action.payload as string;
+        state.signupError = action.payload ? action.payload as string : action.error.message;
         state.loading = false;
     });
 }

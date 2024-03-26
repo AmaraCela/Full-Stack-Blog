@@ -41,7 +41,6 @@ const LogIn = () => {
         }
     }, [isLoggedIn]);
 
-
     useEffect(() => {
         if (error) {
             setInputsError({ username: error === 'Invalid username.' ? error : '', password: error === 'Invalid password.' ? error : '' });

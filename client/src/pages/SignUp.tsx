@@ -9,17 +9,16 @@ import { signupUser } from "../store/auth/authThunks";
 import { selectUser, useAppDispatch } from "../store/store";
 import Loading from "../components/Loading";
 import { useSignupForm } from "../hooks/useSignupForm";
+import ErrorBox from "../components/ErrorBox";
+import { resetError } from "../store/auth/userSlice";
 
 const SignUp = () => {
     const navigate = useNavigate();
     const dispatch = useAppDispatch();
-
     const isLoggedIn = useSelector(selectUser).isLoggedIn;
     const error = useSelector(selectUser).signupError;
     const isLoading = useSelector(selectUser).loading;
-
     const { hasErrors, errors, validateForm, displayErrors } = useSignupForm();
-
     const isButtonPressed = useRef(false);
 
     const [inputs, setInputs] = useState({
@@ -56,6 +55,7 @@ const SignUp = () => {
         validateForm(inputs);
         displayErrors(inputs);
         isButtonPressed.current = true;
+        dispatch(resetError());
     }
 
     return (
@@ -104,6 +104,7 @@ const SignUp = () => {
                 <img src={signup} alt="" className="form-img rounded-r-md" />
             </div>
             {isLoading && <Loading />}
+            {error === 'Failed to fetch' && <ErrorBox error={"There was an error connecting to the server."} />}
         </div>
     );
 }
